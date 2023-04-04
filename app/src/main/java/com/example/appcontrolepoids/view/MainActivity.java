@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AppDatabase.initialiser(this);
         //Initialisation de l'objet binding avec le layout activity_main.xml
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         //Initialisation de l'objet ArticleViewModel avec le contexte de l'activité

@@ -2,6 +2,7 @@ package com.example.appcontrolepoids.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "CP_Articles")
@@ -44,6 +45,7 @@ public class Article {
     }
 
     // Constructeur avec paramètres
+    @Ignore
     public Article(String code, String nom, String ean, int poidsNet, int poidsBrut, int rendement, String codeOperateur) {
         this.code = code;
         this.nom = nom;
@@ -109,5 +111,13 @@ public class Article {
 
     public void setRendement(int rendement) {
         this.rendement = rendement;
+    }
+
+    public String getCodeOperateur() {
+        return codeOperateur;
+    }
+
+    public void setCodeOperateur(String codeOperateur) {
+        this.codeOperateur = codeOperateur;
     }
 }
