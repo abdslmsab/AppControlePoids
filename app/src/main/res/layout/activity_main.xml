@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditText
-        android:id="@+id/texte_EAN"
+    <data>
+
+        <variable
+            name="articleViewModel"
+            type="com.example.appcontrolepoids.viewmodel.ArticleViewModel" />
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="EAN Article" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.MainActivity">
 
-    <Button
-        android:id="@+id/bouton_valider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Valider" />
+        <EditText
+            android:id="@+id/texte_EAN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="EAN Article" />
 
-    <Button
-        android:id="@+id/bouton_ajouter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ajouter Article" />
+        <Button
+            android:id="@+id/bouton_valider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Valider" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/bouton_ajouter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter Article" />
+
+    </LinearLayout>
+</layout>
