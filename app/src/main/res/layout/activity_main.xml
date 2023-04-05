@@ -18,7 +18,9 @@
             android:id="@+id/texte_EAN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="EAN Article" />
+            android:afterTextChanged="@{articleViewModel.onEanChange}"
+            android:hint="EAN Article"
+            android:text="@{articleViewModel.ean}" />
 
         <Button
             android:id="@+id/bouton_valider"

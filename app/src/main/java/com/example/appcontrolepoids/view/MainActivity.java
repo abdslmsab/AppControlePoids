@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 public class MainActivity extends AppCompatActivity {
     private EditText texteEAN;
@@ -38,7 +40,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         AppDatabase.initialiser(this);
+        //Juste un code pas joli pour ajouter un article exemple
+        new Thread() {
+            @Override
+            public void run() {
+                Article article = new Article();
+                article.setCode("robert");
+                AppDatabase.getInstance().articleDao().insert(article);
+            }
+        }.start();
+
         //Initialisation de l'objet binding avec le layout activity_main.xml
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         //Initialisation de l'objet ArticleViewModel avec le contexte de l'activité
@@ -47,5 +60,13 @@ public class MainActivity extends AppCompatActivity {
         binding.setArticleViewModel(articleViewModel);
         //Définition du cycle de vie pour le Data Binding
         binding.setLifecycleOwner(this);
+
+        binding.boutonAjouter.setOnClickListener(v -> {
+            articleViewModel.articleExiste().observe(this, articleExiste -> {
+                if (articleExiste) {
+                    Toast.makeText(this, "L'article existe", Toast.LENGTH_LONG).show();
+                }
+            });
+        });
     }
 }
