@@ -2,24 +2,26 @@ package com.example.appcontrolepoids.viewmodel;
 
 import android.text.Editable;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.appcontrolepoids.database.AppDatabase;
+import com.example.appcontrolepoids.util.action.ActionLiveData;
 
-//Encapsulasion de la logique de récupération des données de la base de données fournis à la couche d'interface utilisateur de manière asynchrone
+import java.util.Objects;
+
 public class ArticleViewModel extends ViewModel {
 
     public final MutableLiveData<String> ean = new MutableLiveData<>("");
+
+    public final ActionLiveData<Boolean> articleExiste = new ActionLiveData<>();
 
     public void onEanChange(Editable text) {
         ean.postValue(text.toString());
     }
 
-    //Utilisation de la méthode getArticleByEAN() de l'objet database pour exécuter la requête SQL qui vérifie si un article correspondant à ce code EAN existe dans la base de données
-    public LiveData<Boolean> articleExiste() {
-        return Transformations.map(AppDatabase.getInstance().articleDao().getArticleByEAN(ean.getValue()), article -> article != null);
+    public void checkArticleExist() {
+        articleExiste.trigger(() -> Transformations.map(AppDatabase.getInstance().articleDao().getArticleByEAN(ean.getValue()), Objects::nonNull));
     }
 }

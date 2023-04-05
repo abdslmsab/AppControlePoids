@@ -32,7 +32,8 @@
             android:id="@+id/bouton_ajouter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ajouter Article" />
+            android:text="Ajouter Article"
+            android:onClick="@{() -> articleViewModel.checkArticleExist()}"/>
 
     </LinearLayout>
 </layout>

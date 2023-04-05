@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
+                AppDatabase.getInstance().articleDao().nukeTable();
+
                 Article article = new Article();
                 article.setCode("robert");
                 AppDatabase.getInstance().articleDao().insert(article);
@@ -61,12 +63,6 @@ public class MainActivity extends AppCompatActivity {
         //Définition du cycle de vie pour le Data Binding
         binding.setLifecycleOwner(this);
 
-        binding.boutonAjouter.setOnClickListener(v -> {
-            articleViewModel.articleExiste().observe(this, articleExiste -> {
-                if (articleExiste) {
-                    Toast.makeText(this, "L'article existe", Toast.LENGTH_LONG).show();
-                }
-            });
-        });
+        articleViewModel.articleExiste.observe(this, articleExiste -> Toast.makeText(this, articleExiste ? "L'article existe" : "L'article n'existe PAS", Toast.LENGTH_LONG).show());
     }
 }
