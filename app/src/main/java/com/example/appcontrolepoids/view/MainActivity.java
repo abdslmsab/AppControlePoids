@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -20,9 +21,7 @@ import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 public class MainActivity extends AppCompatActivity implements DialogAlerte.AlertDialogInterface {
 
 
-    //Variable de liaison (binding) permettant d'accéder aux éléments de l'interface utilisateur
-    private ActivityMainBinding binding;
-    private DialogAlerteViewModel alertDialogViewModel;
+    private DialogAlerteViewModel dialogAlerteViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
         }.start();
 
         //Initialisation de l'objet binding avec le layout activity_main.xml
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        //Variable de liaison (binding) permettant d'accéder aux éléments de l'interface utilisateur
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         //Initialisation de l'objet ArticleViewModel avec le contexte de l'activité
         ArticleViewModel articleViewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
         //Définition de l'objet articleViewModel comme variable dans le layout pour le Data Binding
@@ -53,24 +53,34 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
 
         articleViewModel.articleExiste.observe(this, articleExiste -> Toast.makeText(this, articleExiste ? "L'article existe" : "L'article n'existe pas. Veuillez l'ajouter", Toast.LENGTH_LONG).show());
 
-        alertDialogViewModel = GestionnaireAlerte.initialiseViewModel(this);
-        binding.boutonAjouter.setOnClickListener(v -> showMyDialogFragment(TypeAlerte.verrouillageCode));
-    }
+        //Initialisation de l'objet DialogAlerteViewModel avec le contexte de l'activité
+        dialogAlerteViewModel = new ViewModelProvider(this).get(DialogAlerteViewModel.class);
 
-    //Permet d'afficher la pop-up d'alerte en fonction du type d'alerte
-    private void showMyDialogFragment(TypeAlerte type) {
-        GestionnaireAlerte.showMyDialog(this,
-                type, alertDialogViewModel, this);
+        //Permet d'afficher la pop-up d'alerte en fonction du type d'alerte
+        binding.boutonAjouter.setOnClickListener(v -> GestionnaireAlerte.showMyDialog(this,
+                TypeAlerte.verrouillageCode, dialogAlerteViewModel, this));
+
+        dialogAlerteViewModel.codeValide.observe(this, codeValide -> {
+            if (codeValide) {
+                Intent intent = new Intent(MainActivity.this, AjouterArticle.class);
+                startActivity(intent);
+            } else {
+                //TODO : Afficher une popup erreur
+                Toast.makeText(this, "Code faux !", Toast.LENGTH_LONG).show();
+            }
+            dialogAlerteViewModel.reinitialiserCodeSaisi();
+        });
     }
 
     //Permet d'afficher une notification lorsque l'on clique sur le bouton principal de la pop-up d'alerte
     @Override
     public void alertDialogMainOption(TypeAlerte type) {
-        //TODO verrouillageCode : Si le code est faux -> afficher un Toast "Le code est faux"
         //TODO exempleAvertissement : Si validation -> afficher un Toast "L'article a bien été supprimé"
+        dialogAlerteViewModel.verifierCodeValide();
     }
 
     //Permet d'afficher une notification lorsque l'on clique sur le bouton alternatif de la pop-up d'alerte
     @Override
-    public void alertDialogAlternativeOption(TypeAlerte type) {}
+    public void alertDialogAlternativeOption(TypeAlerte type) {
+    }
 }

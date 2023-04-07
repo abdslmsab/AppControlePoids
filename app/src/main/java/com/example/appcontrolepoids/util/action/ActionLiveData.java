@@ -15,6 +15,8 @@ public class ActionLiveData<T> extends MediatorLiveData<T> {
 
     private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(4);
 
+    private LiveData<T> source;
+
     @Override
     public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super T> observer) {
         if (hasObservers()) {
@@ -29,6 +31,7 @@ public class ActionLiveData<T> extends MediatorLiveData<T> {
 
             //Directement après avoir notifié l'évènement, on reset les données
             setValue(null);
+            removeSource(source);
         });
     }
 
@@ -41,7 +44,8 @@ public class ActionLiveData<T> extends MediatorLiveData<T> {
         EXECUTOR_SERVICE.execute(future);
 
         try {
-            addSource(future.get(), this::setValue);
+            source = future.get();
+            addSource(source, this::setValue);
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

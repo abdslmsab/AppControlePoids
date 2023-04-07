@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AppControlePoids</string>
+    <string name="titre_choix_produit">Saisir ou scanner les 13 chiffres du code barre</string>
+    <string name="saisir_le_code_barre">Saisir le code barre</string>
 </resources>

@@ -49,6 +49,7 @@ public class DialogAlerte extends DialogFragment {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(requireContext());
         AlertDialogLayoutBinding binding = AlertDialogLayoutBinding.inflate(requireActivity().getLayoutInflater());
         binding.setOptions(mOptions);
+        binding.setViewModel(viewModel);
         alertBuilder.setView(binding.getRoot());
         AlertDialog dialog = alertBuilder.create();
 

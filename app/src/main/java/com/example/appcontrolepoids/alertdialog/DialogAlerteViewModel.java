@@ -40,7 +40,7 @@ public class DialogAlerteViewModel extends ViewModel {
     public final MutableLiveData<String> codeSaisi = new MutableLiveData<>("");
 
     //Permet de réagir à des évènements
-    public final ActionLiveData<Boolean> codeExiste = new ActionLiveData<>();
+    public final ActionLiveData<Boolean> codeValide = new ActionLiveData<>();
 
     /**
      * Méthode appelée lorsque le code saisi dans l'EditText change
@@ -52,7 +52,11 @@ public class DialogAlerteViewModel extends ViewModel {
     }
 
     //On vérifie si le code entré est bien égal à 1234
-    public void verifierCodeExiste() {
-        codeExiste.trigger(() -> Transformations.map(codeSaisi, code -> code.equals("1234")));
+    public void verifierCodeValide() {
+        codeValide.trigger(() -> Transformations.map(codeSaisi, code -> code.equals("1234")));
+    }
+
+    public void reinitialiserCodeSaisi(){
+        codeSaisi.setValue("");
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,57 +9,85 @@
             type="com.example.appcontrolepoids.viewmodel.ArticleViewModel" />
     </data>
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:context=".view.MainActivity">
+        android:layout_height="match_parent">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/texte_titre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Saisir ou scanner les 13 chiffres du code barre"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textSize="50sp"
+            android:textColor="@color/primary"
+            android:textAlignment="center"
+            android:text="@string/titre_choix_produit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/formulaireEan"/>
 
-        <EditText
-            android:id="@+id/texte_EAN"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/formulaireEan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:afterTextChanged="@{articleViewModel.changementEan}"
-            android:hint="Saisir le code barre"
-            android:inputType="number"
-            android:maxLength="13"
-            android:backgroundTint="@color/black"
-            android:text="@{articleViewModel.eanSaisi}" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_EAN"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/saisir_le_code_barre"
+                app:layout_constraintEnd_toEndOf="@id/bouton_valider"
+                app:layout_constraintStart_toStartOf="@id/bouton_ajouter"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/codeBarreEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{articleViewModel.changementEan}"
+                    android:inputType="number"
+                    android:maxLength="13"
+                    android:text="@{articleViewModel.eanSaisi}" />
 
-            <Button
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/bouton_ajouter"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:text="Ajouter Article" />
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Ajouter article"
+                app:layout_constraintEnd_toStartOf="@+id/middle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/texte_EAN" />
 
-            <Button
-                android:id="@+id/bouton_valider"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/middle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_valider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
                 android:enabled="@{articleViewModel.activerBoutonValider}"
                 android:onClick="@{() -> articleViewModel.verifierArticleExiste()}"
-                android:text="Valider" />
-        </LinearLayout>
-    </LinearLayout>
+                android:text="Valider"
+                app:layout_constraintBottom_toBottomOf="@+id/bouton_ajouter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/middle"
+                app:layout_constraintTop_toTopOf="@+id/bouton_ajouter" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

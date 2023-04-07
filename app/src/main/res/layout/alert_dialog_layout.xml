@@ -8,6 +8,10 @@
             name="options"
             type="com.example.appcontrolepoids.alertdialog.OptionsAlerte" />
 
+        <variable
+            name="viewModel"
+            type="com.example.appcontrolepoids.alertdialog.DialogAlerteViewModel" />
+
         <import type="android.view.View" />
 
     </data>
@@ -83,7 +87,9 @@
                     android:inputType="numberPassword"
                     android:maxLength="4"
                     android:textAlignment="center"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:text="@{viewModel.codeSaisi}"
+                    android:afterTextChanged="@{viewModel.changementCode}"/>
 
             </LinearLayout>
 
