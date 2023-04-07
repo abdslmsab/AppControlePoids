@@ -11,29 +11,54 @@
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         tools:context=".view.MainActivity">
+
+        <TextView
+            android:id="@+id/texte_titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Saisir ou scanner les 13 chiffres du code barre"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/texte_EAN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:afterTextChanged="@{articleViewModel.onEanChange}"
-            android:hint="EAN Article"
-            android:text="@{articleViewModel.ean}" />
+            android:afterTextChanged="@{articleViewModel.changementEan}"
+            android:hint="Saisir le code barre"
+            android:inputType="number"
+            android:maxLength="13"
+            android:backgroundTint="@color/black"
+            android:text="@{articleViewModel.eanSaisi}" />
 
-        <Button
-            android:id="@+id/bouton_valider"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Valider" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/bouton_ajouter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ajouter Article"
-            android:onClick="@{() -> articleViewModel.checkArticleExist()}"/>
 
+            <Button
+                android:id="@+id/bouton_ajouter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:text="Ajouter Article" />
+
+            <Button
+                android:id="@+id/bouton_valider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:enabled="@{articleViewModel.activerBoutonValider}"
+                android:onClick="@{() -> articleViewModel.verifierArticleExiste()}"
+                android:text="Valider" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

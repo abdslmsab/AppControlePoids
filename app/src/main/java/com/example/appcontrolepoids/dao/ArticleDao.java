@@ -31,9 +31,10 @@ public interface ArticleDao {
     LiveData<List<Article>> getAllArticles();
 
     //Requête SELECT avec une clause WHERE pour filtrer les enregistrements en fonction de l'EAN_Article entré
-    @Query("SELECT * FROM CP_Articles WHERE Code_Article = :ean")
+    @Query("SELECT * FROM CP_Articles WHERE EAN_Article = :ean")
     LiveData<Article> getArticleByEAN(String ean);
 
+    //Requête qui supprime toutes les lignes de la table CP_Articles
     @Query("DELETE FROM CP_Articles")
     void nukeTable();
 }

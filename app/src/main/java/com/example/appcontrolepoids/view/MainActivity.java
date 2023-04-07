@@ -3,37 +3,26 @@ package com.example.appcontrolepoids.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Room;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.appcontrolepoids.dao.ArticleDao;
+import com.example.appcontrolepoids.alertdialog.GestionnaireAlerte;
+import com.example.appcontrolepoids.alertdialog.TypeAlerte;
+import com.example.appcontrolepoids.alertdialog.DialogAlerte;
+import com.example.appcontrolepoids.alertdialog.DialogAlerteViewModel;
 import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.databinding.ActivityMainBinding;
 import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 
-import java.util.List;
-import java.util.concurrent.Executor;
+public class MainActivity extends AppCompatActivity implements DialogAlerte.AlertDialogInterface {
 
-public class MainActivity extends AppCompatActivity {
-    private EditText texteEAN;
-    private Button boutonValider;
-    private Button boutonAjouter;
 
     //Variable de liaison (binding) permettant d'accéder aux éléments de l'interface utilisateur
     private ActivityMainBinding binding;
-
+    private DialogAlerteViewModel alertDialogViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         AppDatabase.initialiser(this);
-        //Juste un code pas joli pour ajouter un article exemple
+        //Article servant de test
         new Thread() {
             @Override
             public void run() {
                 AppDatabase.getInstance().articleDao().nukeTable();
 
-                Article article = new Article();
-                article.setCode("robert");
-                AppDatabase.getInstance().articleDao().insert(article);
+                Article articleTest = new Article("CAKE087", "CAKE 2 CERISES 340 G", "3333040008062", 340, 353, 144, "0001");
+                AppDatabase.getInstance().articleDao().insert(articleTest);
             }
         }.start();
 
@@ -63,6 +51,26 @@ public class MainActivity extends AppCompatActivity {
         //Définition du cycle de vie pour le Data Binding
         binding.setLifecycleOwner(this);
 
-        articleViewModel.articleExiste.observe(this, articleExiste -> Toast.makeText(this, articleExiste ? "L'article existe" : "L'article n'existe PAS", Toast.LENGTH_LONG).show());
+        articleViewModel.articleExiste.observe(this, articleExiste -> Toast.makeText(this, articleExiste ? "L'article existe" : "L'article n'existe pas. Veuillez l'ajouter", Toast.LENGTH_LONG).show());
+
+        alertDialogViewModel = GestionnaireAlerte.initialiseViewModel(this);
+        binding.boutonAjouter.setOnClickListener(v -> showMyDialogFragment(TypeAlerte.verrouillageCode));
     }
+
+    //Permet d'afficher la pop-up d'alerte en fonction du type d'alerte
+    private void showMyDialogFragment(TypeAlerte type) {
+        GestionnaireAlerte.showMyDialog(this,
+                type, alertDialogViewModel, this);
+    }
+
+    //Permet d'afficher une notification lorsque l'on clique sur le bouton principal de la pop-up d'alerte
+    @Override
+    public void alertDialogMainOption(TypeAlerte type) {
+        //TODO verrouillageCode : Si le code est faux -> afficher un Toast "Le code est faux"
+        //TODO exempleAvertissement : Si validation -> afficher un Toast "L'article a bien été supprimé"
+    }
+
+    //Permet d'afficher une notification lorsque l'on clique sur le bouton alternatif de la pop-up d'alerte
+    @Override
+    public void alertDialogAlternativeOption(TypeAlerte type) {}
 }
