@@ -17,14 +17,16 @@
             android:id="@+id/texte_titre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="50sp"
-            android:textColor="@color/primary"
-            android:textAlignment="center"
             android:text="@string/titre_choix_produit"
+            android:textAlignment="center"
+            android:textColor="@color/primary"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toTopOf="@id/formulaireEan"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/formulaireEan"/>
+            app:layout_constraintVertical_bias="0.501" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/formulaireEan"
@@ -41,8 +43,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/saisir_le_code_barre"
-                app:layout_constraintEnd_toEndOf="@id/bouton_valider"
-                app:layout_constraintStart_toStartOf="@id/bouton_ajouter"
+                app:layout_constraintEnd_toEndOf="@+id/conteneurBoutons"
+                app:layout_constraintStart_toStartOf="@+id/conteneurBoutons"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -56,37 +58,35 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/bouton_ajouter"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/conteneurBoutons"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:text="Ajouter article"
-                app:layout_constraintEnd_toStartOf="@+id/middle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/texte_EAN" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/middle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/bouton_valider"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:enabled="@{articleViewModel.activerBoutonValider}"
-                android:onClick="@{() -> articleViewModel.verifierArticleExiste()}"
-                android:text="Valider"
-                app:layout_constraintBottom_toBottomOf="@+id/bouton_ajouter"
+                android:layout_marginHorizontal="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/middle"
-                app:layout_constraintTop_toTopOf="@+id/bouton_ajouter" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/texte_EAN">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bouton_ajouter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="Ajouter article" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bouton_valider"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:enabled="@{articleViewModel.activerBoutonValider}"
+                    android:onClick="@{() -> articleViewModel.verifierArticleExiste()}"
+                    android:text="Valider" />
+
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

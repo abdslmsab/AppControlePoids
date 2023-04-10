@@ -12,5 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textSize">35sp</item>
+        <item name="materialButtonStyle">@style/App.Button</item>
+    </style>
+
+    <style name="App.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:padding">25sp</item>
     </style>
 </resources>
