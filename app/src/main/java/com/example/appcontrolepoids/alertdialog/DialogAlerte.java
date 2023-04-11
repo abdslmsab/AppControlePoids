@@ -4,17 +4,14 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -78,7 +75,7 @@ public class DialogAlerte extends DialogFragment {
         });
 
         //Si le type d'alerte n'est pas codeVerrouillage, on enlève le champ pour taper un code
-        if (mOptions.getType() == TypeAlerte.erreurInconnue || mOptions.getType() == TypeAlerte.exempleAvertissement || mOptions.getType() == TypeAlerte.exempleReussite){
+        if (mOptions.getType() == TypeAlerte.erreurInconnue || mOptions.getType() == TypeAlerte.exempleAvertissement || mOptions.getType() == TypeAlerte.exempleReussite || mOptions.getType() == TypeAlerte.articleExistePas){
             texteCode.setVisibility(View.GONE);
         }
 
@@ -86,11 +83,11 @@ public class DialogAlerte extends DialogFragment {
         CategorieAlerte alertCategory = getCategorieAlerte(mOptions.getType());
         if (alertCategory == CategorieAlerte.avertissement) {
             circleFL.setBackgroundResource(R.drawable.alert_dialog_circle_warning);
-            alternativeOptionTV.setTextColor(requireContext().getColor(R.color.warning_color));
+            alternativeOptionTV.setTextColor(requireContext().getColor(R.color.rouge));
             mainOptionTV.setBackgroundResource(R.drawable.background_rounded_button_warning);
         } else if (alertCategory == CategorieAlerte.reussite) {
             circleFL.setBackgroundResource(R.drawable.alert_dialog_circle_success);
-            alternativeOptionTV.setTextColor(requireContext().getColor(R.color.correct_green));
+            alternativeOptionTV.setTextColor(requireContext().getColor(R.color.vert));
             mainOptionTV.setBackgroundResource(R.drawable.background_rounded_button_success);
         }
 

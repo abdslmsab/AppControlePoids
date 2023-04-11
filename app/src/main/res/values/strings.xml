@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">AppControlePoids</string>
-    <string name="titre_choix_produit">Saisir ou scanner les 13 chiffres du code barre</string>
+    <string name="titre_choix_produit_1">Saisir ou scanner</string>
+    <string name="titre_choix_produit_2">les 13 chiffres du code barre</string>
     <string name="saisir_le_code_barre">Saisir le code barre</string>
+    <string name="ajouter_article">Ajouter article</string>
+    <string name="valider">Valider</string>
+    <string name="nom_article">Nom de l\'article</string>
+    <string name="poids_net">Poids net</string>
+    <string name="poids_brut">Poids brut</string>
+    <string name="rendement">Rendement</string>
+    <string name="code_operateur">Saisir le code opérateur</string>
+    <string name="code_operateur_titre">Code opérateur</string>
+    <string name="nombre_venues">Saisir le nombre de venues</string>
+    <string name="venues_titre">Venues fabriquées</string>
+    <string name="ddm_titre">DDM</string>
+    <string name="saisir_la_ddm">JJ/MM/AA</string>
+    <string name="numero_de_lot">Numéro de lot</string>
+    <string name="annuler">Annuler</string>
 </resources>

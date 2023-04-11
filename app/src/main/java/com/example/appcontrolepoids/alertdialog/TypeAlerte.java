@@ -9,4 +9,6 @@ public enum TypeAlerte {
     exempleReussite,
     //CategorieAlerte.avertissement
     exempleAvertissement,
+    //CategorieAlerte.avertissement
+    articleExistePas
 }

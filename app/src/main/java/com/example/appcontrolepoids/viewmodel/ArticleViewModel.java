@@ -1,7 +1,6 @@
 package com.example.appcontrolepoids.viewmodel;
 
 import android.text.Editable;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,6 +8,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.appcontrolepoids.database.AppDatabase;
+import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.util.action.ActionLiveData;
 
 import java.util.Objects;
@@ -35,5 +35,13 @@ public class ArticleViewModel extends ViewModel {
      */
     public void verifierArticleExiste() {
         articleExiste.trigger(() -> Transformations.map(AppDatabase.getInstance().articleDao().getArticleByEAN(eanSaisi.getValue()), Objects::nonNull));
+    }
+
+    public LiveData<Article> getArticleByEAN(String ean) {
+        return AppDatabase.getInstance().articleDao().getArticleByEAN(ean);
+    }
+
+    public void reinitialiserChamp(){
+        eanSaisi.setValue("");
     }
 }

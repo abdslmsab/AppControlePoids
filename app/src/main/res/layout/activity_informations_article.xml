@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="dateViewModel"
+            type="com.example.appcontrolepoids.viewmodel.DateViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/date_du_jour"
+            style="@style/Theme.AppControlePoids.H2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:text="@{dateViewModel.dateActuelle}"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="14/04/2000" />
+
+        <TextView
+            android:id="@+id/code_article"
+            style="@style/Theme.AppControlePoids.H1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
+            tools:text="Code article" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conteneurFormulaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/code_article"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/conteneurBoutons">
+
+            <TextView
+                android:id="@+id/nom_article"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32sp"
+                android:layout_marginTop="32sp"
+                android:text="@string/nom_article"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/valeur_nom_article"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/nom_article"
+                app:layout_constraintTop_toBottomOf="@id/nom_article"
+                tools:text="CAKE031" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/milieu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/poids_net"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32sp"
+                android:text="@string/poids_net"
+                app:layout_constraintBottom_toBottomOf="@id/nom_article"
+                app:layout_constraintStart_toStartOf="@id/milieu"
+                app:layout_constraintTop_toTopOf="@id/nom_article" />
+
+            <TextView
+                android:id="@+id/valeur_poids_net"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/poids_net"
+                app:layout_constraintTop_toBottomOf="@id/poids_net"
+                tools:text="400" />
+
+            <TextView
+                android:id="@+id/poids_brut"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32sp"
+                android:text="@string/poids_brut"
+                app:layout_constraintStart_toStartOf="@id/nom_article"
+                app:layout_constraintTop_toBottomOf="@id/valeur_nom_article" />
+
+            <TextView
+                android:id="@+id/valeur_poids_brut"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/poids_brut"
+                app:layout_constraintTop_toBottomOf="@id/poids_brut"
+                tools:text="400" />
+
+            <TextView
+                android:id="@+id/rendement"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32sp"
+                android:text="@string/rendement"
+                app:layout_constraintBottom_toBottomOf="@id/poids_brut"
+                app:layout_constraintStart_toStartOf="@id/milieu"
+                app:layout_constraintTop_toTopOf="@id/poids_brut" />
+
+            <TextView
+                android:id="@+id/valeur_rendement"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/rendement"
+                app:layout_constraintTop_toBottomOf="@id/rendement"
+                tools:text="2" />
+
+            <TextView
+                android:id="@+id/matricule"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32sp"
+                android:text="@string/code_operateur_titre"
+                app:layout_constraintStart_toStartOf="@id/poids_brut"
+                app:layout_constraintTop_toBottomOf="@id/valeur_poids_brut" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_operateur"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/code_operateur"
+                app:boxStrokeColor="@color/noir"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="@+id/milieu"
+                app:layout_constraintStart_toStartOf="@id/matricule"
+                app:layout_constraintTop_toBottomOf="@id/matricule">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/nombre_venues"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32sp"
+                android:text="@string/venues_titre"
+                app:layout_constraintStart_toStartOf="@id/rendement"
+                app:layout_constraintTop_toBottomOf="@id/valeur_rendement" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_venues"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/nombre_venues"
+                app:boxStrokeColor="@color/noir"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/nombre_venues"
+                app:layout_constraintTop_toBottomOf="@id/nombre_venues">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/ddm"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32sp"
+                android:text="@string/ddm_titre"
+                app:layout_constraintStart_toStartOf="@id/matricule"
+                app:layout_constraintTop_toBottomOf="@id/texte_operateur" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_ddm"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/saisir_la_ddm"
+                app:boxStrokeColor="@color/noir"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="@+id/milieu"
+                app:layout_constraintStart_toStartOf="@id/ddm"
+                app:layout_constraintTop_toBottomOf="@id/ddm">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ddmEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789/"
+                    android:inputType="number"
+                    android:maxLength="13"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/numerot_de_lot"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32sp"
+                android:text="@string/numero_de_lot"
+                app:layout_constraintStart_toStartOf="@id/nombre_venues"
+                app:layout_constraintTop_toBottomOf="@id/texte_venues" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_lot"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/nombre_venues"
+                app:boxStrokeColor="@color/noir"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/numerot_de_lot"
+                app:layout_constraintTop_toBottomOf="@id/numerot_de_lot">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/conteneurBoutons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conteneurFormulaire">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_annuler"
+                style="?attr/materialButtonOutlinedStyle"
+                android:textColor="@color/rouge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blanc"
+                android:text="@string/annuler" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_valider"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="@string/valider" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

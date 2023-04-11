@@ -73,6 +73,15 @@ public class OptionsAlerte {
                         R.drawable.icon_success,
                         true,
                         type);
+            case articleExistePas:
+                return new OptionsAlerte(
+                        "L'article n'existe pas",
+                        "Veuillez l'ajouter",
+                        "",
+                        "Ok",
+                        R.drawable.icon_warning,
+                        true,
+                        type);
             default:
                 return new OptionsAlerte(
                         "Erreur inconnue",
