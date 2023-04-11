@@ -17,4 +17,5 @@
     <string name="saisir_la_ddm">JJ/MM/AA</string>
     <string name="numero_de_lot">Numéro de lot</string>
     <string name="annuler">Annuler</string>
+    <string name="numero_lot">Saisir le numéro de lot</string>
 </resources>

@@ -123,7 +123,9 @@
                     android:layout_weight="1"
                     android:text="@string/ajouter_article"
                     android:backgroundTint="@color/blanc"
-                    style="?attr/materialButtonOutlinedStyle"/>
+                    style="?attr/materialButtonOutlinedStyle"
+                    app:icon="@drawable/add_white_24dp"
+                    app:iconSize="43sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/bouton_valider"
@@ -133,7 +135,9 @@
                     android:layout_weight="1"
                     android:enabled="@{articleViewModel.activerBoutonValider}"
                     android:onClick="@{() -> articleViewModel.verifierArticleExiste()}"
-                    android:text="@string/valider" />
+                    android:text="@string/valider"
+                    app:icon="@drawable/done_white_24dp"
+                    app:iconSize="43sp"/>
 
             </LinearLayout>
 

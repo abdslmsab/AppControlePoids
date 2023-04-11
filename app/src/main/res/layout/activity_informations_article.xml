@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/secondary">
 
         <TextView
             android:id="@+id/date_du_jour"
@@ -249,7 +250,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32sp"
-                android:hint="@string/nombre_venues"
+                android:hint="@string/numero_lot"
                 app:boxStrokeColor="@color/noir"
                 app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
                 app:hintTextColor="@color/noir"
@@ -280,12 +281,16 @@
                 android:id="@+id/bouton_annuler"
                 style="?attr/materialButtonOutlinedStyle"
                 android:textColor="@color/rouge"
+                app:strokeColor="@color/rouge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/blanc"
-                android:text="@string/annuler" />
+                android:text="@string/annuler"
+                app:icon="@drawable/close_white_24dp"
+                app:iconSize="43sp"
+                app:iconTint="@color/rouge"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bouton_valider"
@@ -293,7 +298,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/valider" />
+                android:text="@string/valider"
+                android:backgroundTint="@color/vert"
+                app:icon="@drawable/done_white_24dp"
+                app:iconSize="43sp"/>
 
         </LinearLayout>
 
