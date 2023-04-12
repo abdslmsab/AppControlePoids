@@ -107,8 +107,8 @@ public class InformationsArticle extends AppCompatActivity {
         binding.boutonValider.setOnClickListener(view -> {
             informationsArticleViewModel.verifierSaisiesValide();
             if(Boolean.TRUE.equals(informationsArticleViewModel.estDdmValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estNumeroLotValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estNombreVenuesValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estCodeOperateurValide.getValue())) {
-                //TODO: Passer à la prochaine activité
-                Toast.makeText(this, "Tout est bon !", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(InformationsArticle.this, PeseesArticle.class);
+                startActivity(intent);
             }
         });
     }
