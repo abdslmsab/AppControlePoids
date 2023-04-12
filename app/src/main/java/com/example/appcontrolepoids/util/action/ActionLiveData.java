@@ -30,7 +30,7 @@ public class ActionLiveData<T> extends MediatorLiveData<T> {
             observer.onChanged(data);
 
             //Directement après avoir notifié l'évènement, on reset les données
-            setValue(null);
+            //setValue(null);
             removeSource(source);
         });
     }

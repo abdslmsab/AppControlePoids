@@ -42,4 +42,8 @@
     <style name="App.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:padding">25sp</item>
     </style>
+
+    <style name="Theme.AppControlePoids.Error">
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

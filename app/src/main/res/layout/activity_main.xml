@@ -95,7 +95,7 @@
                 app:layout_constraintBottom_toTopOf="@id/conteneurBoutons"
                 app:counterEnabled="true"
                 app:counterMaxLength="13"
-                app:errorEnabled="true"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:endIconDrawable="@drawable/photo_camera_white_24dp"
                 app:iconSize="43sp"
                 app:endIconMode="custom">

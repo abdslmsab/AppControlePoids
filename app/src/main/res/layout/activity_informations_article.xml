@@ -8,6 +8,9 @@
         <variable
             name="dateViewModel"
             type="com.example.appcontrolepoids.viewmodel.DateViewModel" />
+        <variable
+            name="informationsArticleViewModel"
+            type="com.example.appcontrolepoids.viewmodel.InformationsArticleViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -155,17 +158,22 @@
                 app:hintTextColor="@color/noir"
                 app:counterEnabled="true"
                 app:counterMaxLength="4"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:layout_constraintEnd_toEndOf="@+id/milieu"
                 app:layout_constraintStart_toStartOf="@id/matricule"
                 app:layout_constraintTop_toBottomOf="@id/matricule">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/matricule_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:afterTextChanged="@{informationsArticleViewModel.changementCodeOperateur}"
+                    android:text="@{informationsArticleViewModel.codeOperateurSaisi}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -191,17 +199,22 @@
                 app:hintTextColor="@color/noir"
                 app:counterEnabled="true"
                 app:counterMaxLength="2"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/nombre_venues"
                 app:layout_constraintTop_toBottomOf="@id/nombre_venues">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nombre_venues_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:afterTextChanged="@{informationsArticleViewModel.changementNombreVenues}"
+                    android:text="@{informationsArticleViewModel.nombreVenuesSaisi}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -225,6 +238,7 @@
                 app:boxStrokeColor="@color/noir"
                 app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
                 app:hintTextColor="@color/noir"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:layout_constraintEnd_toEndOf="@+id/milieu"
                 app:layout_constraintStart_toStartOf="@id/ddm"
                 app:layout_constraintTop_toBottomOf="@id/ddm">
@@ -236,7 +250,9 @@
                     android:digits="0123456789/"
                     android:inputType="number"
                     android:maxLength="13"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:afterTextChanged="@{informationsArticleViewModel.changementDdm}"
+                    android:text="@{informationsArticleViewModel.ddmSaisie}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -262,17 +278,25 @@
                 app:hintTextColor="@color/noir"
                 app:counterEnabled="true"
                 app:counterMaxLength="5"
+                app:helperText="AAQQQ avec AA = année en cours"
+                app:helperTextEnabled="true"
+                app:helperTextTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/numerot_de_lot"
                 app:layout_constraintTop_toBottomOf="@id/numerot_de_lot">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/numero_lot_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="5"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:afterTextChanged="@{informationsArticleViewModel.changementNumeroLot}"
+                    android:text="@{informationsArticleViewModel.numeroLotSaisi}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

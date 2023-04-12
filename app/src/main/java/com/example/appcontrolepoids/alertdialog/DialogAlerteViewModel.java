@@ -7,10 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.util.action.ActionLiveData;
-
-import java.util.Objects;
 
 public class DialogAlerteViewModel extends ViewModel {
     private final MutableLiveData<OptionsAlerte> options = new MutableLiveData<>();
