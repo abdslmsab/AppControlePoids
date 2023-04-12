@@ -92,7 +92,13 @@
                 app:layout_constraintEnd_toEndOf="@+id/conteneurBoutons"
                 app:layout_constraintStart_toStartOf="@+id/conteneurBoutons"
                 app:layout_constraintTop_toBottomOf="@id/texte_titre_1"
-                app:layout_constraintBottom_toTopOf="@id/conteneurBoutons">
+                app:layout_constraintBottom_toTopOf="@id/conteneurBoutons"
+                app:counterEnabled="true"
+                app:counterMaxLength="13"
+                app:errorEnabled="true"
+                app:endIconDrawable="@drawable/photo_camera_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="custom">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/codeBarreEdit"
