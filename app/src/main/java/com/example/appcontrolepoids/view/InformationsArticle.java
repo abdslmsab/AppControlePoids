@@ -49,8 +49,8 @@ public class InformationsArticle extends AppCompatActivity {
         String ean = getIntent().getStringExtra("ean");
         articleViewModel.getArticleByEAN(ean).observe(this, article -> {
             // On utilise l'article récupéré avec son EAN (dans MainActivity) pour afficher les informations sur l'interface
-            binding.codeArticle.setText(article.getCode());
-            binding.valeurNomArticle.setText(article.getNom());
+            binding.nomArticle.setText(article.getNom());
+            binding.valeurCodeArticle.setText(article.getCode());
             binding.valeurPoidsNet.setText(article.getPoidsNet() + " g");
             binding.valeurPoidsBrut.setText(article.getPoidsBrut() + " g");
             binding.valeurRendement.setText(article.getRendement() + "");

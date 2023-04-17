@@ -19,19 +19,30 @@
         android:background="@color/secondary">
 
         <TextView
-            android:id="@+id/date_du_jour"
+            android:id="@+id/nom_date_du_jour"
             style="@style/Theme.AppControlePoids.H2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:text="@string/date_du_jour"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/date_du_jour"
+            style="@style/Theme.AppControlePoids.H2.NoBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25sp"
             android:text="@{dateViewModel.dateActuelle}"
             android:textColor="@android:color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/nom_date_du_jour"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="14/04/2000" />
 
         <TextView
-            android:id="@+id/code_article"
+            android:id="@+id/nom_article"
             style="@style/Theme.AppControlePoids.H1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,35 +50,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
-            tools:text="Code article" />
+            tools:text="Nom article" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/conteneurFormulaire"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/code_article"
+            app:layout_constraintTop_toBottomOf="@id/nom_article"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/conteneurBoutons">
 
             <TextView
-                android:id="@+id/nom_article"
+                android:id="@+id/code_article"
                 style="@style/Theme.AppControlePoids.H2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32sp"
                 android:layout_marginTop="32sp"
-                android:text="@string/nom_article"
+                android:text="@string/code_article"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
-                android:id="@+id/valeur_nom_article"
+                android:id="@+id/valeur_code_article"
                 style="@style/Theme.AppControlePoids.H2.NoBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/nom_article"
-                app:layout_constraintTop_toBottomOf="@id/nom_article"
+                app:layout_constraintStart_toStartOf="@id/code_article"
+                app:layout_constraintTop_toBottomOf="@id/code_article"
                 tools:text="CAKE031" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -78,73 +89,15 @@
                 app:layout_constraintGuide_percent="0.5" />
 
             <TextView
-                android:id="@+id/poids_net"
-                style="@style/Theme.AppControlePoids.H2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32sp"
-                android:text="@string/poids_net"
-                app:layout_constraintBottom_toBottomOf="@id/nom_article"
-                app:layout_constraintStart_toStartOf="@id/milieu"
-                app:layout_constraintTop_toTopOf="@id/nom_article" />
-
-            <TextView
-                android:id="@+id/valeur_poids_net"
-                style="@style/Theme.AppControlePoids.H2.NoBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/poids_net"
-                app:layout_constraintTop_toBottomOf="@id/poids_net"
-                tools:text="400" />
-
-            <TextView
-                android:id="@+id/poids_brut"
-                style="@style/Theme.AppControlePoids.H2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32sp"
-                android:text="@string/poids_brut"
-                app:layout_constraintStart_toStartOf="@id/nom_article"
-                app:layout_constraintTop_toBottomOf="@id/valeur_nom_article" />
-
-            <TextView
-                android:id="@+id/valeur_poids_brut"
-                style="@style/Theme.AppControlePoids.H2.NoBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/poids_brut"
-                app:layout_constraintTop_toBottomOf="@id/poids_brut"
-                tools:text="400" />
-
-            <TextView
-                android:id="@+id/rendement"
-                style="@style/Theme.AppControlePoids.H2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32sp"
-                android:text="@string/rendement"
-                app:layout_constraintBottom_toBottomOf="@id/poids_brut"
-                app:layout_constraintStart_toStartOf="@id/milieu"
-                app:layout_constraintTop_toTopOf="@id/poids_brut" />
-
-            <TextView
-                android:id="@+id/valeur_rendement"
-                style="@style/Theme.AppControlePoids.H2.NoBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/rendement"
-                app:layout_constraintTop_toBottomOf="@id/rendement"
-                tools:text="2" />
-
-            <TextView
                 android:id="@+id/matricule"
                 style="@style/Theme.AppControlePoids.H2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32sp"
+                android:layout_marginStart="32sp"
                 android:text="@string/code_operateur_titre"
-                app:layout_constraintStart_toStartOf="@id/poids_brut"
-                app:layout_constraintTop_toBottomOf="@id/valeur_poids_brut" />
+                app:layout_constraintBottom_toBottomOf="@id/code_article"
+                app:layout_constraintStart_toStartOf="@id/milieu"
+                app:layout_constraintTop_toTopOf="@id/code_article" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/texte_operateur"
@@ -161,7 +114,7 @@
                 app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
-                app:layout_constraintEnd_toEndOf="@+id/milieu"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/matricule"
                 app:layout_constraintTop_toBottomOf="@id/matricule">
 
@@ -178,14 +131,68 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
+                android:id="@+id/poids_net"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/poids_net"
+                app:layout_constraintStart_toStartOf="@id/code_article"
+                app:layout_constraintTop_toTopOf="@id/poids_brut"/>
+
+            <TextView
+                android:id="@+id/valeur_poids_net"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/poids_net"
+                app:layout_constraintTop_toBottomOf="@id/poids_net"
+                tools:text="400" />
+
+            <TextView
+                android:id="@+id/poids_brut"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/poids_brut"
+                app:layout_constraintStart_toStartOf="@id/matricule"
+                app:layout_constraintTop_toBottomOf="@id/texte_operateur" />
+
+            <TextView
+                android:id="@+id/valeur_poids_brut"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/poids_brut"
+                app:layout_constraintTop_toBottomOf="@id/poids_brut"
+                tools:text="400" />
+
+            <TextView
+                android:id="@+id/rendement"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rendement"
+                app:layout_constraintStart_toStartOf="@id/poids_net"
+                app:layout_constraintTop_toTopOf="@id/nombre_venues" />
+
+            <TextView
+                android:id="@+id/valeur_rendement"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/rendement"
+                app:layout_constraintTop_toBottomOf="@id/rendement"
+                tools:text="2" />
+
+            <TextView
                 android:id="@+id/nombre_venues"
                 style="@style/Theme.AppControlePoids.H2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32sp"
                 android:text="@string/venues_titre"
-                app:layout_constraintStart_toStartOf="@id/rendement"
-                app:layout_constraintTop_toBottomOf="@id/valeur_rendement" />
+                app:layout_constraintStart_toStartOf="@id/poids_brut"
+                app:layout_constraintTop_toBottomOf="@id/valeur_poids_brut" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/texte_venues"
@@ -223,10 +230,9 @@
                 style="@style/Theme.AppControlePoids.H2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32sp"
                 android:text="@string/ddm_titre"
-                app:layout_constraintStart_toStartOf="@id/matricule"
-                app:layout_constraintTop_toBottomOf="@id/texte_operateur" />
+                app:layout_constraintStart_toStartOf="@id/rendement"
+                app:layout_constraintTop_toTopOf="@id/numerot_de_lot" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/texte_ddm"
@@ -261,7 +267,6 @@
                 style="@style/Theme.AppControlePoids.H2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32sp"
                 android:text="@string/numero_de_lot"
                 app:layout_constraintStart_toStartOf="@id/nombre_venues"
                 app:layout_constraintTop_toBottomOf="@id/texte_venues" />
@@ -332,7 +337,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="@string/valider"
-                android:backgroundTint="@color/vert"
                 app:icon="@drawable/done_white_24dp"
                 app:iconSize="43sp"/>
 

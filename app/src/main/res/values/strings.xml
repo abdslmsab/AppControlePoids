@@ -18,4 +18,6 @@
     <string name="numero_de_lot">Numéro de lot</string>
     <string name="annuler">Annuler</string>
     <string name="numero_lot">Saisir le numéro de lot</string>
+    <string name="code_article">Code article</string>
+    <string name="date_du_jour">Date du jour :</string>
 </resources>
