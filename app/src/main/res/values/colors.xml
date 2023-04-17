@@ -10,4 +10,5 @@
     <color name="blanc">#FFFFFFFF</color>
     <color name="rouge">#B53F3F</color>
     <color name="vert">#43A047</color>
+    <color name="gris">#E4E4E4</color>
 </resources>

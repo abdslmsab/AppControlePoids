@@ -5,7 +5,160 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/secondary">
+
+        <TextView
+            android:id="@+id/nom_article"
+            style="@style/Theme.AppControlePoids.H1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nom article" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conteneurFormulaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/conteneurBoutons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nom_article">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/barre_progression"
+                style="?attr/circularProgressIndicatorStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="60"
+                app:indicatorSize="350dp"
+                app:layout_constraintBottom_toTopOf="@id/conteneurPoids"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:trackColor="@color/gris"
+                app:trackThickness="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="150sp"
+                android:textColor="@color/noir"
+                tools:text="30"
+                app:layout_constraintStart_toStartOf="@id/barre_progression"
+                app:layout_constraintEnd_toEndOf="@id/barre_progression"
+                app:layout_constraintTop_toTopOf="@id/barre_progression"
+                app:layout_constraintBottom_toBottomOf="@id/barre_progression"/>
+
+            <LinearLayout
+                android:id="@+id/conteneurPoids"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@id/barre_progression"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/poids_cible"
+                    style="@style/Theme.AppControlePoids.H2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/poids_cible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barre_progression" />
+
+                <TextView
+                    android:id="@+id/valeur_poids_cible"
+                    style="@style/Theme.AppControlePoids.H2.NoBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/poids_cible"
+                    app:layout_constraintTop_toTopOf="@id/poids_cible"
+                    tools:text="340" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/poids_brut"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32sp"
+                android:text="@string/poids_brut"
+                app:layout_constraintStart_toStartOf="@id/barre_progression"
+                app:layout_constraintTop_toBottomOf="@id/conteneurPoids" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_poids_brut"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/saisir_le_poids_brut"
+                app:boxStrokeColor="@color/noir"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="@id/barre_progression"
+                app:layout_constraintStart_toStartOf="@id/barre_progression"
+                app:layout_constraintTop_toBottomOf="@id/poids_brut">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/poids_brut_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/conteneurBoutons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conteneurFormulaire">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_annuler"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blanc"
+                android:text="@string/annuler"
+                android:textColor="@color/rouge"
+                app:icon="@drawable/close_white_24dp"
+                app:iconSize="43sp"
+                app:iconTint="@color/rouge"
+                app:strokeColor="@color/rouge" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_valider"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="@string/valider"
+                app:icon="@drawable/done_white_24dp"
+                app:iconSize="43sp" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

@@ -20,4 +20,6 @@
     <string name="numero_lot">Saisir le numéro de lot</string>
     <string name="code_article">Code article</string>
     <string name="date_du_jour">Date du jour :</string>
+    <string name="poids_cible">Poids cible</string>
+    <string name="saisir_le_poids_brut">Saisir le poids brut</string>
 </resources>
