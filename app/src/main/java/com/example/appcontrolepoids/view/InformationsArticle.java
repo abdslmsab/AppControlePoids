@@ -2,19 +2,13 @@ package com.example.appcontrolepoids.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.databinding.ActivityInformationsArticleBinding;
-import com.example.appcontrolepoids.databinding.ActivityMainBinding;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 import com.example.appcontrolepoids.viewmodel.DateViewModel;
 import com.example.appcontrolepoids.viewmodel.InformationsArticleViewModel;
@@ -24,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class InformationsArticle extends AppCompatActivity {
     @Override
@@ -34,7 +29,7 @@ public class InformationsArticle extends AppCompatActivity {
 
         //Variable de liaison (binding) permettant d'accéder aux éléments de l'interface utilisateur
         ActivityInformationsArticleBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_informations_article);
-        //Initialisation de l'objet ArticleViewModel avec le contexte de l'activité
+        //Initialisation de l'objet DateViewModel avec le contexte de l'activité
         DateViewModel dateViewModel = new ViewModelProvider(this).get(DateViewModel.class);
         //Définition de l'objet dateViewModel comme variable dans le layout pour le Data Binding
         binding.setDateViewModel(dateViewModel);
@@ -46,6 +41,8 @@ public class InformationsArticle extends AppCompatActivity {
         //Initialisation de l'objet ArticleViewModel avec le contexte de l'activité
         ArticleViewModel articleViewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
 
+        AtomicInteger rendement = new AtomicInteger();
+
         String ean = getIntent().getStringExtra("ean");
         articleViewModel.getArticleByEAN(ean).observe(this, article -> {
             // On utilise l'article récupéré avec son EAN (dans MainActivity) pour afficher les informations sur l'interface
@@ -54,6 +51,7 @@ public class InformationsArticle extends AppCompatActivity {
             binding.valeurPoidsNet.setText(article.getPoidsNet() + " g");
             binding.valeurPoidsBrut.setText(article.getPoidsBrut() + " g");
             binding.valeurRendement.setText(article.getRendement() + "");
+            rendement.set(article.getRendement());
         });
 
         //Format de l'entrée désirée (voir https://github.com/RedMadRobot/input-mask-android/wiki/1.-Mask-Syntax)
@@ -108,6 +106,9 @@ public class InformationsArticle extends AppCompatActivity {
             informationsArticleViewModel.verifierSaisiesValide();
             if(Boolean.TRUE.equals(informationsArticleViewModel.estDdmValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estNumeroLotValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estNombreVenuesValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estCodeOperateurValide.getValue())) {
                 Intent intent = new Intent(InformationsArticle.this, PeseesArticle.class);
+                intent.putExtra("ean", ean);
+                intent.putExtra("nombre_venues", informationsArticleViewModel.saisieNombreVenuesEntier.getValue());
+                intent.putExtra("rendement", rendement.get());
                 startActivity(intent);
             }
         });

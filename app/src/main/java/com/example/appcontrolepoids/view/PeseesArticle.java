@@ -1,10 +1,16 @@
 package com.example.appcontrolepoids.view;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appcontrolepoids.R;
+import com.example.appcontrolepoids.databinding.ActivityPeseesArticleBinding;
+import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
+import com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel;
 
 import java.util.Objects;
 
@@ -15,5 +21,47 @@ public class PeseesArticle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesees_article);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        //Variable de liaison (binding) permettant d'accéder aux éléments de l'interface utilisateur
+        ActivityPeseesArticleBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_pesees_article);
+        //Initialisation de l'objet PeseesArticleViewModel avec le contexte de l'activité
+        PeseesArticleViewModel peseesArticleViewModel = new ViewModelProvider(this).get(PeseesArticleViewModel.class);
+        //Définition de l'objet PeseesArticleViewModel comme variable dans le layout pour le Data Binding
+        binding.setPeseesArticleViewModel(peseesArticleViewModel);
+        binding.setLifecycleOwner(this);
+
+        //Initialisation de l'objet ArticleViewModel avec le contexte de l'activité
+        ArticleViewModel articleViewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
+
+        String ean = getIntent().getStringExtra("ean");
+        articleViewModel.getArticleByEAN(ean).observe(this, article -> {
+            binding.nomArticle.setText(article.getNom());
+            binding.valeurPoidsCible.setText(" : " + article.getPoidsNet() + " g");
+        });
+
+        //Lorsque l'on clique sur le bouton "Annuler" on ferme cette activité afin de revenir sur l'activité principale
+        binding.boutonAnnuler.setOnClickListener(view -> this.finish());
+
+        //On récupère les données entrées dans la précédente activité
+        int rendement = getIntent().getIntExtra("rendement", -1);
+        int nombreVenues = getIntent().getIntExtra("nombre_venues", -1);
+
+        peseesArticleViewModel.calculerCompteur(rendement, nombreVenues);
+
+        // Vérification du champ de saisie
+        peseesArticleViewModel.estPeseeValide.observe(this, estPeseeValide -> {
+            if (!estPeseeValide) {
+                binding.textePoidsBrut.setError("La pesée ne peut être nulle");
+            } else {
+                binding.textePoidsBrut.setErrorEnabled(false);
+            }
+        });
+
+        binding.boutonValider.setOnClickListener(view -> {
+            peseesArticleViewModel.verifierSaisieValides();
+            if (Boolean.TRUE.equals(peseesArticleViewModel.estPeseeValide.getValue())){
+                peseesArticleViewModel.ajouterPesee(peseesArticleViewModel.saisiesPeseesFlottant.getValue());
+            }
+        });
     }
 }

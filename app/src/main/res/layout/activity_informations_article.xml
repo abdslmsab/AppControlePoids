@@ -8,6 +8,7 @@
         <variable
             name="dateViewModel"
             type="com.example.appcontrolepoids.viewmodel.DateViewModel" />
+
         <variable
             name="informationsArticleViewModel"
             type="com.example.appcontrolepoids.viewmodel.InformationsArticleViewModel" />
@@ -27,7 +28,7 @@
             android:text="@string/date_du_jour"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/date_du_jour"
@@ -46,20 +47,20 @@
             style="@style/Theme.AppControlePoids.H1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
             tools:text="Nom article" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/conteneurFormulaire"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nom_article"
+            app:layout_constraintBottom_toTopOf="@id/conteneurBoutons"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/conteneurBoutons">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nom_article">
 
             <TextView
                 android:id="@+id/code_article"
@@ -70,7 +71,7 @@
                 android:layout_marginTop="32sp"
                 android:text="@string/code_article"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/valeur_code_article"
@@ -107,13 +108,13 @@
                 android:layout_marginEnd="32sp"
                 android:hint="@string/code_operateur"
                 app:boxStrokeColor="@color/noir"
-                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
-                app:hintTextColor="@color/noir"
                 app:counterEnabled="true"
                 app:counterMaxLength="4"
                 app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/matricule"
                 app:layout_constraintTop_toBottomOf="@id/matricule">
@@ -122,11 +123,11 @@
                     android:id="@+id/matricule_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{informationsArticleViewModel.changementCodeOperateur}"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:textSize="25sp"
-                    android:afterTextChanged="@{informationsArticleViewModel.changementCodeOperateur}"
-                    android:text="@{informationsArticleViewModel.codeOperateurSaisi}"/>
+                    android:text="@{informationsArticleViewModel.codeOperateurSaisi}"
+                    android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/poids_net"
                 app:layout_constraintStart_toStartOf="@id/code_article"
-                app:layout_constraintTop_toTopOf="@id/poids_brut"/>
+                app:layout_constraintTop_toTopOf="@id/poids_brut" />
 
             <TextView
                 android:id="@+id/valeur_poids_net"
@@ -202,13 +203,13 @@
                 android:layout_marginEnd="32sp"
                 android:hint="@string/nombre_venues"
                 app:boxStrokeColor="@color/noir"
-                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
-                app:hintTextColor="@color/noir"
                 app:counterEnabled="true"
                 app:counterMaxLength="2"
                 app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/nombre_venues"
                 app:layout_constraintTop_toBottomOf="@id/nombre_venues">
@@ -217,11 +218,11 @@
                     android:id="@+id/nombre_venues_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{informationsArticleViewModel.changementNombreVenues}"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:textSize="25sp"
-                    android:afterTextChanged="@{informationsArticleViewModel.changementNombreVenues}"
-                    android:text="@{informationsArticleViewModel.nombreVenuesSaisi}"/>
+                    android:text="@{informationsArticleViewModel.nombreVenuesSaisi}"
+                    android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -242,9 +243,9 @@
                 android:layout_marginEnd="32sp"
                 android:hint="@string/saisir_la_ddm"
                 app:boxStrokeColor="@color/noir"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
                 app:hintTextColor="@color/noir"
-                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:layout_constraintEnd_toEndOf="@+id/milieu"
                 app:layout_constraintStart_toStartOf="@id/ddm"
                 app:layout_constraintTop_toBottomOf="@id/ddm">
@@ -253,12 +254,12 @@
                     android:id="@+id/ddmEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{informationsArticleViewModel.changementDdm}"
                     android:digits="0123456789/"
                     android:inputType="number"
                     android:maxLength="13"
-                    android:textSize="25sp"
-                    android:afterTextChanged="@{informationsArticleViewModel.changementDdm}"
-                    android:text="@{informationsArticleViewModel.ddmSaisie}"/>
+                    android:text="@{informationsArticleViewModel.ddmSaisie}"
+                    android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -279,16 +280,16 @@
                 android:layout_marginEnd="32sp"
                 android:hint="@string/numero_lot"
                 app:boxStrokeColor="@color/noir"
-                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
-                app:hintTextColor="@color/noir"
                 app:counterEnabled="true"
                 app:counterMaxLength="5"
-                app:helperText="AAQQQ avec AA = année en cours"
-                app:helperTextEnabled="true"
-                app:helperTextTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:helperText="AAQQQ avec AA = année en cours"
+                app:helperTextEnabled="true"
+                app:helperTextTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/numerot_de_lot"
                 app:layout_constraintTop_toBottomOf="@id/numerot_de_lot">
@@ -297,11 +298,11 @@
                     android:id="@+id/numero_lot_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{informationsArticleViewModel.changementNumeroLot}"
                     android:inputType="number"
                     android:maxLength="5"
-                    android:textSize="25sp"
-                    android:afterTextChanged="@{informationsArticleViewModel.changementNumeroLot}"
-                    android:text="@{informationsArticleViewModel.numeroLotSaisi}"/>
+                    android:text="@{informationsArticleViewModel.numeroLotSaisi}"
+                    android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -318,17 +319,17 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bouton_annuler"
                 style="?attr/materialButtonOutlinedStyle"
-                android:textColor="@color/rouge"
-                app:strokeColor="@color/rouge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/blanc"
                 android:text="@string/annuler"
+                android:textColor="@color/rouge"
                 app:icon="@drawable/close_white_24dp"
                 app:iconSize="43sp"
-                app:iconTint="@color/rouge"/>
+                app:iconTint="@color/rouge"
+                app:strokeColor="@color/rouge" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bouton_valider"
@@ -338,7 +339,7 @@
                 android:layout_weight="1"
                 android:text="@string/valider"
                 app:icon="@drawable/done_white_24dp"
-                app:iconSize="43sp"/>
+                app:iconSize="43sp" />
 
         </LinearLayout>
 

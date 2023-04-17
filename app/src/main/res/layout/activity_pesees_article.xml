@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="peseesArticleViewModel"
+            type="com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,8 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
-                android:max="100"
-                android:progress="60"
+                android:max="@{peseesArticleViewModel.nombrePeseesAEffectuer}"
+                android:progress="@{peseesArticleViewModel.nombrePeseesAEffectuer - peseesArticleViewModel.nombrePeseesEnregistrees}"
                 app:indicatorSize="350dp"
                 app:layout_constraintBottom_toTopOf="@id/conteneurPoids"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,24 +52,26 @@
                 app:trackThickness="10dp" />
 
             <TextView
+                android:id="@+id/nombre_pesees"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="150sp"
                 android:textColor="@color/noir"
-                tools:text="30"
-                app:layout_constraintStart_toStartOf="@id/barre_progression"
+                android:textSize="150sp"
+                android:text="@{String.valueOf(peseesArticleViewModel.nombrePeseesAEffectuer - peseesArticleViewModel.nombrePeseesEnregistrees)}"
+                app:layout_constraintBottom_toBottomOf="@id/barre_progression"
                 app:layout_constraintEnd_toEndOf="@id/barre_progression"
+                app:layout_constraintStart_toStartOf="@id/barre_progression"
                 app:layout_constraintTop_toTopOf="@id/barre_progression"
-                app:layout_constraintBottom_toBottomOf="@id/barre_progression"/>
+                tools:text="30" />
 
             <LinearLayout
                 android:id="@+id/conteneurPoids"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                app:layout_constraintTop_toBottomOf="@id/barre_progression"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/barre_progression">
 
                 <TextView
                     android:id="@+id/poids_cible"
@@ -78,7 +87,6 @@
                     style="@style/Theme.AppControlePoids.H2.NoBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/poids_cible"
                     app:layout_constraintTop_toTopOf="@id/poids_cible"
@@ -116,8 +124,10 @@
                     android:id="@+id/poids_brut_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{peseesArticleViewModel.changementPesees}"
                     android:inputType="number"
                     android:maxLength="3"
+                    android:text="@{peseesArticleViewModel.peseeSaisie}"
                     android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
