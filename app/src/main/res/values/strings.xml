@@ -22,4 +22,7 @@
     <string name="date_du_jour">Date du jour :</string>
     <string name="poids_cible">Poids cible</string>
     <string name="saisir_le_poids_brut">Saisir le poids brut</string>
+    <string name="ecart_type">Ecart-type</string>
+    <string name="moyenne">Moyenne</string>
+    <string name="variance">Variance</string>
 </resources>

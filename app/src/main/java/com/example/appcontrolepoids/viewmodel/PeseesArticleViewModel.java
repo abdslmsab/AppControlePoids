@@ -8,11 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import com.example.appcontrolepoids.util.CombinedLiveData;
 import com.example.appcontrolepoids.util.action.ActionLiveData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class PeseesArticleViewModel extends ViewModel {
 
@@ -50,12 +52,15 @@ public class PeseesArticleViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<Float>> listePesees = new MutableLiveData<>(new ArrayList<>());
-
-    public LiveData<Integer> nombrePeseesEnregistrees = Transformations.map(listePesees, List::size);
+    public LiveData<Integer> nombrePeseesRestantes = new CombinedLiveData<>(nombrePeseesAEffectuer, listePesees, (aEffectuer, pesees) -> aEffectuer != null ? aEffectuer - pesees.size() : null);
 
     public void ajouterPesee(Float pesee) {
         ArrayList<Float> nouvelleListPesee = new ArrayList<>(listePesees.getValue());
         nouvelleListPesee.add(pesee);
         listePesees.postValue(nouvelleListPesee);
+    }
+
+    public void reinitialiserChamp() {
+        peseeSaisie.setValue("");
     }
 }

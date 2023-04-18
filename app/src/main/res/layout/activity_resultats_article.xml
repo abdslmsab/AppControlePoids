@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/secondary">
+
+        <TextView
+            android:id="@+id/nom_article"
+            style="@style/Theme.AppControlePoids.H1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nom article" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conteneurFormulaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/conteneurBoutons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nom_article">
+
+            <TextView
+                android:id="@+id/poids_cible"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32sp"
+                android:layout_marginTop="32sp"
+                android:text="@string/poids_cible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/valeur_poids_cible"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/poids_cible"
+                app:layout_constraintTop_toBottomOf="@id/poids_cible"
+                tools:text="400" />
+
+            <TextView
+                android:id="@+id/ecart_type"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/ecart_type"
+                app:layout_constraintStart_toStartOf="@id/poids_cible"
+                app:layout_constraintTop_toBottomOf="@id/valeur_poids_cible" />
+
+            <TextView
+                android:id="@+id/valeur_ecart_type"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/ecart_type"
+                app:layout_constraintTop_toBottomOf="@id/ecart_type"
+                tools:text="400" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/milieu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/moyenne"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32sp"
+                android:text="@string/moyenne"
+                app:layout_constraintBottom_toBottomOf="@id/poids_cible"
+                app:layout_constraintStart_toStartOf="@id/milieu"
+                app:layout_constraintTop_toTopOf="@id/poids_cible" />
+
+            <TextView
+                android:id="@+id/valeur_moyenne"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/moyenne"
+                app:layout_constraintTop_toBottomOf="@id/moyenne"
+                tools:text="400" />
+
+            <TextView
+                android:id="@+id/variance"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/variance"
+                app:layout_constraintStart_toStartOf="@id/moyenne"
+                app:layout_constraintTop_toTopOf="@id/ecart_type"/>
+
+            <TextView
+                android:id="@+id/valeur_variance"
+                style="@style/Theme.AppControlePoids.H2.NoBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/variance"
+                app:layout_constraintTop_toBottomOf="@id/variance"
+                tools:text="400" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/conteneurBoutons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conteneurFormulaire">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_annuler"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blanc"
+                android:text="@string/annuler"
+                android:textColor="@color/rouge"
+                app:icon="@drawable/close_white_24dp"
+                app:iconSize="43sp"
+                app:iconTint="@color/rouge"
+                app:strokeColor="@color/rouge" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_valider"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="@string/valider"
+                app:icon="@drawable/done_white_24dp"
+                app:iconSize="43sp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

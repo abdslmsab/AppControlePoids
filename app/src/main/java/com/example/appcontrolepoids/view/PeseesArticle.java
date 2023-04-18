@@ -1,5 +1,6 @@
 package com.example.appcontrolepoids.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -59,8 +60,18 @@ public class PeseesArticle extends AppCompatActivity {
 
         binding.boutonValider.setOnClickListener(view -> {
             peseesArticleViewModel.verifierSaisieValides();
-            if (Boolean.TRUE.equals(peseesArticleViewModel.estPeseeValide.getValue())){
+            if (Boolean.TRUE.equals(peseesArticleViewModel.estPeseeValide.getValue())) {
                 peseesArticleViewModel.ajouterPesee(peseesArticleViewModel.saisiesPeseesFlottant.getValue());
+                peseesArticleViewModel.reinitialiserChamp();
+            }
+        });
+
+        peseesArticleViewModel.nombrePeseesRestantes.observe(this, nombrePeseesRestantes -> {
+            if (nombrePeseesRestantes != null && nombrePeseesRestantes <= 0) {
+                Intent intent = new Intent(PeseesArticle.this, ResultatArticle.class);
+                intent.putExtra("ean", ean);
+                intent.putExtra("listePesees", peseesArticleViewModel.listePesees.getValue().toArray());
+                startActivity(intent);
             }
         });
     }
