@@ -5,8 +5,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "CP_Articles")
-public class Article {
+public class Article implements Serializable {
     //Clé primaire : Id_Article
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Id_Article")

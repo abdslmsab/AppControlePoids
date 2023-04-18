@@ -1,33 +1,35 @@
 package com.example.appcontrolepoids.viewmodel;
 
 import android.text.Editable;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.example.appcontrolepoids.util.CombinedLiveData;
+import com.example.appcontrolepoids.util.CombinedTwoLiveData;
 import com.example.appcontrolepoids.util.action.ActionLiveData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 
 public class PeseesArticleViewModel extends ViewModel {
 
     public MutableLiveData<Integer> nombrePeseesAEffectuer = new MutableLiveData<>();
 
+    public float coefficient;
+
     public void calculerCompteur(int rendement, int nombreVenues) {
         int calculCompteur = rendement * nombreVenues;
         if (calculCompteur < 500) {
             nombrePeseesAEffectuer.postValue(30);
+            coefficient = 0.239F;
         } else if (calculCompteur < 3200) {
             nombrePeseesAEffectuer.postValue(50);
+            coefficient = 0.184F;
         } else {
             nombrePeseesAEffectuer.postValue(80);
+            coefficient = 0.144F;
         }
     }
 
@@ -52,7 +54,7 @@ public class PeseesArticleViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<Float>> listePesees = new MutableLiveData<>(new ArrayList<>());
-    public LiveData<Integer> nombrePeseesRestantes = new CombinedLiveData<>(nombrePeseesAEffectuer, listePesees, (aEffectuer, pesees) -> aEffectuer != null ? aEffectuer - pesees.size() : null);
+    public LiveData<Integer> nombrePeseesRestantes = new CombinedTwoLiveData<>(nombrePeseesAEffectuer, listePesees, (aEffectuer, pesees) -> aEffectuer != null ? aEffectuer - pesees.size() : null);
 
     public void ajouterPesee(Float pesee) {
         ArrayList<Float> nouvelleListPesee = new ArrayList<>(listePesees.getValue());

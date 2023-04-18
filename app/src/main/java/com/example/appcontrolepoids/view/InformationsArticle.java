@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.databinding.ActivityInformationsArticleBinding;
+import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 import com.example.appcontrolepoids.viewmodel.DateViewModel;
 import com.example.appcontrolepoids.viewmodel.InformationsArticleViewModel;
@@ -38,21 +39,13 @@ public class InformationsArticle extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         dateViewModel.setDateActuelle(dateFormat.format(new Date()));
 
-        //Initialisation de l'objet ArticleViewModel avec le contexte de l'activité
-        ArticleViewModel articleViewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
+        Article article = (Article) getIntent().getSerializableExtra("article");
 
-        AtomicInteger rendement = new AtomicInteger();
-
-        String ean = getIntent().getStringExtra("ean");
-        articleViewModel.getArticleByEAN(ean).observe(this, article -> {
-            // On utilise l'article récupéré avec son EAN (dans MainActivity) pour afficher les informations sur l'interface
-            binding.nomArticle.setText(article.getNom());
-            binding.valeurCodeArticle.setText(article.getCode());
-            binding.valeurPoidsNet.setText(article.getPoidsNet() + " g");
-            binding.valeurPoidsBrut.setText(article.getPoidsBrut() + " g");
-            binding.valeurRendement.setText(article.getRendement() + "");
-            rendement.set(article.getRendement());
-        });
+        binding.nomArticle.setText(article.getNom());
+        binding.valeurCodeArticle.setText(article.getCode());
+        binding.valeurPoidsNet.setText(article.getPoidsNet() + " g");
+        binding.valeurPoidsBrut.setText(article.getPoidsBrut() + " g");
+        binding.valeurRendement.setText(article.getRendement() + "");
 
         //Format de l'entrée désirée (voir https://github.com/RedMadRobot/input-mask-android/wiki/1.-Mask-Syntax)
         final MaskedTextChangedListener listener = new MaskedTextChangedListener("[00]/[00]/[00]", binding.ddmEditText);
@@ -106,9 +99,8 @@ public class InformationsArticle extends AppCompatActivity {
             informationsArticleViewModel.verifierSaisiesValide();
             if(Boolean.TRUE.equals(informationsArticleViewModel.estDdmValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estNumeroLotValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estNombreVenuesValide.getValue()) && Boolean.TRUE.equals(informationsArticleViewModel.estCodeOperateurValide.getValue())) {
                 Intent intent = new Intent(InformationsArticle.this, PeseesArticle.class);
-                intent.putExtra("ean", ean);
                 intent.putExtra("nombre_venues", informationsArticleViewModel.saisieNombreVenuesEntier.getValue());
-                intent.putExtra("rendement", rendement.get());
+                intent.putExtra("article", article);
                 startActivity(intent);
             }
         });

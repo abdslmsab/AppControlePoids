@@ -1,21 +1,21 @@
 package com.example.appcontrolepoids.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.appcontrolepoids.alertdialog.GestionnaireAlerte;
-import com.example.appcontrolepoids.alertdialog.TypeAlerte;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.alertdialog.DialogAlerte;
 import com.example.appcontrolepoids.alertdialog.DialogAlerteViewModel;
+import com.example.appcontrolepoids.alertdialog.GestionnaireAlerte;
+import com.example.appcontrolepoids.alertdialog.TypeAlerte;
 import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.databinding.ActivityMainBinding;
 import com.example.appcontrolepoids.model.Article;
-import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 
 import java.util.Objects;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
         articleViewModel.articleExiste.observe(this, articleExiste -> {
             if (articleExiste) {
                 Intent intent = new Intent(MainActivity.this, InformationsArticle.class);
-                intent.putExtra("ean", articleViewModel.eanSaisi.getValue());
+                intent.putExtra("article", articleViewModel.article.getValue());
                 articleViewModel.reinitialiserChamp();
                 startActivity(intent);
             } else {

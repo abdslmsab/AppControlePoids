@@ -140,7 +140,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:enabled="@{articleViewModel.activerBoutonValider}"
-                    android:onClick="@{() -> articleViewModel.verifierArticleExiste()}"
+                    android:onClick="@{() -> articleViewModel.recupererArticle()}"
                     android:text="@string/valider"
                     app:icon="@drawable/done_white_24dp"
                     app:iconSize="43sp"/>

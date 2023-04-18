@@ -20,28 +20,24 @@ public class ArticleViewModel extends ViewModel {
     //Permet d'activer le bouton "Valider" seulement lorsqu'au moins 1 chiffre est entré (LiveData : valeur seulement observable)
     public final LiveData<Boolean> activerBoutonValider = Transformations.map(eanSaisi, texte -> texte.length() == 13);
     //Permet de réagir à des évènements
-    public final ActionLiveData<Boolean> articleExiste = new ActionLiveData<>();
+
+    public final ActionLiveData<Article> article = new ActionLiveData<>();
+    public final LiveData<Boolean> articleExiste = Transformations.map(article, Objects::nonNull);
 
     /**
      * Méthode appelée lorsque l'ean saisi dans l'EditText change
+     *
      * @param texte le texte saisi
      */
     public void changementEan(Editable texte) {
         eanSaisi.postValue(texte.toString());
     }
 
-    /**
-     * Vérifie si l'article du ean saisi existe
-     */
-    public void verifierArticleExiste() {
-        articleExiste.trigger(() -> Transformations.map(AppDatabase.getInstance().articleDao().getArticleByEAN(eanSaisi.getValue()), Objects::nonNull));
+    public void recupererArticle() {
+        article.trigger(() -> AppDatabase.getInstance().articleDao().getArticleByEAN(eanSaisi.getValue()));
     }
 
-    public LiveData<Article> getArticleByEAN(String ean) {
-        return AppDatabase.getInstance().articleDao().getArticleByEAN(ean);
-    }
-
-    public void reinitialiserChamp(){
+    public void reinitialiserChamp() {
         eanSaisi.setValue("");
     }
 }
