@@ -35,7 +35,7 @@ public class InformationsArticle extends AppCompatActivity {
         //Définition de l'objet dateViewModel comme variable dans le layout pour le Data Binding
         binding.setDateViewModel(dateViewModel);
 
-        //Afficher ld date du jour
+        //Afficher la date du jour
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         dateViewModel.setDateActuelle(dateFormat.format(new Date()));
 

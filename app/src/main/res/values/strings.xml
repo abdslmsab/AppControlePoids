@@ -26,4 +26,11 @@
     <string name="moyenne">Moyenne</string>
     <string name="variance">Variance</string>
     <string name="continuer">Continuer</string>
+    <string name="ajouter_un_article">Ajouter un article</string>
+    <string name="saisir_code_article">Saisir le code de l\'article</string>
+    <string name="ean_article">EAN de l\'article</string>
+    <string name="saisir_ean_article">Saisir l\'EAN de l\'article</string>
+    <string name="saisir_nom_article">Saisir le nom de l\'article</string>
+    <string name="saisir_poids_net">Saisir le poids net de l\'article</string>
+    <string name="saisir_rendement">Saisir le rendement</string>
 </resources>

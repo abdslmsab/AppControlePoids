@@ -1,88 +1,396 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <data>
+
+        <variable
+            name="dateViewModel"
+            type="com.example.appcontrolepoids.viewmodel.DateViewModel" />
+
+        <variable
+            name="ajouterArticleViewModel"
+            type="com.example.appcontrolepoids.viewmodel.AjouterArticleViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:context=".view.AjouterArticle">
+        android:background="@color/secondary">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/nom_date_du_jour"
+            style="@style/Theme.AppControlePoids.H2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:text="@string/date_du_jour"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/date_du_jour"
+            style="@style/Theme.AppControlePoids.H2.NoBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25sp"
+            android:text="@{dateViewModel.dateActuelle}"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/nom_date_du_jour"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="14/04/2000" />
+
+        <TextView
+            android:id="@+id/titre_ajouter"
+            style="@style/Theme.AppControlePoids.H1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ajouter_un_article"
+            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conteneurFormulaire"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/conteneurBoutons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titre_ajouter">
 
             <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="match_parent"
+                android:id="@+id/ean_article"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:layout_marginStart="32sp"
+                android:text="@string/ean_article"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/et_code_article"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_ean"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Code article"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textSize="18sp" />
+                android:layout_marginEnd="32sp"
+                android:hint="@string/saisir_ean_article"
+                app:boxStrokeColor="@color/noir"
+                app:counterEnabled="true"
+                app:counterMaxLength="13"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="@id/milieu"
+                app:layout_constraintStart_toStartOf="@id/ean_article"
+                app:layout_constraintTop_toBottomOf="@id/ean_article">
 
-            <EditText
-                android:id="@+id/et_nom_article"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nom article"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textSize="18sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ean_article_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{ajouterArticleViewModel.changementEan}"
+                    android:inputType="number"
+                    android:maxLength="13"
+                    android:text="@{ajouterArticleViewModel.eanSaisi}"
+                    android:textSize="25sp" />
 
-            <EditText
-                android:id="@+id/et_ean"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Code barre"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/et_poids_net"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/code_operateur"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Poids net (g)"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textSize="18sp" />
+                android:layout_marginStart="32sp"
+                android:text="@string/code_operateur_titre"
+                app:layout_constraintStart_toStartOf="@id/milieu"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/et_poids_brut"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_code_operateur"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Poids brut (g)"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textSize="18sp" />
+                android:layout_marginEnd="32sp"
+                android:hint="@string/code_operateur"
+                app:boxStrokeColor="@color/noir"
+                app:counterEnabled="true"
+                app:counterMaxLength="4"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/code_operateur"
+                app:layout_constraintTop_toBottomOf="@id/code_operateur">
 
-            <EditText
-                android:id="@+id/et_rendement"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Rendement"
-                android:inputType="number"
-                android:maxLines="1"
-                android:textSize="18sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/code_operateur_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{ajouterArticleViewModel.changementCodeOperateur}"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:text="@{ajouterArticleViewModel.codeOperateurSaisi}"
+                    android:textSize="25sp" />
 
-            <EditText
-                android:id="@+id/et_code_operateur"
-                android:layout_width="match_parent"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/nom_article"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Code opérateur"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textSize="18sp" />
+                android:layout_marginTop="32dp"
+                android:text="@string/nom_article"
+                app:layout_constraintStart_toStartOf="@id/ean_article"
+                app:layout_constraintTop_toBottomOf="@id/texte_ean" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_nom_article"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/saisir_nom_article"
+                app:boxStrokeColor="@color/noir"
+                app:counterEnabled="true"
+                app:counterMaxLength="69"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="@id/milieu"
+                app:layout_constraintStart_toStartOf="@id/nom_article"
+                app:layout_constraintTop_toBottomOf="@id/nom_article">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nom_article_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{ajouterArticleViewModel.changementNom}"
+                    android:inputType="text"
+                    android:maxLength="69"
+                    android:text="@{ajouterArticleViewModel.nomSaisi}"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/milieu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/code_article"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/code_article"
+                app:layout_constraintBottom_toBottomOf="@id/nom_article"
+                app:layout_constraintStart_toStartOf="@id/code_operateur"
+                app:layout_constraintTop_toTopOf="@id/nom_article" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_code_article"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/saisir_code_article"
+                app:boxStrokeColor="@color/noir"
+                app:counterEnabled="true"
+                app:counterMaxLength="13"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/code_article"
+                app:layout_constraintTop_toBottomOf="@id/code_article">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/code_article_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{ajouterArticleViewModel.changementCodeArticle}"
+                    android:inputType="text"
+                    android:maxLength="13"
+                    android:text="@{ajouterArticleViewModel.codeArticleSaisi}"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/poids_net"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/poids_net"
+                app:layout_constraintStart_toStartOf="@id/nom_article"
+                app:layout_constraintTop_toBottomOf="@id/texte_nom_article" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_poids_net"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/saisir_poids_net"
+                app:boxStrokeColor="@color/noir"
+                app:counterEnabled="true"
+                app:counterMaxLength="3"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="@id/milieu"
+                app:layout_constraintStart_toStartOf="@id/poids_net"
+                app:layout_constraintTop_toBottomOf="@id/poids_net">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/poids_net_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{ajouterArticleViewModel.changementPoidsNet}"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:text="@{ajouterArticleViewModel.poidsNetSaisi}"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/poids_brut"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/poids_brut"
+                app:layout_constraintBottom_toBottomOf="@id/poids_net"
+                app:layout_constraintStart_toStartOf="@id/code_article"
+                app:layout_constraintTop_toTopOf="@id/poids_net" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_poids_brut"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/saisir_le_poids_brut"
+                app:boxStrokeColor="@color/noir"
+                app:counterEnabled="true"
+                app:counterMaxLength="3"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/poids_brut"
+                app:layout_constraintTop_toBottomOf="@id/poids_brut">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/poids_brut_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{ajouterArticleViewModel.changementPoidsBrut}"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:text="@{ajouterArticleViewModel.poidsBrutSaisi}"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/rendement"
+                style="@style/Theme.AppControlePoids.H2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/rendement"
+                app:layout_constraintStart_toStartOf="@id/poids_net"
+                app:layout_constraintTop_toBottomOf="@id/texte_poids_net" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/texte_rendement"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32sp"
+                android:hint="@string/saisir_rendement"
+                app:boxStrokeColor="@color/noir"
+                app:counterEnabled="true"
+                app:counterMaxLength="3"
+                app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
+                app:hintTextColor="@color/noir"
+                app:layout_constraintEnd_toEndOf="@id/milieu"
+                app:layout_constraintStart_toStartOf="@id/rendement"
+                app:layout_constraintTop_toBottomOf="@id/rendement">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/rendement_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textSize="25sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/conteneurBoutons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conteneurFormulaire">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_annuler"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blanc"
+                android:text="@string/annuler"
+                android:textColor="@color/rouge"
+                app:icon="@drawable/close_white_24dp"
+                app:iconSize="43sp"
+                app:iconTint="@color/rouge"
+                app:strokeColor="@color/rouge" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bouton_valider"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="@string/valider"
+                app:icon="@drawable/done_white_24dp"
+                app:iconSize="43sp" />
+
         </LinearLayout>
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
