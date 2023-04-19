@@ -348,8 +348,10 @@
                     android:id="@+id/rendement_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{ajouterArticleViewModel.changementRendement}"
                     android:inputType="number"
                     android:maxLength="3"
+                    android:text="@{ajouterArticleViewModel.rendementSaisi}"
                     android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
