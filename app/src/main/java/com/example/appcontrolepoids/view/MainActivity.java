@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
                 Intent intent = new Intent(MainActivity.this, AjouterArticle.class);
                 startActivity(intent);
             } else {
-                //TODO : Afficher une popup erreur
                 Toast.makeText(this, "Code faux !", Toast.LENGTH_LONG).show();
             }
             dialogAlerteViewModel.reinitialiserCodeSaisi();
@@ -86,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
     //Permet d'afficher une notification lorsque l'on clique sur le bouton principal de la pop-up d'alerte
     @Override
     public void alertDialogMainOption(TypeAlerte type) {
-        //TODO exempleAvertissement : Si validation -> afficher un Toast "L'article a bien été supprimé"
         if (type == TypeAlerte.verrouillageCode) {
             dialogAlerteViewModel.verifierCodeValide();
         }

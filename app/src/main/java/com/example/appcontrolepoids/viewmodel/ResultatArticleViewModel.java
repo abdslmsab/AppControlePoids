@@ -45,7 +45,6 @@ public class ResultatArticleViewModel extends ViewModel {
             (_poidsBrut, _coefficient, _ecartType) -> _poidsBrut + (_coefficient * _ecartType)
     );
 
-    //TODO : vérifier la formule
     public LiveData<Boolean> lotValide = new CombinedTwoLiveData<>(moyenne, formule, (_moyenne, _formule) -> _moyenne >= _formule);
 
     public void init(float[] pesees, int poidsBrut, float coefficient) {

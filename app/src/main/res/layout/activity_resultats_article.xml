@@ -151,27 +151,12 @@
             app:layout_constraintTop_toBottomOf="@id/conteneurFormulaire">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/bouton_annuler"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/blanc"
-                android:text="@string/annuler"
-                android:textColor="@color/rouge"
-                app:icon="@drawable/close_white_24dp"
-                app:iconSize="43sp"
-                app:iconTint="@color/rouge"
-                app:strokeColor="@color/rouge" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/bouton_valider"
+                android:id="@+id/bouton_continuer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="@string/valider"
+                android:text="@string/continuer"
                 app:icon="@drawable/done_white_24dp"
                 app:iconSize="43sp" />
 

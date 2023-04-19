@@ -25,4 +25,5 @@
     <string name="ecart_type">Ecart-type</string>
     <string name="moyenne">Moyenne</string>
     <string name="variance">Variance</string>
+    <string name="continuer">Continuer</string>
 </resources>
