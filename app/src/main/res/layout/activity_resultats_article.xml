@@ -16,6 +16,17 @@
         android:background="@color/secondary">
 
         <TextView
+            android:id="@+id/code_article"
+            style="@style/Theme.AppControlePoids.H1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Code article"/>
+
+
+        <TextView
             android:id="@+id/nom_article"
             style="@style/Theme.AppControlePoids.H1"
             android:layout_width="wrap_content"
@@ -23,7 +34,7 @@
             app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/code_article"
             tools:text="Nom article" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32sp"
-                android:layout_marginTop="32sp"
                 android:text="@string/poids_cible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/milieu"
@@ -124,23 +134,22 @@
                 android:text="@{String.valueOf(resultatArticleViewModel.variance)}"
                 tools:text="400" />
 
-            <TextView
-                android:id="@+id/validation_lot"
-                style="@style/Theme.AppControlePoids.H2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@{resultatArticleViewModel.lotValide ? `Lot validé` : `Lot non valide`}"
-                android:textColor="@{resultatArticleViewModel.lotValide ? @color/vert : @color/rouge}"
-                app:layout_constraintBottom_toBottomOf="@id/conteneurFormulaire"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/valeur_ecart_type"
-                tools:textColor="@color/vert"
-                tools:text="Lot validé" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/validation_lot"
+            style="@style/Theme.AppControlePoids.H2"
+            android:textSize="45sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{resultatArticleViewModel.lotValide ? `Lot validé` : `Lot non valide`}"
+            android:textColor="@{resultatArticleViewModel.lotValide ? @color/vert : @color/rouge}"
+            app:layout_constraintBottom_toTopOf="@id/conteneurBoutons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conteneurFormulaire"
+            tools:textColor="@color/vert"
+            tools:text="Lot validé" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/conteneurBoutons"

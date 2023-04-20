@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.appcontrolepoids.R;
+import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.databinding.ActivityAjouterArticleBinding;
 import com.example.appcontrolepoids.databinding.ActivityPeseesArticleBinding;
+import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.viewmodel.AjouterArticleViewModel;
 import com.example.appcontrolepoids.viewmodel.DateViewModel;
 import com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel;
@@ -115,7 +117,9 @@ public class AjouterArticle extends AppCompatActivity {
         binding.boutonValider.setOnClickListener(view -> {
             ajouterArticleViewModel.verifierSaisiesValide();
             if(Boolean.TRUE.equals(ajouterArticleViewModel.estCodeOperateurValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estEanValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estNomValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estPoidsNetSaisiValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estPoidsBrutSaisiValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estRendementSaisiValide.getValue())) {
-                Toast.makeText(this, "Champs valides", Toast.LENGTH_SHORT).show();
+                Article article = new Article(ajouterArticleViewModel.codeArticleSaisi.getValue(), ajouterArticleViewModel.nomSaisi.getValue(), ajouterArticleViewModel.eanSaisi.getValue(), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsNetSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsBrutSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.rendementSaisi.getValue())), ajouterArticleViewModel.codeOperateurSaisi.getValue());
+                ajouterArticleViewModel.insererArticle(article);
+                this.finish();
             }
         });
     }

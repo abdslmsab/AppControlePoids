@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import com.example.appcontrolepoids.database.AppDatabase;
+import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.util.action.ActionLiveData;
 
 public class AjouterArticleViewModel extends ViewModel {
@@ -77,5 +79,9 @@ public class AjouterArticleViewModel extends ViewModel {
         estPoidsNetSaisiValide.trigger(() -> Transformations.map(poidsNetSaisi, poidsNet -> poidsNet != null && poidsNet.length() > 0 && poidsNet.length() <= 3));
         estPoidsBrutSaisiValide.trigger(() -> Transformations.map(poidsBrutSaisi, poidsBrut -> poidsBrut != null && poidsBrut.length() > 0 && poidsBrut.length() <= 3));
         estRendementSaisiValide.trigger(() -> Transformations.map(rendementSaisi, rendement -> rendement != null && rendement.length() > 0 && rendement.length() <= 3));
+    }
+
+    public void insererArticle(Article article) {
+        AppDatabase.getInstance().articleDao().insert(article);
     }
 }

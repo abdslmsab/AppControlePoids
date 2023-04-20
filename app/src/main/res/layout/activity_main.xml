@@ -31,7 +31,7 @@
         <ImageView
             android:id="@+id/cakes"
             android:layout_width="match_parent"
-            android:layout_height="550sp"
+            android:layout_height="500sp"
             android:scaleType="centerCrop"
             android:src="@drawable/cakes"
             app:layout_constraintTop_toBottomOf="@id/logo" />
@@ -101,7 +101,7 @@
                 app:endIconMode="custom">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/codeBarreEdit"
+                    android:id="@+id/texte_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:afterTextChanged="@{articleViewModel.changementEan}"

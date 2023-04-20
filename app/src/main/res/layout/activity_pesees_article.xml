@@ -49,7 +49,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:trackColor="@color/gris"
-                app:trackThickness="10dp" />
+                app:trackThickness="25dp" />
 
             <TextView
                 android:id="@+id/nombre_pesees"
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32sp"
                 android:text="@string/poids_brut"
-                app:layout_constraintStart_toStartOf="@id/barre_progression"
+                app:layout_constraintStart_toStartOf="@id/conteneurPoids"
                 app:layout_constraintTop_toBottomOf="@id/conteneurPoids" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -116,8 +116,8 @@
                 app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
                 app:hintTextColor="@color/noir"
-                app:layout_constraintEnd_toEndOf="@id/barre_progression"
-                app:layout_constraintStart_toStartOf="@id/barre_progression"
+                app:layout_constraintEnd_toEndOf="@id/conteneurPoids"
+                app:layout_constraintStart_toStartOf="@id/conteneurPoids"
                 app:layout_constraintTop_toBottomOf="@id/poids_brut">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -165,7 +165,8 @@
                 android:layout_weight="1"
                 android:text="@string/valider"
                 app:icon="@drawable/done_white_24dp"
-                app:iconSize="43sp" />
+                app:iconSize="43sp"
+                android:imeOptions="actionDone"/>
 
         </LinearLayout>
 

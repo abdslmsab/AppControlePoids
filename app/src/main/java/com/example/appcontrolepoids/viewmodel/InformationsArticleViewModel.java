@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.appcontrolepoids.util.action.ActionLiveData;
 
+import java.util.Calendar;
+
 public class InformationsArticleViewModel extends ViewModel {
 
     //Texte codeOperateurSaisi saisi par l'utilisateur (MutableLiveData : valeur qui peut changer)
@@ -61,7 +63,18 @@ public class InformationsArticleViewModel extends ViewModel {
     public void verifierSaisiesValide() {
         estCodeOperateurValide.trigger(() -> Transformations.map(codeOperateurSaisi, code -> code != null && code.length() == 4));
         estNombreVenuesValide.trigger(() -> Transformations.map(saisieNombreVenuesEntier, venues -> venues != null && venues >= 1));
-        estNumeroLotValide.trigger(() -> Transformations.map(numeroLotSaisi, numero -> numero != null && numero.length() == 5));
+        estNumeroLotValide.trigger(() -> Transformations.map(numeroLotSaisi, numero -> {
+            if (numero == null || numero.length() != 5) {
+                return false;
+            }
+            String anneeLot = numero.substring(0, 2);
+            int jourDansLAnnee = Integer.parseInt(numero.substring(2));
+            int anneeActuelle = Calendar.getInstance().get(Calendar.YEAR) % 100;
+            int jourDansLAnneeLimiteInf = 1;
+            int jourDansLAnneeLimiteSup = anneeActuelle % 4 == 0 ? 366 : 365;
+
+            return anneeLot.equals(String.valueOf(anneeActuelle)) && jourDansLAnnee >= jourDansLAnneeLimiteInf && jourDansLAnnee <= jourDansLAnneeLimiteSup;
+        }));
         estDdmValide.trigger(() -> Transformations.map(ddmSaisie, ddm -> {
             try {
                 String[] tokens = ddm.split("/");

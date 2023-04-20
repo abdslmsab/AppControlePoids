@@ -80,7 +80,7 @@ public class InformationsArticle extends AppCompatActivity {
         // Vérification du champ "Numéro de lot"
         informationsArticleViewModel.estNumeroLotValide.observe(this, estNumeroLotValide -> {
             if (!estNumeroLotValide) {
-                binding.texteLot.setError("Le numéro de lot requiert 5 caractères");
+                binding.texteLot.setError("Le numéro de lot n'est pas conforme");
             } else {
                 binding.texteLot.setErrorEnabled(false);
             }
