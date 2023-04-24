@@ -37,6 +37,8 @@ public class PeseesArticle extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         String numeroLot = getIntent().getStringExtra("numero_lot");
+        String codeOperateur = getIntent().getStringExtra("code_operateur");
+        String ddm = getIntent().getStringExtra("ddm");
 
         Article article = (Article) getIntent().getSerializableExtra("article");
         binding.nomArticle.setText(article.getNom());
@@ -79,6 +81,8 @@ public class PeseesArticle extends AppCompatActivity {
                 Intent intent = new Intent(PeseesArticle.this, ResultatArticle.class);
                 intent.putExtra("article", article);
                 intent.putExtra("numeroLot", numeroLot);
+                intent.putExtra("codeOperateur", codeOperateur);
+                intent.putExtra("ddm", ddm);
 
                 List<Float> listePesees = peseesArticleViewModel.listePesees.getValue();
                 float[] listePeseesTableau = new float[listePesees.size()];

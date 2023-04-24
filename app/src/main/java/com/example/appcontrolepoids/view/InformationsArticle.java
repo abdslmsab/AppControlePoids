@@ -102,6 +102,8 @@ public class InformationsArticle extends AppCompatActivity {
                 intent.putExtra("nombre_venues", informationsArticleViewModel.saisieNombreVenuesEntier.getValue());
                 intent.putExtra("article", article);
                 intent.putExtra("numero_lot", informationsArticleViewModel.numeroLotSaisi.getValue());
+                intent.putExtra("code_operateur", informationsArticleViewModel.codeOperateurSaisi.getValue());
+                intent.putExtra("ddm", informationsArticleViewModel.ddmSaisie.getValue());
                 startActivity(intent);
             }
         });

@@ -125,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:afterTextChanged="@{peseesArticleViewModel.changementPesees}"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:maxLength="3"
                     android:text="@{peseesArticleViewModel.peseeSaisie}"
                     android:textSize="25sp"

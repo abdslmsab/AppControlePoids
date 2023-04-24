@@ -41,6 +41,8 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
         binding.setLifecycleOwner(this);
 
         String numeroLot = getIntent().getStringExtra("numeroLot");
+        String codeOperateur = getIntent().getStringExtra("codeOperateur");
+        String ddm = getIntent().getStringExtra("ddm");
 
         Article article = (Article) getIntent().getSerializableExtra("article");
         binding.nomArticle.setText(article.getNom());
@@ -51,7 +53,7 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
         float[] listePesees = getIntent().getFloatArrayExtra("listePesees");
         float coefficient = getIntent().getFloatExtra("coefficient", -1);
 
-        resultatArticleViewModel.init(listePesees, article.getPoidsBrut(), coefficient);
+        resultatArticleViewModel.init(listePesees, article.getPoidsBrut(), coefficient, article.getCode(), article.getNom(), numeroLot, codeOperateur, ddm);
 
         //Initialisation de l'objet DialogAlerteViewModel avec le contexte de l'activité
         dialogAlerteViewModel = new ViewModelProvider(this).get(DialogAlerteViewModel.class);
@@ -59,6 +61,8 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
         binding.boutonContinuer.setOnClickListener(view -> {
             if (Boolean.TRUE.equals(resultatArticleViewModel.lotValide.getValue())){
                 Intent intent = new Intent(ResultatArticle.this, TicketArticle.class);
+                //On génère le PDF
+                resultatArticleViewModel.genererPDF();
                 startActivity(intent);
             } else {
                 GestionnaireAlerte.showMyDialog(this, TypeAlerte.verrouillageCode, dialogAlerteViewModel, this);
