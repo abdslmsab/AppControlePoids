@@ -3,7 +3,9 @@ package com.example.appcontrolepoids.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -57,12 +59,19 @@ public class PeseesArticle extends AppCompatActivity {
             }
         });
 
-        binding.boutonValider.setOnClickListener(view -> {
-            peseesArticleViewModel.verifierSaisieValides();
-            if (Boolean.TRUE.equals(peseesArticleViewModel.estPeseeValide.getValue())) {
-                peseesArticleViewModel.ajouterPesee(peseesArticleViewModel.saisiesPeseesFlottant.getValue());
-                peseesArticleViewModel.reinitialiserChamp();
+        //Permet de pouvoir cliquer sur le bouton "Valider" si on clique sur la touche "Ok" du clavier
+        binding.poidsBrutEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    peseesArticleViewModel.actionValiderSaisie();
+                }
+                return false;
             }
+        });
+
+        binding.boutonValider.setOnClickListener(view -> {
+            peseesArticleViewModel.actionValiderSaisie();
         });
 
         peseesArticleViewModel.nombrePeseesRestantes.observe(this, nombrePeseesRestantes -> {

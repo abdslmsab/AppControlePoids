@@ -53,6 +53,15 @@ public class PeseesArticleViewModel extends ViewModel {
         estPeseeValide.trigger(() -> Transformations.map(saisiesPeseesFlottant, pesee -> pesee != null && pesee >= 1));
     }
 
+    //Permet de verifier, d'ajouter et de valider la pesée lors du clique sur le bouton "Valider" ou la touche "Ok" du clavier
+    public void actionValiderSaisie() {
+        verifierSaisieValides();
+        if (Boolean.TRUE.equals(estPeseeValide.getValue())) {
+            ajouterPesee(saisiesPeseesFlottant.getValue());
+            reinitialiserChamp();
+        }
+    }
+
     public MutableLiveData<List<Float>> listePesees = new MutableLiveData<>(new ArrayList<>());
     public LiveData<Integer> nombrePeseesRestantes = new CombinedTwoLiveData<>(nombrePeseesAEffectuer, listePesees, (aEffectuer, pesees) -> aEffectuer != null ? aEffectuer - pesees.size() : null);
 

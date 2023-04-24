@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.inputmethod.EditorInfo"/>
         <variable
             name="peseesArticleViewModel"
             type="com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel" />
@@ -128,7 +128,8 @@
                     android:inputType="number"
                     android:maxLength="3"
                     android:text="@{peseesArticleViewModel.peseeSaisie}"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:imeOptions="actionDone"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,8 +166,7 @@
                 android:layout_weight="1"
                 android:text="@string/valider"
                 app:icon="@drawable/done_white_24dp"
-                app:iconSize="43sp"
-                android:imeOptions="actionDone"/>
+                app:iconSize="43sp"/>
 
         </LinearLayout>
 
