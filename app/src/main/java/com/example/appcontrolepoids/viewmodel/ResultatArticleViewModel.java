@@ -20,7 +20,10 @@ public class ResultatArticleViewModel extends ViewModel {
             somme += p;
         }
 
-        return somme / _pesees.length;
+        float moyenne = somme / _pesees.length;
+
+        //Arrondi le résultat à 2 chiffres après la virgule
+        return Math.round(moyenne * 100.0) / 100.0f;
     });
 
     public LiveData<Float> variance = new CombinedTwoLiveData<>(pesees, moyenne, (_pesees, _moyenne) -> {
@@ -31,11 +34,19 @@ public class ResultatArticleViewModel extends ViewModel {
             sommeEcartsCarres += ecart * ecart;
         }
 
-        return sommeEcartsCarres / _pesees.length;
+        float variance = sommeEcartsCarres / _pesees.length;
+
+        //Arrondi le résultat à 2 chiffres après la virgule
+        return Math.round(variance * 100.0) / 100.0f;
     });
 
 
-    public LiveData<Float> ecartType = Transformations.map(variance, _variance -> (float) Math.sqrt(_variance));
+    public LiveData<Float> ecartType = Transformations.map(variance, _variance -> {
+        float ecartType = (float) Math.sqrt(_variance);
+
+        //Arrondi le résultat à 2 chiffres après la virgule
+        return Math.round(ecartType * 100.0) / 100.0f;
+    });
 
     public MutableLiveData<Integer> poidsBrut = new MutableLiveData<>();
 
