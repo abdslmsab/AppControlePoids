@@ -101,6 +101,7 @@ public class InformationsArticle extends AppCompatActivity {
                 Intent intent = new Intent(InformationsArticle.this, PeseesArticle.class);
                 intent.putExtra("nombre_venues", informationsArticleViewModel.saisieNombreVenuesEntier.getValue());
                 intent.putExtra("article", article);
+                intent.putExtra("numero_lot", informationsArticleViewModel.numeroLotSaisi.getValue());
                 startActivity(intent);
             }
         });

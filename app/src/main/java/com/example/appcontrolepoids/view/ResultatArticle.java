@@ -40,9 +40,13 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
         binding.setResultatArticleViewModel(resultatArticleViewModel);
         binding.setLifecycleOwner(this);
 
+        String numeroLot = getIntent().getStringExtra("numeroLot");
+
         Article article = (Article) getIntent().getSerializableExtra("article");
         binding.nomArticle.setText(article.getNom());
+        binding.codeArticle.setText(article.getCode());
         binding.valeurPoidsCible.setText(article.getPoidsBrut() + " g");
+        binding.numeroLot.setText("LOT N°" + numeroLot);
 
         float[] listePesees = getIntent().getFloatArrayExtra("listePesees");
         float coefficient = getIntent().getFloatExtra("coefficient", -1);
