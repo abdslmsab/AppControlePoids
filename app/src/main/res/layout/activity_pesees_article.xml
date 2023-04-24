@@ -20,11 +20,41 @@
             style="@style/Theme.AppControlePoids.H1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
+            app:layout_constraintBottom_toTopOf="@id/barre_progression"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Nom article" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/barre_progression"
+            style="?attr/circularProgressIndicatorStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:max="@{peseesArticleViewModel.nombrePeseesAEffectuer}"
+            android:progress="@{peseesArticleViewModel.nombrePeseesRestantes}"
+            app:indicatorSize="350dp"
+            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nom_article"
+            app:trackColor="@color/gris"
+            app:trackThickness="25dp" />
+
+        <TextView
+            android:id="@+id/nombre_pesees"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/noir"
+            android:textSize="150sp"
+            android:text="@{String.valueOf(peseesArticleViewModel.nombrePeseesRestantes)}"
+            app:layout_constraintBottom_toBottomOf="@id/barre_progression"
+            app:layout_constraintEnd_toEndOf="@id/barre_progression"
+            app:layout_constraintStart_toStartOf="@id/barre_progression"
+            app:layout_constraintTop_toTopOf="@id/barre_progression"
+            tools:text="30" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/conteneurFormulaire"
@@ -33,45 +63,15 @@
             app:layout_constraintBottom_toTopOf="@id/conteneurBoutons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nom_article">
-
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/barre_progression"
-                style="?attr/circularProgressIndicatorStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="false"
-                android:max="@{peseesArticleViewModel.nombrePeseesAEffectuer}"
-                android:progress="@{peseesArticleViewModel.nombrePeseesRestantes}"
-                app:indicatorSize="350dp"
-                app:layout_constraintBottom_toTopOf="@id/conteneurPoids"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:trackColor="@color/gris"
-                app:trackThickness="25dp" />
-
-            <TextView
-                android:id="@+id/nombre_pesees"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/noir"
-                android:textSize="150sp"
-                android:text="@{String.valueOf(peseesArticleViewModel.nombrePeseesRestantes)}"
-                app:layout_constraintBottom_toBottomOf="@id/barre_progression"
-                app:layout_constraintEnd_toEndOf="@id/barre_progression"
-                app:layout_constraintStart_toStartOf="@id/barre_progression"
-                app:layout_constraintTop_toTopOf="@id/barre_progression"
-                tools:text="30" />
+            app:layout_constraintTop_toBottomOf="@id/barre_progression">
 
             <LinearLayout
                 android:id="@+id/conteneurPoids"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/barre_progression">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/poids_cible"

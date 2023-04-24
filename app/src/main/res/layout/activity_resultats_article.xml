@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@id/numero_lot"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nom_article"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
             tools:text="Code article" />
 
         <TextView
@@ -43,8 +44,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
+            app:layout_constraintTop_toBottomOf="@id/code_article"
             tools:text="Nom article" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +54,7 @@
             app:layout_constraintBottom_toTopOf="@id/validation_lot"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/code_article">
+            app:layout_constraintTop_toBottomOf="@id/nom_article">
 
             <TextView
                 android:id="@+id/poids_cible"
