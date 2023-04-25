@@ -64,6 +64,7 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
                 Intent intent = new Intent(ResultatArticle.this, TicketArticle.class);
                 //On génère le PDF
                 resultatArticleViewModel.genererPDF();
+                Toast.makeText(this, "PDF généré dans le fichier 'Documents' de la tablette", Toast.LENGTH_LONG).show();
                 intent.putExtra("pdf_path", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + article.getCode() + "-" + numeroLot + ".pdf");
                 startActivity(intent);
             } else {

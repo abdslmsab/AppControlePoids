@@ -1,5 +1,6 @@
 package com.example.appcontrolepoids.view;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
@@ -8,8 +9,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appcontrolepoids.R;
+import com.example.appcontrolepoids.databinding.ActivityResultatsArticleBinding;
+import com.example.appcontrolepoids.databinding.ActivityTicketArticleBinding;
+import com.example.appcontrolepoids.viewmodel.ResultatArticleViewModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +27,11 @@ public class TicketArticle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_article);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        //Variable de liaison (binding) permettant d'accéder aux éléments de l'interface utilisateur
+        ActivityTicketArticleBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_ticket_article);
+
+        binding.setLifecycleOwner(this);
 
         String pdfPath = getIntent().getStringExtra("pdf_path");
 
@@ -46,8 +57,7 @@ public class TicketArticle extends AppCompatActivity {
                 page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
 
                 //Affichage du Bitmap dans ImageView
-                ImageView imageView = findViewById(R.id.pdf_genere);
-                imageView.setImageBitmap(bitmap);
+                binding.pdfGenere.setImageBitmap(bitmap);
 
                 //Libération de la mémoire utilisée par la page PDF
                 page.close();
@@ -59,8 +69,16 @@ public class TicketArticle extends AppCompatActivity {
                 ex.printStackTrace();
             }
         } else {
-            Toast.makeText(this, "Le PDF n'existe pas", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Le PDF est introuvable et ne peut être visualisé", Toast.LENGTH_LONG).show();
+            this.finish();
+            Intent intent = new Intent(TicketArticle.this, MainActivity.class);
+            startActivity(intent);
         }
 
+        binding.boutonTerminer.setOnClickListener(view -> {
+            this.finish();
+            Intent intent = new Intent(TicketArticle.this, MainActivity.class);
+            startActivity(intent);
+        });
     }
 }

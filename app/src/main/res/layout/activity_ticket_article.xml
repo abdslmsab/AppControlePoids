@@ -48,7 +48,7 @@
                 app:layout_constraintGuide_percent="0.25" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/bouton_continuer"
+                android:id="@+id/bouton_terminer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/terminer"
