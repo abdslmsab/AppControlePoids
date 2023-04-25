@@ -46,10 +46,10 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
         String ddm = getIntent().getStringExtra("ddm");
 
         Article article = (Article) getIntent().getSerializableExtra("article");
+        binding.numeroLot.setText("LOT N°" + numeroLot);
         binding.nomArticle.setText(article.getNom());
         binding.codeArticle.setText(article.getCode());
         binding.valeurPoidsCible.setText(article.getPoidsBrut() + " g");
-        binding.numeroLot.setText("LOT N°" + numeroLot);
 
         float[] listePesees = getIntent().getFloatArrayExtra("listePesees");
         float coefficient = getIntent().getFloatExtra("coefficient", -1);
