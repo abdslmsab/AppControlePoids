@@ -57,6 +57,7 @@ public class ResultatArticleViewModel extends ViewModel {
     private  String codeOperateur;
     private String ddm;
     private int poidsNet;
+    private String eanArticle;
     private final MutableLiveData<float[]> pesees = new MutableLiveData<>();
     public LiveData<Float> moyenne = Transformations.map(pesees, _pesees -> {
         float somme = 0;
@@ -103,7 +104,7 @@ public class ResultatArticleViewModel extends ViewModel {
 
     public LiveData<Boolean> lotValide = new CombinedTwoLiveData<>(moyenne, formule, (_moyenne, _formule) -> _moyenne >= _formule);
 
-    public void init(float[] pesees, int poidsBrut, float coefficient, String codeArticle, String nomArticle, String numeroLot, String codeOperateur, String ddm, int poidsNet) {
+    public void init(float[] pesees, int poidsBrut, float coefficient, String codeArticle, String nomArticle, String numeroLot, String codeOperateur, String ddm, int poidsNet, String eanArticle) {
         this.pesees.postValue(pesees);
         this.poidsBrut.postValue(poidsBrut);
         this.coefficient.postValue(coefficient);
@@ -113,6 +114,7 @@ public class ResultatArticleViewModel extends ViewModel {
         this.codeOperateur = codeOperateur;
         this.ddm = ddm;
         this.poidsNet = poidsNet;
+        this.eanArticle = eanArticle;
     }
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -142,8 +144,17 @@ public class ResultatArticleViewModel extends ViewModel {
 
             document.add(tableControle);
 
-            Paragraph titre = new Paragraph("\n\n" + codeArticle + " - LOT N° " + numeroLot + "\n" + nomArticle + "\n\n").setTextAlignment(TextAlignment.CENTER).setBold();
+            Paragraph titre = new Paragraph("\n" + codeArticle + " - " + nomArticle + "\n")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setBold()
+                    .setFontSize(17);
             document.add(titre);
+
+            Paragraph ean = new Paragraph(eanArticle + "\n\n")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setBold()
+                    .setFontSize(14);
+            document.add(ean);
 
             //Crée le tableau à une ligne et deux colonnes
             Table tableInfos = new Table(2);
@@ -154,7 +165,7 @@ public class ResultatArticleViewModel extends ViewModel {
 
             //Crée les cellules du tableau
             Cell cell1 = new Cell().add(new Paragraph("DDM : " + ddm));
-            Cell cell2 = new Cell().add(new Paragraph("Numéro de lot : " + numeroLot));
+            Cell cell2 = new Cell().add(new Paragraph("Lot n°" + numeroLot));
             Cell cell3 = new Cell().add(new Paragraph("Poids net : " + poidsNet + " g"));
             Cell cell4 = new Cell().add(new Paragraph("Poids brut : " + poidsBrut.getValue() + " g"));
 
@@ -173,39 +184,31 @@ public class ResultatArticleViewModel extends ViewModel {
             //Ajoute le tableau au document
             document.add(tableInfos);
 
-            document.add(new Paragraph("\n\nListe des pesées\n\n").setBold());
+            document.add(new Paragraph("\nListe des pesées\n").setBold());
 
-            int numberOfColumns = 3;
             List<Float> listPesees = new ArrayList<>();
             if (pesees.getValue() != null) {
                 for (float f : pesees.getValue()) {
                     listPesees.add(f);
                 }
-                if (listPesees.size() == 30) {
-                    numberOfColumns = 3;
-                } else if (listPesees.size() == 50) {
-                    numberOfColumns = 5;
-                } else if (listPesees.size() == 80) {
-                    numberOfColumns = 4;
-                }
             }
 
-            Table tablePesees = new Table(numberOfColumns);
+            Table tablePesees = new Table(5);
 
             int peseeNumero = 1;
             for (float p : listPesees) {
-                Cell cell = new Cell().add(new Paragraph(String.format(Locale.FRANCE, "%d : %.2f", peseeNumero, p)).setTextAlignment(TextAlignment.JUSTIFIED));
+                Cell cell = new Cell().add(new Paragraph(String.format(Locale.FRANCE, "%02d : %.2f", peseeNumero, p)).setTextAlignment(TextAlignment.JUSTIFIED));
                 cell.setBorder(Border.NO_BORDER);
                 tablePesees.addCell(cell);
                 peseeNumero++;
             }
 
             tablePesees.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            tablePesees.setWidth(UnitValue.createPercentValue(80));
+            tablePesees.useAllAvailableWidth();
 
             document.add(tablePesees);
 
-            document.add(new Paragraph("\n\nRésultat des pesées\n\n").setBold());
+            document.add(new Paragraph("\nRésultat des pesées\n\n").setBold());
 
             Table tableResultat = new Table(4);
 
@@ -233,10 +236,10 @@ public class ResultatArticleViewModel extends ViewModel {
             document.add(tableResultat);
 
             DeviceRgb greenColor = new DeviceRgb(67, 160, 71);
-            Paragraph validation = new Paragraph("\n\nLot validé")
+            Paragraph validation = new Paragraph("\nLOT VALIDÉ")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setBold()
-                    .setFontSize(30)
+                    .setFontSize(17)
                     .setFontColor(greenColor);
             document.add(validation);
 
