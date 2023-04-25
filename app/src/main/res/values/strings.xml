@@ -33,4 +33,6 @@
     <string name="saisir_nom_article">Saisir le nom de l\'article</string>
     <string name="saisir_poids_net">Saisir le poids net de l\'article</string>
     <string name="saisir_rendement">Saisir le rendement</string>
+    <string name="terminer">Terminer</string>
+    <string name="ticket_pdf">Ticket PDF</string>
 </resources>

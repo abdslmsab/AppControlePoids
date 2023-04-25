@@ -2,6 +2,7 @@ package com.example.appcontrolepoids.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -63,6 +64,7 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
                 Intent intent = new Intent(ResultatArticle.this, TicketArticle.class);
                 //On génère le PDF
                 resultatArticleViewModel.genererPDF();
+                intent.putExtra("pdf_path", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + article.getCode() + "-" + numeroLot + ".pdf");
                 startActivity(intent);
             } else {
                 GestionnaireAlerte.showMyDialog(this, TypeAlerte.verrouillageCode, dialogAlerteViewModel, this);

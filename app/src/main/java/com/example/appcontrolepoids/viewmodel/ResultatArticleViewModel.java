@@ -126,6 +126,7 @@ public class ResultatArticleViewModel extends ViewModel {
             PdfDocument pdfDoc = new PdfDocument(writer);
 
             Document document = new Document(pdfDoc, PageSize.A4);
+            document.setBackgroundColor(ColorConstants.WHITE);
 
             Table tableControle = new Table(2);
             tableControle.useAllAvailableWidth();
@@ -148,7 +149,6 @@ public class ResultatArticleViewModel extends ViewModel {
             Table tableInfos = new Table(2);
 
             //Rend le fond du tableau transparent
-            tableInfos.setBackgroundColor(new DeviceRgb(255, 255, 255));
             tableInfos.setWidth(UnitValue.createPercentValue(80));
             tableInfos.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
