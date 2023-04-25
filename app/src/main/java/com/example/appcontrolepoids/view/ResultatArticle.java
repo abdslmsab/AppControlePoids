@@ -53,7 +53,7 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
         float[] listePesees = getIntent().getFloatArrayExtra("listePesees");
         float coefficient = getIntent().getFloatExtra("coefficient", -1);
 
-        resultatArticleViewModel.init(listePesees, article.getPoidsBrut(), coefficient, article.getCode(), article.getNom(), numeroLot, codeOperateur, ddm);
+        resultatArticleViewModel.init(listePesees, article.getPoidsBrut(), coefficient, article.getCode(), article.getNom(), numeroLot, codeOperateur, ddm, article.getPoidsNet());
 
         //Initialisation de l'objet DialogAlerteViewModel avec le contexte de l'activité
         dialogAlerteViewModel = new ViewModelProvider(this).get(DialogAlerteViewModel.class);
