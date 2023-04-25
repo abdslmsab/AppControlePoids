@@ -23,6 +23,8 @@ import java.util.Objects;
 
 public class PeseesArticle extends AppCompatActivity {
 
+    private PeseesArticleViewModel peseesArticleViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class PeseesArticle extends AppCompatActivity {
         //Variable de liaison (binding) permettant d'accéder aux éléments de l'interface utilisateur
         ActivityPeseesArticleBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_pesees_article);
         //Initialisation de l'objet PeseesArticleViewModel avec le contexte de l'activité
-        PeseesArticleViewModel peseesArticleViewModel = new ViewModelProvider(this).get(PeseesArticleViewModel.class);
+        peseesArticleViewModel = new ViewModelProvider(this).get(PeseesArticleViewModel.class);
         //Définition de l'objet PeseesArticleViewModel comme variable dans le layout pour le Data Binding
         binding.setPeseesArticleViewModel(peseesArticleViewModel);
         binding.setLifecycleOwner(this);
@@ -83,6 +85,8 @@ public class PeseesArticle extends AppCompatActivity {
 
         peseesArticleViewModel.nombrePeseesRestantes.observe(this, nombrePeseesRestantes -> {
             if (nombrePeseesRestantes != null && nombrePeseesRestantes <= 0) {
+                binding.poidsBrutEditText.clearFocus();
+
                 Intent intent = new Intent(PeseesArticle.this, ResultatArticle.class);
                 intent.putExtra("article", article);
                 intent.putExtra("numeroLot", numeroLot);
@@ -99,5 +103,11 @@ public class PeseesArticle extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        peseesArticleViewModel.reinitialiserListePesees();
     }
 }

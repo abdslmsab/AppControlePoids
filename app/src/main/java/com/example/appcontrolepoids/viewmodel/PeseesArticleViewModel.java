@@ -63,6 +63,10 @@ public class PeseesArticleViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<Float>> listePesees = new MutableLiveData<>(new ArrayList<>());
+
+    public void reinitialiserListePesees() {
+        listePesees.postValue(new ArrayList<>());
+    }
     public LiveData<Integer> nombrePeseesRestantes = new CombinedTwoLiveData<>(nombrePeseesAEffectuer, listePesees, (aEffectuer, pesees) -> aEffectuer != null ? aEffectuer - pesees.size() : null);
 
     public void ajouterPesee(Float pesee) {

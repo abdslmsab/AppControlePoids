@@ -74,8 +74,7 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
 
         dialogAlerteViewModel.codeValide.observe(this, codeValide -> {
             if (codeValide) {
-                Intent intent = new Intent(ResultatArticle.this, PeseesArticle.class);
-                startActivity(intent);
+                this.finish();
             } else {
                 Toast.makeText(this, "Code faux !", Toast.LENGTH_LONG).show();
             }
