@@ -16,6 +16,7 @@ import com.example.appcontrolepoids.databinding.ActivityPeseesArticleBinding;
 import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 import com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel;
+import com.redmadrobot.inputmask.MaskedTextChangedListener;
 
 import java.util.List;
 import java.util.Objects;
@@ -60,6 +61,10 @@ public class PeseesArticle extends AppCompatActivity {
                 binding.textePoidsBrut.setErrorEnabled(false);
             }
         });
+
+        //Format de l'entrée désirée (voir https://github.com/RedMadRobot/input-mask-android/wiki/1.-Mask-Syntax)
+        final MaskedTextChangedListener listener = new MaskedTextChangedListener("[990]{.}[9]", binding.poidsBrutEditText);
+        binding.poidsBrutEditText.addTextChangedListener(listener);
 
         //Permet de pouvoir cliquer sur le bouton "Valider" si on clique sur la touche "Ok" du clavier
         binding.poidsBrutEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
