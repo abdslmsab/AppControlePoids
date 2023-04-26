@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
             }
             dialogAlerteViewModel.reinitialiserCodeSaisi();
         });
+        //TODO: voir si on garde
+        binding.texteCode.requestFocus();
     }
 
     //Permet d'afficher une notification lorsque l'on clique sur le bouton principal de la pop-up d'alerte

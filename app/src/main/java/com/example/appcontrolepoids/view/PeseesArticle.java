@@ -2,6 +2,8 @@ package com.example.appcontrolepoids.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -95,7 +97,7 @@ public class PeseesArticle extends AppCompatActivity {
 
                 List<Float> listePesees = peseesArticleViewModel.listePesees.getValue();
                 float[] listePeseesTableau = new float[listePesees.size()];
-                for(int i = 0; i < listePesees.size(); i++) {
+                for (int i = 0; i < listePesees.size(); i++) {
                     listePeseesTableau[i] = listePesees.get(i);
                 }
                 intent.putExtra("listePesees", listePeseesTableau);
