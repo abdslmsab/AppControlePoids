@@ -2,9 +2,6 @@ package com.example.appcontrolepoids.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
@@ -14,18 +11,22 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appcontrolepoids.R;
+import com.example.appcontrolepoids.alertdialog.DialogAlerte;
+import com.example.appcontrolepoids.alertdialog.DialogAlerteViewModel;
+import com.example.appcontrolepoids.alertdialog.GestionnaireAlerte;
+import com.example.appcontrolepoids.alertdialog.TypeAlerte;
 import com.example.appcontrolepoids.databinding.ActivityPeseesArticleBinding;
 import com.example.appcontrolepoids.model.Article;
-import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 import com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel;
 import com.redmadrobot.inputmask.MaskedTextChangedListener;
 
 import java.util.List;
 import java.util.Objects;
 
-public class PeseesArticle extends AppCompatActivity {
+public class PeseesArticle extends AppCompatActivity implements DialogAlerte.AlertDialogInterface {
 
     private PeseesArticleViewModel peseesArticleViewModel;
+    private DialogAlerteViewModel dialogAlerteViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,9 @@ public class PeseesArticle extends AppCompatActivity {
         //Définition de l'objet PeseesArticleViewModel comme variable dans le layout pour le Data Binding
         binding.setPeseesArticleViewModel(peseesArticleViewModel);
         binding.setLifecycleOwner(this);
+
+        //Initialisation de l'objet DialogAlerteViewModel avec le contexte de l'activité
+        dialogAlerteViewModel = new ViewModelProvider(this).get(DialogAlerteViewModel.class);
 
         String numeroLot = getIntent().getStringExtra("numero_lot");
         String codeOperateur = getIntent().getStringExtra("code_operateur");
@@ -66,9 +70,19 @@ public class PeseesArticle extends AppCompatActivity {
             }
         });
 
+        // Vérification des données aberrantes
+        peseesArticleViewModel.estPeseeAberrante.observe(this, estPeseeAberrante -> {
+            if (estPeseeAberrante) {
+                GestionnaireAlerte.showMyDialog(this, TypeAlerte.peseeAberrante, dialogAlerteViewModel, this);
+            }
+        });
+
         //Format de l'entrée désirée (voir https://github.com/RedMadRobot/input-mask-android/wiki/1.-Mask-Syntax)
         final MaskedTextChangedListener listener = new MaskedTextChangedListener("[990]{.}[9]", binding.poidsBrutEditText);
         binding.poidsBrutEditText.addTextChangedListener(listener);
+
+        //Permet d'utiliser la valeur du poids brut entre la vue et la vue-modèle
+        peseesArticleViewModel.init(article.getPoidsBrut());
 
         //Permet de pouvoir cliquer sur le bouton "Valider" si on clique sur la touche "Ok" du clavier
         binding.poidsBrutEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -111,5 +125,15 @@ public class PeseesArticle extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         peseesArticleViewModel.reinitialiserListePesees();
+    }
+
+    @Override
+    public void alertDialogMainOption(TypeAlerte type) {
+        peseesArticleViewModel.actionAjouterPeseeAberrante();
+    }
+
+    @Override
+    public void alertDialogAlternativeOption(TypeAlerte type) {
+
     }
 }

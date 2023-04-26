@@ -75,7 +75,7 @@ public class DialogAlerte extends DialogFragment {
         });
 
         //Si le type d'alerte n'est pas codeVerrouillage, on enlève le champ pour taper un code
-        if (mOptions.getType() == TypeAlerte.erreurInconnue || mOptions.getType() == TypeAlerte.exempleAvertissement || mOptions.getType() == TypeAlerte.exempleReussite || mOptions.getType() == TypeAlerte.articleExistePas){
+        if (mOptions.getType() == TypeAlerte.erreurInconnue || mOptions.getType() == TypeAlerte.confirmationSupprimerArticle || mOptions.getType() == TypeAlerte.articleSupprime || mOptions.getType() == TypeAlerte.articleExistePas || mOptions.getType() == TypeAlerte.peseeAberrante ){
             texteCode.setVisibility(View.GONE);
         }
 
@@ -114,7 +114,7 @@ public class DialogAlerte extends DialogFragment {
      */
     private CategorieAlerte getCategorieAlerte(TypeAlerte type) {
         //Catégorie réussite
-        if (type == TypeAlerte.exempleReussite) {
+        if (type == TypeAlerte.articleSupprime) {
             return CategorieAlerte.reussite;
         }
         //Catégorie primaire

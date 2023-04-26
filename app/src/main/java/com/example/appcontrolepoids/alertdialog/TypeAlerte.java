@@ -6,9 +6,11 @@ public enum TypeAlerte {
     //CategorieAlerte.primaire
     verrouillageCode,
     //CategorieAlerte.reussite
-    exempleReussite,
+    articleSupprime,
     //CategorieAlerte.avertissement
-    exempleAvertissement,
+    confirmationSupprimerArticle,
     //CategorieAlerte.avertissement
-    articleExistePas
+    articleExistePas,
+    //CategorieAlerte.avertissement
+    peseeAberrante
 }

@@ -55,7 +55,7 @@ public class OptionsAlerte {
                         R.drawable.icon_primary,
                         false,
                         type);
-            case exempleAvertissement:
+            case confirmationSupprimerArticle:
                 return new OptionsAlerte(
                         "Attention !",
                         "Êtes-vous sûr de vouloir supprimer cet article ?",
@@ -64,7 +64,7 @@ public class OptionsAlerte {
                         R.drawable.icon_warning,
                         false,
                         type);
-            case exempleReussite:
+            case articleSupprime:
                 return new OptionsAlerte(
                         "Supprimé !",
                         "L'article a bien été supprimé.",
@@ -79,6 +79,15 @@ public class OptionsAlerte {
                         "Veuillez l'ajouter",
                         "",
                         "Ok",
+                        R.drawable.icon_warning,
+                        true,
+                        type);
+            case peseeAberrante:
+                return new OptionsAlerte(
+                        "Attention !",
+                        "Êtes-vous sûr de vouloir ajouter cette pesée ?",
+                        "Non",
+                        "Oui",
                         R.drawable.icon_warning,
                         true,
                         type);

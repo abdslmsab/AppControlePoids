@@ -1,6 +1,7 @@
 package com.example.appcontrolepoids.viewmodel;
 
 import android.text.Editable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -18,6 +19,12 @@ public class PeseesArticleViewModel extends ViewModel {
     public MutableLiveData<Integer> nombrePeseesAEffectuer = new MutableLiveData<>();
 
     public float coefficient;
+
+    private int poidsBrut;
+
+    public void init(int poidsBrut) {
+       this.poidsBrut = poidsBrut;
+    }
 
     public void calculerCompteur(int rendement, int nombreVenues) {
         int calculCompteur = rendement * nombreVenues;
@@ -49,12 +56,35 @@ public class PeseesArticleViewModel extends ViewModel {
 
     public final ActionLiveData<Boolean> estPeseeValide = new ActionLiveData<>();
 
+    public final ActionLiveData<Boolean> estPeseeAberrante = new ActionLiveData<>();
+
     public void verifierSaisieValides() {
         estPeseeValide.trigger(() -> Transformations.map(saisiesPeseesFlottant, pesee -> pesee != null && pesee >= 1));
     }
 
+    public void verifierSaisieDonneeAberrante(){
+        estPeseeAberrante.trigger(() -> Transformations.map(saisiesPeseesFlottant, pesee -> {
+            if (pesee == null){
+                return false;
+            }
+            double poidsMin = poidsBrut - (poidsBrut * 0.1);
+            double poidsMax = poidsBrut + (poidsBrut * 0.1);
+            return pesee < poidsMin || pesee > poidsMax;
+        }));
+    }
+
     //Permet de verifier, d'ajouter et de valider la pesée lors du clique sur le bouton "Valider" ou la touche "Ok" du clavier
     public void actionValiderSaisie() {
+        verifierSaisieValides();
+        verifierSaisieDonneeAberrante();
+        if (Boolean.TRUE.equals(estPeseeValide.getValue()) && Boolean.FALSE.equals(estPeseeAberrante.getValue())) {
+            ajouterPesee(saisiesPeseesFlottant.getValue());
+            reinitialiserChamp();
+        }
+    }
+
+    //Permet de quand même ajouter la saisie aberrante lorsque l'utilisateur appuie sur "Oui"
+    public void actionAjouterPeseeAberrante(){
         verifierSaisieValides();
         if (Boolean.TRUE.equals(estPeseeValide.getValue())) {
             ajouterPesee(saisiesPeseesFlottant.getValue());
