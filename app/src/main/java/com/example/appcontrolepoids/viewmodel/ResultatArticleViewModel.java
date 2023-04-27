@@ -230,7 +230,7 @@ public class ResultatArticleViewModel extends ViewModel {
             document.add(tableResultat);
 
             DeviceRgb greenColor = new DeviceRgb(67, 160, 71);
-            Paragraph validation = new Paragraph("\nLOT VALIDÉ | Moyenne des pesées > Critère d'acceptation")
+            Paragraph validation = new Paragraph("\nLOT VALIDÉ | Moyenne des pesées > Critère d'acceptation\n\n")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setBold()
                     .setFontSize(17)
