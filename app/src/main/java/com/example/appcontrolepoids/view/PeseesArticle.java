@@ -108,6 +108,7 @@ public class PeseesArticle extends AppCompatActivity implements DialogAlerte.Ale
                 intent.putExtra("numeroLot", numeroLot);
                 intent.putExtra("codeOperateur", codeOperateur);
                 intent.putExtra("ddm", ddm);
+                intent.putExtra("nombreVenues", nombreVenues);
 
                 List<Float> listePesees = peseesArticleViewModel.listePesees.getValue();
                 float[] listePeseesTableau = new float[listePesees.size()];

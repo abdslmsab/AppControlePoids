@@ -44,6 +44,7 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
         String numeroLot = getIntent().getStringExtra("numeroLot");
         String codeOperateur = getIntent().getStringExtra("codeOperateur");
         String ddm = getIntent().getStringExtra("ddm");
+        int nombreVenues = getIntent().getIntExtra("nombreVenues", -1);
 
         Article article = (Article) getIntent().getSerializableExtra("article");
         binding.numeroLot.setText("LOT N°" + numeroLot);
@@ -54,7 +55,7 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
         float[] listePesees = getIntent().getFloatArrayExtra("listePesees");
         float coefficient = getIntent().getFloatExtra("coefficient", -1);
 
-        resultatArticleViewModel.init(listePesees, article.getPoidsBrut(), coefficient, article.getCode(), article.getNom(), numeroLot, codeOperateur, ddm, article.getPoidsNet(), article.getEan());
+        resultatArticleViewModel.init(listePesees, article.getPoidsBrut(), coefficient, article.getCode(), article.getNom(), numeroLot, codeOperateur, ddm, article.getPoidsNet(), article.getEan(), nombreVenues, article.getRendement());
 
         //Initialisation de l'objet DialogAlerteViewModel avec le contexte de l'activité
         dialogAlerteViewModel = new ViewModelProvider(this).get(DialogAlerteViewModel.class);

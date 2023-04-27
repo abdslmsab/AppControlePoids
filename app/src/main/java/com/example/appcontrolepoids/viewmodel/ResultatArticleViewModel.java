@@ -58,6 +58,8 @@ public class ResultatArticleViewModel extends ViewModel {
     private String ddm;
     private int poidsNet;
     private String eanArticle;
+    private int nombreVenues;
+    private int rendement;
     private final MutableLiveData<float[]> pesees = new MutableLiveData<>();
     public LiveData<Float> moyenne = Transformations.map(pesees, _pesees -> {
         float somme = 0;
@@ -99,12 +101,15 @@ public class ResultatArticleViewModel extends ViewModel {
     public MutableLiveData<Float> coefficient = new MutableLiveData<>();
 
     public MutableLiveData<Float> formule = new CombinedThreeLiveData<>(poidsBrut, coefficient, ecartType,
-            (_poidsBrut, _coefficient, _ecartType) -> _poidsBrut + (_coefficient * _ecartType)
+            (_poidsBrut, _coefficient, _ecartType) -> {
+                float resultat = _poidsBrut + (_coefficient * _ecartType);
+                return Math.round(resultat * 100.0) / 100.0f;
+            }
     );
-
+    
     public LiveData<Boolean> lotValide = new CombinedTwoLiveData<>(moyenne, formule, (_moyenne, _formule) -> _moyenne >= _formule);
 
-    public void init(float[] pesees, int poidsBrut, float coefficient, String codeArticle, String nomArticle, String numeroLot, String codeOperateur, String ddm, int poidsNet, String eanArticle) {
+    public void init(float[] pesees, int poidsBrut, float coefficient, String codeArticle, String nomArticle, String numeroLot, String codeOperateur, String ddm, int poidsNet, String eanArticle, int nombreVenues, int rendement) {
         this.pesees.postValue(pesees);
         this.poidsBrut.postValue(poidsBrut);
         this.coefficient.postValue(coefficient);
@@ -115,6 +120,8 @@ public class ResultatArticleViewModel extends ViewModel {
         this.ddm = ddm;
         this.poidsNet = poidsNet;
         this.eanArticle = eanArticle;
+        this.nombreVenues = nombreVenues;
+        this.rendement = rendement;
     }
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -130,56 +137,44 @@ public class ResultatArticleViewModel extends ViewModel {
             Document document = new Document(pdfDoc, PageSize.A4);
             document.setBackgroundColor(ColorConstants.WHITE);
 
-            Table tableControle = new Table(2);
-            tableControle.useAllAvailableWidth();
-
-            Cell controle = new Cell().add(new Paragraph("Contrôle réalisé le " + dateFormat.format(new Date())));
-            Cell operateur = new Cell().add(new Paragraph("Code opérateur : " + codeOperateur)).setTextAlignment(TextAlignment.RIGHT);
-
-            controle.setBorder(Border.NO_BORDER);
-            operateur.setBorder(Border.NO_BORDER);
-
-            tableControle.addCell(controle);
-            tableControle.addCell(operateur);
-
-            document.add(tableControle);
-
-            Paragraph titre = new Paragraph("\n" + codeArticle + " - " + nomArticle + "\n")
+            Paragraph titre = new Paragraph(codeArticle + " - " + nomArticle + "\n")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setBold()
-                    .setFontSize(17);
+                    .setFontSize(25);
             document.add(titre);
 
             Paragraph ean = new Paragraph(eanArticle + "\n\n")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setBold()
-                    .setFontSize(14);
+                    .setFontSize(16);
             document.add(ean);
 
             //Crée le tableau à une ligne et deux colonnes
-            Table tableInfos = new Table(2);
+            Table tableInfos = new Table(3);
 
-            //Rend le fond du tableau transparent
-            tableInfos.setWidth(UnitValue.createPercentValue(80));
+            tableInfos.useAllAvailableWidth();
             tableInfos.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
             //Crée les cellules du tableau
-            Cell cell1 = new Cell().add(new Paragraph("DDM : " + ddm));
-            Cell cell2 = new Cell().add(new Paragraph("Lot n°" + numeroLot));
-            Cell cell3 = new Cell().add(new Paragraph("Poids net : " + poidsNet + " g"));
-            Cell cell4 = new Cell().add(new Paragraph("Poids brut : " + poidsBrut.getValue() + " g"));
+            Cell cell1 = new Cell().add(new Paragraph("Lot n°" + numeroLot));
+            Cell cell2 = new Cell().add(new Paragraph("DDM : " + ddm));
+            Cell cell3 = new Cell().add(new Paragraph("Taille lot : " + nombreVenues * rendement));
+            Cell cell4 = new Cell().add(new Paragraph("Poids net : " + poidsNet + " g"));
+            Cell cell5 = new Cell().add(new Paragraph("Poids brut : " + poidsBrut.getValue() + " g"));
 
             //Rend les bordures des cellules invisibles
             cell1.setBorder(Border.NO_BORDER);
             cell2.setBorder(Border.NO_BORDER);
             cell3.setBorder(Border.NO_BORDER);
             cell4.setBorder(Border.NO_BORDER);
+            cell5.setBorder(Border.NO_BORDER);
 
             //Ajoute les cellules au tableau
             tableInfos.addCell(cell1);
             tableInfos.addCell(cell2);
             tableInfos.addCell(cell3);
             tableInfos.addCell(cell4);
+            tableInfos.addCell(cell5);
 
             //Ajoute le tableau au document
             document.add(tableInfos);
@@ -197,7 +192,7 @@ public class ResultatArticleViewModel extends ViewModel {
 
             int peseeNumero = 1;
             for (float p : listPesees) {
-                Cell cell = new Cell().add(new Paragraph(String.format(Locale.FRANCE, "%02d : %.2f", peseeNumero, p)).setTextAlignment(TextAlignment.JUSTIFIED));
+                Cell cell = new Cell().add(new Paragraph(String.format(Locale.FRANCE, "%02d : %.1f", peseeNumero, p)).setTextAlignment(TextAlignment.JUSTIFIED));
                 cell.setBorder(Border.NO_BORDER);
                 tablePesees.addCell(cell);
                 peseeNumero++;
@@ -212,11 +207,11 @@ public class ResultatArticleViewModel extends ViewModel {
 
             Table tableResultat = new Table(4);
 
-            Cell cellule1 = new Cell().add(new Paragraph("Poids cible").setBold());
+            Cell cellule1 = new Cell().add(new Paragraph("Critère d'acceptation").setBold());
             Cell cellule2 = new Cell().add(new Paragraph("Moyenne").setBold());
             Cell cellule3 = new Cell().add(new Paragraph("Ecart-type").setBold());
             Cell cellule4 = new Cell().add(new Paragraph("Variance").setBold());
-            Cell cellule5 = new Cell().add(new Paragraph(poidsBrut.getValue() + " g"));
+            Cell cellule5 = new Cell().add(new Paragraph(String.valueOf(formule.getValue())));
             Cell cellule6 = new Cell().add(new Paragraph(String.valueOf(moyenne.getValue())));
             Cell cellule7 = new Cell().add(new Paragraph(String.valueOf(ecartType.getValue())));
             Cell cellule8 = new Cell().add(new Paragraph(String.valueOf(variance.getValue())));
@@ -230,18 +225,31 @@ public class ResultatArticleViewModel extends ViewModel {
             tableResultat.addCell(cellule7);
             tableResultat.addCell(cellule8);
 
-            tableResultat.setWidth(UnitValue.createPercentValue(80));
-            tableResultat.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            tableResultat.useAllAvailableWidth();
 
             document.add(tableResultat);
 
             DeviceRgb greenColor = new DeviceRgb(67, 160, 71);
-            Paragraph validation = new Paragraph("\nLOT VALIDÉ")
+            Paragraph validation = new Paragraph("\nLOT VALIDÉ | Moyenne des pesées > Critère d'acceptation")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setBold()
                     .setFontSize(17)
                     .setFontColor(greenColor);
             document.add(validation);
+
+            Table tableControle = new Table(2);
+            tableControle.useAllAvailableWidth();
+
+            Cell controle = new Cell().add(new Paragraph("Contrôle réalisé le " + dateFormat.format(new Date())));
+            Cell operateur = new Cell().add(new Paragraph("Code opérateur : " + codeOperateur)).setTextAlignment(TextAlignment.RIGHT);
+
+            controle.setBorder(Border.NO_BORDER);
+            operateur.setBorder(Border.NO_BORDER);
+
+            tableControle.addCell(controle);
+            tableControle.addCell(operateur);
+
+            document.add(tableControle);
 
             document.close();
         } catch (FileNotFoundException e) {
