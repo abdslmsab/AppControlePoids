@@ -153,19 +153,20 @@ public class ResultatArticleViewModel extends ViewModel {
                     .setFontSize(16);
             document.add(ean);
 
-            //Crée le tableau à une ligne et deux colonnes
-            Table tableInfos = new Table(3);
-
-            tableInfos.useAllAvailableWidth();
-            tableInfos.setHorizontalAlignment(HorizontalAlignment.CENTER);
+            //Crée le tableau à une ligne et trois colonnes
+            Table tableInfos = new Table(3).useAllAvailableWidth();
 
             //Crée les cellules du tableau
-            Cell cell1 = new Cell().add(new Paragraph("Code opérateur : " + codeOperateur));
-            Cell cell2 = new Cell().add(new Paragraph("Lot n°" + numeroLot));
+            Cell cell1 = new Cell().add(new Paragraph("Date du contrôle : " + dateFormat.format(new Date())));
+            Cell cell2 = new Cell().add(new Paragraph("\tLot n°" + numeroLot));
             Cell cell3 = new Cell().add(new Paragraph("DDM : " + ddm));
-            Cell cell4 = new Cell().add(new Paragraph("Poids net : " + poidsNet + " g"));
-            Cell cell5 = new Cell().add(new Paragraph("Poids brut : " + poidsBrut.getValue() + " g"));
-            Cell cell6 = new Cell().add(new Paragraph("Taille lot : " + nombreVenues * rendement));
+            Cell cell4 = new Cell().add(new Paragraph("Code opérateur : " + codeOperateur));
+            Cell cell5 = new Cell().add(new Paragraph("\tPoids net : " + poidsNet + " g"));
+            Cell cell6 = new Cell().add(new Paragraph("Poids brut : " + poidsBrut.getValue() + " g"));
+
+            //Définit la largeur de la première colonne à 40%
+            cell1.setWidth(UnitValue.createPercentValue(40));
+
 
             //Rend les bordures des cellules invisibles
             cell1.setBorder(Border.NO_BORDER);
@@ -186,7 +187,7 @@ public class ResultatArticleViewModel extends ViewModel {
             //Ajoute le tableau au document
             document.add(tableInfos);
 
-            document.add(new Paragraph("Liste des pesées\n").setBold());
+            document.add(new Paragraph("\nListe des pesées\n").setBold());
 
             List<Float> listPesees = new ArrayList<>();
             if (pesees.getValue() != null) {
@@ -227,14 +228,14 @@ public class ResultatArticleViewModel extends ViewModel {
 
             Table tableResultat = new Table(UnitValue.createPercentArray(4)).useAllAvailableWidth();
 
-            Cell cellule1 = new Cell().add(new Paragraph("Critère d'acceptation").setBold());
-            Cell cellule2 = new Cell().add(new Paragraph("Moyenne").setBold());
+            Cell cellule1 = new Cell().add(new Paragraph("Moyenne").setBold());
+            Cell cellule2 = new Cell().add(new Paragraph("Variance").setBold());
             Cell cellule3 = new Cell().add(new Paragraph("Ecart-type").setBold());
-            Cell cellule4 = new Cell().add(new Paragraph("Variance").setBold());
-            Cell cellule5 = new Cell().add(new Paragraph(String.valueOf(formule.getValue())));
-            Cell cellule6 = new Cell().add(new Paragraph(String.valueOf(moyenne.getValue())));
+            Cell cellule4 = new Cell().add(new Paragraph("Critère d'acceptation").setBold());
+            Cell cellule5 = new Cell().add(new Paragraph(String.valueOf(moyenne.getValue())));
+            Cell cellule6 = new Cell().add(new Paragraph(String.valueOf(variance.getValue())));
             Cell cellule7 = new Cell().add(new Paragraph(String.valueOf(ecartType.getValue())));
-            Cell cellule8 = new Cell().add(new Paragraph(String.valueOf(variance.getValue())));
+            Cell cellule8 = new Cell().add(new Paragraph(String.valueOf(formule.getValue())));
 
             tableResultat.addCell(cellule1);
             tableResultat.addCell(cellule2);
@@ -273,10 +274,6 @@ public class ResultatArticleViewModel extends ViewModel {
             tableValidation.addCell(cell);
 
             document.add(tableValidation);
-
-
-            Paragraph controle = new Paragraph("Contrôle réalisé le " + dateFormat.format(new Date()));
-            document.add(controle);
 
             document.close();
         } catch (FileNotFoundException e) {
