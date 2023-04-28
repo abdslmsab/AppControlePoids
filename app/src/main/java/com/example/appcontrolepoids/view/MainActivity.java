@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
 
                 Article articleTest = new Article("CAKE087", "CAKE 2 CERISES 340 G", "3333040008062", 340, 353, 144, "0001");
                 AppDatabase.getInstance().articleDao().insert(articleTest);
+                Article articleTestDeux = new Article("CAKE087", "CAKE 2 CERISES 340 G", "1111111111111", 3, 6, 144, "0001");
+                AppDatabase.getInstance().articleDao().insert(articleTestDeux);
             }
         }.start();
 

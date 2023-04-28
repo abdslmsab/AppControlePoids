@@ -27,13 +27,17 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvasConstants;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Div;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Tab;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.BorderRadius;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
@@ -54,7 +58,7 @@ public class ResultatArticleViewModel extends ViewModel {
     private String codeArticle;
     private String nomArticle;
     private String numeroLot;
-    private  String codeOperateur;
+    private String codeOperateur;
     private String ddm;
     private int poidsNet;
     private String eanArticle;
@@ -71,7 +75,7 @@ public class ResultatArticleViewModel extends ViewModel {
         float moyenne = somme / _pesees.length;
 
         //Arrondi le résultat à 2 chiffres après la virgule
-        return Math.round(moyenne * 100.0) / 100.0f;
+        return Math.round(moyenne * 10.0) / 10.0f;
     });
 
     public LiveData<Float> variance = new CombinedTwoLiveData<>(pesees, moyenne, (_pesees, _moyenne) -> {
@@ -85,7 +89,7 @@ public class ResultatArticleViewModel extends ViewModel {
         float variance = sommeEcartsCarres / _pesees.length;
 
         //Arrondi le résultat à 2 chiffres après la virgule
-        return Math.round(variance * 100.0) / 100.0f;
+        return Math.round(variance * 10.0) / 10.0f;
     });
 
 
@@ -93,7 +97,7 @@ public class ResultatArticleViewModel extends ViewModel {
         float ecartType = (float) Math.sqrt(_variance);
 
         //Arrondi le résultat à 2 chiffres après la virgule
-        return Math.round(ecartType * 100.0) / 100.0f;
+        return Math.round(ecartType * 10.0) / 10.0f;
     });
 
     public MutableLiveData<Integer> poidsBrut = new MutableLiveData<>();
@@ -103,10 +107,10 @@ public class ResultatArticleViewModel extends ViewModel {
     public MutableLiveData<Float> formule = new CombinedThreeLiveData<>(poidsBrut, coefficient, ecartType,
             (_poidsBrut, _coefficient, _ecartType) -> {
                 float resultat = _poidsBrut + (_coefficient * _ecartType);
-                return Math.round(resultat * 100.0) / 100.0f;
+                return Math.round(resultat * 10.0) / 10.0f;
             }
     );
-    
+
     public LiveData<Boolean> lotValide = new CombinedTwoLiveData<>(moyenne, formule, (_moyenne, _formule) -> _moyenne >= _formule);
 
     public void init(float[] pesees, int poidsBrut, float coefficient, String codeArticle, String nomArticle, String numeroLot, String codeOperateur, String ddm, int poidsNet, String eanArticle, int nombreVenues, int rendement) {
@@ -156,11 +160,12 @@ public class ResultatArticleViewModel extends ViewModel {
             tableInfos.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
             //Crée les cellules du tableau
-            Cell cell1 = new Cell().add(new Paragraph("Lot n°" + numeroLot));
-            Cell cell2 = new Cell().add(new Paragraph("DDM : " + ddm));
-            Cell cell3 = new Cell().add(new Paragraph("Taille lot : " + nombreVenues * rendement));
+            Cell cell1 = new Cell().add(new Paragraph("Code opérateur : " + codeOperateur));
+            Cell cell2 = new Cell().add(new Paragraph("Lot n°" + numeroLot));
+            Cell cell3 = new Cell().add(new Paragraph("DDM : " + ddm));
             Cell cell4 = new Cell().add(new Paragraph("Poids net : " + poidsNet + " g"));
             Cell cell5 = new Cell().add(new Paragraph("Poids brut : " + poidsBrut.getValue() + " g"));
+            Cell cell6 = new Cell().add(new Paragraph("Taille lot : " + nombreVenues * rendement));
 
             //Rend les bordures des cellules invisibles
             cell1.setBorder(Border.NO_BORDER);
@@ -168,6 +173,7 @@ public class ResultatArticleViewModel extends ViewModel {
             cell3.setBorder(Border.NO_BORDER);
             cell4.setBorder(Border.NO_BORDER);
             cell5.setBorder(Border.NO_BORDER);
+            cell6.setBorder(Border.NO_BORDER);
 
             //Ajoute les cellules au tableau
             tableInfos.addCell(cell1);
@@ -175,11 +181,12 @@ public class ResultatArticleViewModel extends ViewModel {
             tableInfos.addCell(cell3);
             tableInfos.addCell(cell4);
             tableInfos.addCell(cell5);
+            tableInfos.addCell(cell6);
 
             //Ajoute le tableau au document
             document.add(tableInfos);
 
-            document.add(new Paragraph("\nListe des pesées\n").setBold());
+            document.add(new Paragraph("Liste des pesées\n").setBold());
 
             List<Float> listPesees = new ArrayList<>();
             if (pesees.getValue() != null) {
@@ -203,9 +210,22 @@ public class ResultatArticleViewModel extends ViewModel {
 
             document.add(tablePesees);
 
-            document.add(new Paragraph("\nRésultat des pesées\n\n").setBold());
+            int nombrePesees = listPesees.size();
+            int nombreDeLignesAAjouter = (80 - nombrePesees) / 5;
+            int nombreLignes;
+            for (nombreLignes = 0; nombreLignes < nombreDeLignesAAjouter; nombreLignes++) {
+                Paragraph sautLigne = new Paragraph("\n");
+                document.add(sautLigne);
+            }
 
-            Table tableResultat = new Table(4);
+            if (listPesees.size() == 80){
+                Paragraph sautLigne = new Paragraph("\n\n");
+                document.add(sautLigne);
+            }
+
+            document.add(new Paragraph("Résultat des pesées\n").setBold());
+
+            Table tableResultat = new Table(UnitValue.createPercentArray(4)).useAllAvailableWidth();
 
             Cell cellule1 = new Cell().add(new Paragraph("Critère d'acceptation").setBold());
             Cell cellule2 = new Cell().add(new Paragraph("Moyenne").setBold());
@@ -225,31 +245,38 @@ public class ResultatArticleViewModel extends ViewModel {
             tableResultat.addCell(cellule7);
             tableResultat.addCell(cellule8);
 
-            tableResultat.useAllAvailableWidth();
-
             document.add(tableResultat);
 
             DeviceRgb greenColor = new DeviceRgb(67, 160, 71);
-            Paragraph validation = new Paragraph("\nLOT VALIDÉ | Moyenne des pesées > Critère d'acceptation\n\n")
+            Paragraph critere = new Paragraph("\nMoyenne des pesées > Critère d'acceptation")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setBold()
                     .setFontSize(17)
                     .setFontColor(greenColor);
-            document.add(validation);
+            document.add(critere);
 
-            Table tableControle = new Table(2);
-            tableControle.useAllAvailableWidth();
+            Table tableValidation = new Table(3);
+            tableValidation.setWidth(UnitValue.createPercentValue(30)).setHorizontalAlignment(HorizontalAlignment.CENTER);
 
-            Cell controle = new Cell().add(new Paragraph("Contrôle réalisé le " + dateFormat.format(new Date())));
-            Cell operateur = new Cell().add(new Paragraph("Code opérateur : " + codeOperateur)).setTextAlignment(TextAlignment.RIGHT);
+            Cell cell = new Cell()
+                    .add(new Paragraph("LOT VALIDÉ")
+                            .setTextAlignment(TextAlignment.CENTER)
+                            .setBold()
+                            .setFontSize(17)
+                            .setFontColor(greenColor)
+                            .setPadding(5f)
+                            .setBorder(new SolidBorder(greenColor, 2))
+                            .setBorderRadius(new BorderRadius(10f)));
 
-            controle.setBorder(Border.NO_BORDER);
-            operateur.setBorder(Border.NO_BORDER);
+            cell.setBorder(Border.NO_BORDER);
 
-            tableControle.addCell(controle);
-            tableControle.addCell(operateur);
+            tableValidation.addCell(cell);
 
-            document.add(tableControle);
+            document.add(tableValidation);
+
+
+            Paragraph controle = new Paragraph("Contrôle réalisé le " + dateFormat.format(new Date()));
+            document.add(controle);
 
             document.close();
         } catch (FileNotFoundException e) {
