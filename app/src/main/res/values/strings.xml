@@ -35,4 +35,5 @@
     <string name="saisir_rendement">Saisir le rendement</string>
     <string name="terminer">Terminer</string>
     <string name="ticket_pdf">Ticket PDF</string>
+    <string name="ajouter_modifier">Ajouter modifier</string>
 </resources>

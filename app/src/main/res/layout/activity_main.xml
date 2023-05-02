@@ -127,10 +127,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:text="@string/ajouter_article"
+                    android:onClick="@{() -> articleViewModel.boutonModifierAjouter()}"
+                    android:text="@string/ajouter_modifier"
                     android:backgroundTint="@color/blanc"
                     style="?attr/materialButtonOutlinedStyle"
-                    app:icon="@drawable/add_white_24dp"
+                    app:icon="@drawable/edit_white_24dp"
                     app:iconSize="43sp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -140,7 +141,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:enabled="@{articleViewModel.activerBoutonValider}"
-                    android:onClick="@{() -> articleViewModel.recupererArticle()}"
+                    android:onClick="@{() -> articleViewModel.boutonValider()}"
                     android:text="@string/valider"
                     app:icon="@drawable/done_white_24dp"
                     app:iconSize="43sp"/>

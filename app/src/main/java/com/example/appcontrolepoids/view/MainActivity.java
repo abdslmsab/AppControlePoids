@@ -55,27 +55,41 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
         //Définition du cycle de vie pour le Data Binding
         binding.setLifecycleOwner(this);
 
-        articleViewModel.articleExiste.observe(this, articleExiste -> {
-            if (articleExiste) {
-                Intent intent = new Intent(MainActivity.this, InformationsArticle.class);
-                intent.putExtra("article", articleViewModel.article.getValue());
-                articleViewModel.reinitialiserChamp();
-                startActivity(intent);
-            } else {
-                GestionnaireAlerte.showMyDialog(this, TypeAlerte.articleExistePas, dialogAlerteViewModel, this);
-            }
-        });
-
         //Initialisation de l'objet DialogAlerteViewModel avec le contexte de l'activité
         dialogAlerteViewModel = new ViewModelProvider(this).get(DialogAlerteViewModel.class);
 
-        //Permet d'afficher la pop-up d'alerte en fonction du type d'alerte
-        binding.boutonAjouter.setOnClickListener(v -> GestionnaireAlerte.showMyDialog(this,
-                TypeAlerte.verrouillageCode, dialogAlerteViewModel, this));
+        articleViewModel.articleExiste.observe(this, articleExiste -> {
+            if (articleViewModel.action == ArticleViewModel.ArticleAction.ACTION_VALIDER) {
+                if (articleExiste) {
+                    Intent intent = new Intent(MainActivity.this, InformationsArticle.class);
+                    intent.putExtra("article", articleViewModel.article.getValue());
+                    articleViewModel.reinitialiserChamp();
+                    startActivity(intent);
+                } else {
+                    GestionnaireAlerte.showMyDialog(this, TypeAlerte.articleExistePas, dialogAlerteViewModel, this);
+                }
+            } else if (articleViewModel.action == ArticleViewModel.ArticleAction.ACTION_MODIFIER_AJOUTER) {
+                if (Boolean.TRUE.equals(articleViewModel.estEanSaisiValide.getValue())) {
+                    GestionnaireAlerte.showMyDialog(this, TypeAlerte.verrouillageCode, dialogAlerteViewModel, this);
+                }
+            }
+        });
+
+        // Vérification du champ "EAN"
+        articleViewModel.estEanSaisiValide.observe(this, estEanSaisiValide -> {
+            if (!estEanSaisiValide) {
+                binding.texteEAN.setError("Le code barre saisi n'est pas conforme");
+            } else {
+                binding.texteEAN.setErrorEnabled(false);
+            }
+        });
 
         dialogAlerteViewModel.codeValide.observe(this, codeValide -> {
             if (codeValide) {
                 Intent intent = new Intent(MainActivity.this, AjouterArticle.class);
+                intent.putExtra("article", articleViewModel.article.getValue());
+                intent.putExtra("ean", articleViewModel.eanSaisi.getValue());
+                articleViewModel.reinitialiserChamp();
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Code faux !", Toast.LENGTH_LONG).show();

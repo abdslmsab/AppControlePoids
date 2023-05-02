@@ -46,6 +46,17 @@ public class AjouterArticle extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         dateViewModel.setDateActuelle(dateFormat.format(new Date()));
 
+        String ean = getIntent().getStringExtra("ean");
+        Article article = (Article) getIntent().getSerializableExtra("article");
+
+        if (article == null){
+            binding.titreAjouter.setText("Ajouter un article");
+            binding.eanArticleEditText.setText(ean);
+        } else {
+            binding.titreAjouter.setText("Modifier un article");
+            binding.eanArticleEditText.setText(article.getEan());
+        }
+
         //Lorsque l'on clique sur le bouton "Annuler" on ferme cette activité afin de revenir sur l'activité principale
         binding.boutonAnnuler.setOnClickListener(view -> {
             this.finish();
@@ -117,8 +128,8 @@ public class AjouterArticle extends AppCompatActivity {
         binding.boutonValider.setOnClickListener(view -> {
             ajouterArticleViewModel.verifierSaisiesValide();
             if(Boolean.TRUE.equals(ajouterArticleViewModel.estCodeOperateurValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estEanValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estNomValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estPoidsNetSaisiValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estPoidsBrutSaisiValide.getValue()) && Boolean.TRUE.equals(ajouterArticleViewModel.estRendementSaisiValide.getValue())) {
-                Article article = new Article(ajouterArticleViewModel.codeArticleSaisi.getValue(), ajouterArticleViewModel.nomSaisi.getValue(), ajouterArticleViewModel.eanSaisi.getValue(), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsNetSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsBrutSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.rendementSaisi.getValue())), ajouterArticleViewModel.codeOperateurSaisi.getValue());
-                ajouterArticleViewModel.insererArticle(article);
+                Article nouvelArticle = new Article(ajouterArticleViewModel.codeArticleSaisi.getValue(), ajouterArticleViewModel.nomSaisi.getValue(), ajouterArticleViewModel.eanSaisi.getValue(), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsNetSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsBrutSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.rendementSaisi.getValue())), ajouterArticleViewModel.codeOperateurSaisi.getValue());
+                ajouterArticleViewModel.insererArticle(nouvelArticle);
                 this.finish();
             }
         });

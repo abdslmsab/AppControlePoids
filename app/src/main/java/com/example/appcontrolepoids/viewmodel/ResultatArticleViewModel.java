@@ -157,7 +157,7 @@ public class ResultatArticleViewModel extends ViewModel {
             Table tableInfos = new Table(3).useAllAvailableWidth();
 
             //Crée les cellules du tableau
-            Cell cell1 = new Cell().add(new Paragraph("Date du contrôle : " + dateFormat.format(new Date())));
+            Cell cell1 = new Cell().add(new Paragraph("Date contrôle : " + dateFormat.format(new Date())));
             Cell cell2 = new Cell().add(new Paragraph("\tLot n°" + numeroLot));
             Cell cell3 = new Cell().add(new Paragraph("DDM : " + ddm));
             Cell cell4 = new Cell().add(new Paragraph("Code opérateur : " + codeOperateur));

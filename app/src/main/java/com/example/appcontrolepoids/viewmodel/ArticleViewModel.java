@@ -15,6 +15,13 @@ import java.util.Objects;
 
 public class ArticleViewModel extends ViewModel {
 
+    public enum ArticleAction { ACTION_MODIFIER_AJOUTER, ACTION_VALIDER };
+
+    public ArticleAction action;
+
+    //Permet de réagir à des évènements
+    public final ActionLiveData<Boolean> estEanSaisiValide = new ActionLiveData<>();
+
     //Texte ean saisi par l'utilisateur (MutableLiveData : valeur qui peut changer)
     public final MutableLiveData<String> eanSaisi = new MutableLiveData<>("");
     //Permet d'activer le bouton "Valider" seulement lorsqu'au moins 1 chiffre est entré (LiveData : valeur seulement observable)
@@ -39,5 +46,21 @@ public class ArticleViewModel extends ViewModel {
 
     public void reinitialiserChamp() {
         eanSaisi.setValue("");
+    }
+
+    public void verifierSaisieValide() {
+        estEanSaisiValide.trigger(() -> Transformations.map(eanSaisi, ean -> ean != null && ean.length() == 13));
+    }
+
+    public void boutonValider(){
+        action = ArticleAction.ACTION_VALIDER;
+        verifierSaisieValide();
+        recupererArticle();
+    }
+
+    public void boutonModifierAjouter(){
+        action = ArticleAction.ACTION_MODIFIER_AJOUTER;
+        verifierSaisieValide();
+        recupererArticle();
     }
 }
