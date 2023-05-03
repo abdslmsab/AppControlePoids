@@ -1,6 +1,7 @@
 package com.example.appcontrolepoids.viewmodel;
 
 import android.text.Editable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,12 +12,45 @@ import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.util.action.ActionLiveData;
 
+import java.util.Objects;
+
 public class AjouterArticleViewModel extends ViewModel {
+
+    public enum Mode { AJOUTER, MODIFIER };
+
+    private Mode mode;
+
+    private int idArticleExistant;
+
+    public int getIdArticleExistant() {
+        return idArticleExistant;
+    }
+
+    public MutableLiveData<String> titre = new MutableLiveData<>();
+
     //Texte codeOperateurSaisi saisi par l'utilisateur (MutableLiveData : valeur qui peut changer)
     public final MutableLiveData<String> codeOperateurSaisi = new MutableLiveData<>("");
 
     public void changementCodeOperateur(Editable texte) {
         codeOperateurSaisi.postValue(texte.toString());
+    }
+
+    public void init(String ean, Article article) {
+        if (article == null) {
+            mode = Mode.AJOUTER;
+            titre.postValue("Ajouter un article");
+            eanSaisi.postValue(ean);
+        } else {
+            mode = Mode.MODIFIER;
+            idArticleExistant = article.getId();
+            titre.postValue("Modifier un article");
+            eanSaisi.postValue(ean);
+            nomSaisi.postValue(article.getNom());
+            codeArticleSaisi.postValue(article.getCode());
+            poidsNetSaisi.postValue(String.valueOf(article.getPoidsNet()));
+            poidsBrutSaisi.postValue(String.valueOf(article.getPoidsBrut()));
+            rendementSaisi.postValue(String.valueOf(article.getRendement()));
+        }
     }
 
     //Permet de réagir à des évènements
@@ -82,6 +116,13 @@ public class AjouterArticleViewModel extends ViewModel {
     }
 
     public void insererArticle(Article article) {
-        AppDatabase.getInstance().articleDao().insert(article);
+        if (mode == Mode.MODIFIER) {
+            // Mettre à jour un article existant
+            article.setId(idArticleExistant);
+            AppDatabase.getInstance().articleDao().update(article);
+        } else {
+            // Insérer un nouvel article
+            AppDatabase.getInstance().articleDao().insert(article);
+        }
     }
 }

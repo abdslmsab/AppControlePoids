@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.appcontrolepoids.R;
@@ -49,13 +50,7 @@ public class AjouterArticle extends AppCompatActivity {
         String ean = getIntent().getStringExtra("ean");
         Article article = (Article) getIntent().getSerializableExtra("article");
 
-        if (article == null){
-            binding.titreAjouter.setText("Ajouter un article");
-            binding.eanArticleEditText.setText(ean);
-        } else {
-            binding.titreAjouter.setText("Modifier un article");
-            binding.eanArticleEditText.setText(article.getEan());
-        }
+        ajouterArticleViewModel.init(ean, article);
 
         //Lorsque l'on clique sur le bouton "Annuler" on ferme cette activité afin de revenir sur l'activité principale
         binding.boutonAnnuler.setOnClickListener(view -> {
@@ -131,6 +126,8 @@ public class AjouterArticle extends AppCompatActivity {
                 Article nouvelArticle = new Article(ajouterArticleViewModel.codeArticleSaisi.getValue(), ajouterArticleViewModel.nomSaisi.getValue(), ajouterArticleViewModel.eanSaisi.getValue(), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsNetSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsBrutSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.rendementSaisi.getValue())), ajouterArticleViewModel.codeOperateurSaisi.getValue());
                 ajouterArticleViewModel.insererArticle(nouvelArticle);
                 this.finish();
+                Intent intent = new Intent(AjouterArticle.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

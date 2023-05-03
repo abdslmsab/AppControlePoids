@@ -47,11 +47,13 @@
             style="@style/Theme.AppControlePoids.H1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ajouter_un_article"
+            android:text="@{ajouterArticleViewModel.titre}"
+            android:textAllCaps="true"
             app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ajouter un article" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/conteneurFormulaire"
