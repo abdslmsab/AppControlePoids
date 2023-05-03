@@ -122,4 +122,18 @@ public class Article implements Serializable {
     public void setCodeOperateur(String codeOperateur) {
         this.codeOperateur = codeOperateur;
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", nom='" + nom + '\'' +
+                ", ean='" + ean + '\'' +
+                ", poidsNet=" + poidsNet +
+                ", poidsBrut=" + poidsBrut +
+                ", rendement=" + rendement +
+                ", codeOperateur='" + codeOperateur + '\'' +
+                '}';
+    }
 }

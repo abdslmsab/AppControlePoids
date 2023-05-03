@@ -126,6 +126,7 @@ public class AjouterArticle extends AppCompatActivity {
                 Article nouvelArticle = new Article(ajouterArticleViewModel.codeArticleSaisi.getValue(), ajouterArticleViewModel.nomSaisi.getValue(), ajouterArticleViewModel.eanSaisi.getValue(), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsNetSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.poidsBrutSaisi.getValue())), Integer.parseInt(Objects.requireNonNull(ajouterArticleViewModel.rendementSaisi.getValue())), ajouterArticleViewModel.codeOperateurSaisi.getValue());
                 ajouterArticleViewModel.insererArticle(nouvelArticle);
                 this.finish();
+                Toast.makeText(this, "L'article a bien été enregistré dans la base de données", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(AjouterArticle.this, MainActivity.class);
                 startActivity(intent);
             }

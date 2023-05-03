@@ -23,6 +23,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements DialogAlerte.AlertDialogInterface {
 
+    private static boolean TEST_FIRST_RUN = true;
 
     private DialogAlerteViewModel dialogAlerteViewModel;
 
@@ -34,17 +35,20 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
 
         AppDatabase.initialiser(this);
         //Article servant de test
-        new Thread() {
-            @Override
-            public void run() {
-                AppDatabase.getInstance().articleDao().nukeTable();
+        if(TEST_FIRST_RUN) {
+            TEST_FIRST_RUN = false;
+            new Thread() {
+                @Override
+                public void run() {
+                    AppDatabase.getInstance().articleDao().nukeTable();
 
-                Article articleTest = new Article("CAKE087", "CAKE 2 CERISES 340 G", "3333040008062", 340, 353, 144, "0001");
-                AppDatabase.getInstance().articleDao().insert(articleTest);
-                Article articleTestDeux = new Article("CAKE087", "CAKE 2 CERISES 340 G", "1111111111111", 3, 6, 144, "0001");
-                AppDatabase.getInstance().articleDao().insert(articleTestDeux);
-            }
-        }.start();
+                    Article articleTest = new Article("CAKE087", "CAKE 2 CERISES 340 G", "3333040008062", 340, 353, 144, "0001");
+                    AppDatabase.getInstance().articleDao().insert(articleTest);
+                    Article articleTestDeux = new Article("CAKE087", "CAKE 2 CERISES 340 G", "1111111111111", 3, 6, 144, "0001");
+                    AppDatabase.getInstance().articleDao().insert(articleTestDeux);
+                }
+            }.start();
+        }
 
         //Initialisation de l'objet binding avec le layout activity_main.xml
         //Variable de liaison (binding) permettant d'accéder aux éléments de l'interface utilisateur
@@ -97,8 +101,6 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
             }
             dialogAlerteViewModel.reinitialiserCodeSaisi();
         });
-        //TODO: voir si on garde
-        binding.texteCode.requestFocus();
     }
 
     //Permet d'afficher une notification lorsque l'on clique sur le bouton principal de la pop-up d'alerte
