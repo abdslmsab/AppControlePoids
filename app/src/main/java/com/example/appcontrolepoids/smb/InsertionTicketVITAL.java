@@ -16,8 +16,8 @@ public class InsertionTicketVITAL {
         SMBClient client = new SMBClient();
 
         try {
-            Connection connection = client.connect("VM-GED");
-            AuthenticationContext ac = new AuthenticationContext("PRAMI", "".toCharArray(), "VITAL");
+            Connection connection = client.connect("");
+            AuthenticationContext ac = new AuthenticationContext("", "".toCharArray(), "");
             Session session = connection.authenticate(ac);
 
             // Connect to Share

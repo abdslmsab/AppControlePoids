@@ -13,10 +13,10 @@ public class InsertionTicketSAGETest {
         try {
             String serverName = "192.168.100.11";
             String dbName = "VITAL";
-            //String url = "jdbc:sqlserver://" +serverName + ":1433;DatabaseName=" + dbName + ";encrypt=true;trustServerCertificate=true;";
-            String url = "jdbc:sqlserver://VM-SQL;databaseName=VITAL;integratedSecurity=true;encrypt=true;trustServerCertificate=true;";
-            String user = "PRAMI";
-            String password = "PR170772";
+            String url = "jdbc:sqlserver://" +serverName + ":1433;DatabaseName=" + dbName + ";encrypt=true;trustServerCertificate=true;";
+            //String url = "jdbc:sqlserver://VM-SQL;databaseName=VITAL;integratedSecurity=true;encrypt=true;trustServerCertificate=true;";
+            String user = "apps";
+            String password = "apps@VITAL31";
             connection = DriverManager.getConnection(url, user, password);
             if (connection != null) {
                 DatabaseMetaData dm = (DatabaseMetaData) connection.getMetaData();
