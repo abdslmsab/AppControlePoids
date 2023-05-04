@@ -1,10 +1,9 @@
-package com.example.appcontrolepoids.insertion;
+package com.example.appcontrolepoids.sage;
 
 import android.os.Environment;
 
 import com.example.appcontrolepoids.model.Article;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class InsertionTicket {
+public class InsertionTicketSAGE {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
