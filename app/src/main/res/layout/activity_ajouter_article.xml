@@ -86,6 +86,7 @@
                 app:counterMaxLength="13"
                 app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:errorEnabled="true"
+                android:enabled="@{ajouterArticleViewModel.estModeAjouter()}"
                 app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
                 app:hintTextColor="@color/noir"

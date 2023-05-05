@@ -96,9 +96,9 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="13"
                 app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
-                app:endIconDrawable="@drawable/photo_camera_white_24dp"
+                app:endIconDrawable="@drawable/clear_white_24dp"
                 app:iconSize="43sp"
-                app:endIconMode="custom">
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/texte_code"

@@ -23,10 +23,6 @@ public class AjouterArticleViewModel extends ViewModel {
 
     private int idArticleExistant;
 
-    public int getIdArticleExistant() {
-        return idArticleExistant;
-    }
-
     public MutableLiveData<String> titre = new MutableLiveData<>();
 
     //Texte codeOperateurSaisi saisi par l'utilisateur (MutableLiveData : valeur qui peut changer)
@@ -52,6 +48,11 @@ public class AjouterArticleViewModel extends ViewModel {
             poidsBrutSaisi.postValue(String.valueOf(article.getPoidsBrut()));
             rendementSaisi.postValue(String.valueOf(article.getRendement()));
         }
+    }
+
+    //Permet de rendre la modification de l'EAN impossible s'il existe dans la BDD
+    public boolean estModeAjouter(){
+        return mode != Mode.MODIFIER;
     }
 
     //Permet de réagir à des évènements
