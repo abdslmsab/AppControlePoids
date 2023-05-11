@@ -42,6 +42,7 @@ import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.MalformedURLException;
@@ -62,8 +63,7 @@ public class ResultatArticleViewModel extends ViewModel {
     private String ddm;
     private int poidsNet;
     private String eanArticle;
-    private int nombreVenues;
-    private int rendement;
+
     private final MutableLiveData<float[]> pesees = new MutableLiveData<>();
     public LiveData<Float> moyenne = Transformations.map(pesees, _pesees -> {
         float somme = 0;
@@ -113,7 +113,7 @@ public class ResultatArticleViewModel extends ViewModel {
 
     public LiveData<Boolean> lotValide = new CombinedTwoLiveData<>(moyenne, formule, (_moyenne, _formule) -> _moyenne >= _formule);
 
-    public void init(float[] pesees, int poidsBrut, float coefficient, String codeArticle, String nomArticle, String numeroLot, String codeOperateur, String ddm, int poidsNet, String eanArticle, int nombreVenues, int rendement) {
+    public void init(float[] pesees, int poidsBrut, float coefficient, String codeArticle, String nomArticle, String numeroLot, String codeOperateur, String ddm, int poidsNet, String eanArticle) {
         this.pesees.postValue(pesees);
         this.poidsBrut.postValue(poidsBrut);
         this.coefficient.postValue(coefficient);
@@ -124,18 +124,13 @@ public class ResultatArticleViewModel extends ViewModel {
         this.ddm = ddm;
         this.poidsNet = poidsNet;
         this.eanArticle = eanArticle;
-        this.nombreVenues = nombreVenues;
-        this.rendement = rendement;
     }
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-    public void genererPDF() {
-        String fileName = codeArticle + "-" + numeroLot + ".pdf";
-        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString() + "/" + fileName;
-
+    public void genererPDF(File file) {
         try {
-            PdfWriter writer = new PdfWriter(pdfPath);
+            PdfWriter writer = new PdfWriter(file);
             PdfDocument pdfDoc = new PdfDocument(writer);
 
             Document document = new Document(pdfDoc, PageSize.A4);

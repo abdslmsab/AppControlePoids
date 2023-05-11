@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation 'commons-net:commons-net:3.8.0'
+    implementation 'net.sourceforge.jtds:jtds:1.3.1'
 
     //Fichiers SMB
     implementation 'com.hierynomus:smbj:0.11.5'

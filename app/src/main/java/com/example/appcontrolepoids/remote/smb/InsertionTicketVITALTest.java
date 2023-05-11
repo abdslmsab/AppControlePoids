@@ -1,4 +1,4 @@
-package com.example.appcontrolepoids.smb;
+package com.example.appcontrolepoids.remote.smb;
 
 import com.hierynomus.msfscc.fileinformation.FileIdBothDirectoryInformation;
 import com.hierynomus.smbj.SMBClient;
@@ -10,14 +10,14 @@ import com.hierynomus.smbj.utils.SmbFiles;
 
 import java.io.File;
 
-public class InsertionTicketVITAL {
+public class InsertionTicketVITALTest {
 
     public static void main(String[] args) {
         SMBClient client = new SMBClient();
 
         try {
-            Connection connection = client.connect("");
-            AuthenticationContext ac = new AuthenticationContext("", "".toCharArray(), "");
+            Connection connection = client.connect("VM-GED");
+            AuthenticationContext ac = new AuthenticationContext("PRAMI", "PR170772".toCharArray(), "VITAL");
             Session session = connection.authenticate(ac);
 
             // Connect to Share
@@ -26,13 +26,9 @@ public class InsertionTicketVITAL {
                 System.out.println("File : " + f.getFileName());
             }
 
-            //Below line is to use when run on android device only
-            //String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString() + "/CAKE087-23115.pdf";
-            //File file = new File(path);
-
             File file = new File("./build.gradle");
 
-            SmbFiles.copy(file, share, "/Qualité/Production/Controle Poids PF/didier.gradle", false);
+            SmbFiles.copy(file, share, "/Qualité/Production/Controle Poids PF/robert.gradle", false);
         } catch (Exception e) {
             System.out.println(e);
         }

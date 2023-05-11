@@ -1,4 +1,4 @@
-package com.example.appcontrolepoids.sage;
+package com.example.appcontrolepoids.remote.sage;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -14,9 +14,10 @@ public class InsertionTicketSAGETest {
             String serverName = "192.168.100.11";
             String dbName = "VITAL";
             String url = "jdbc:sqlserver://" +serverName + ":1433;DatabaseName=" + dbName + ";encrypt=true;trustServerCertificate=true;";
-            //String url = "jdbc:sqlserver://VM-SQL;databaseName=VITAL;integratedSecurity=true;encrypt=true;trustServerCertificate=true;";
             String user = "apps";
             String password = "apps@VITAL31";
+            String sql = "INSERT INTO F_ARTICLEMEDIA (AR_Ref, ME_Fichier, ME_Commentaire) VALUES (?, ?, ?)";
+
             connection = DriverManager.getConnection(url, user, password);
             if (connection != null) {
                 DatabaseMetaData dm = (DatabaseMetaData) connection.getMetaData();

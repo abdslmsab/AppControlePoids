@@ -1,24 +1,30 @@
 package com.example.appcontrolepoids.view;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.widget.ImageView;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appcontrolepoids.R;
-import com.example.appcontrolepoids.databinding.ActivityResultatsArticleBinding;
 import com.example.appcontrolepoids.databinding.ActivityTicketArticleBinding;
-import com.example.appcontrolepoids.viewmodel.ResultatArticleViewModel;
+import com.example.appcontrolepoids.model.Article;
+import com.example.appcontrolepoids.remote.sage.InsertionTicketSAGE;
+import com.example.appcontrolepoids.remote.smb.InsertionTicketVITAL;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TicketArticle extends AppCompatActivity {
@@ -33,18 +39,22 @@ public class TicketArticle extends AppCompatActivity {
 
         binding.setLifecycleOwner(this);
 
-        String pdfPath = getIntent().getStringExtra("pdf_path");
+        String pdfName = getIntent().getStringExtra("pdf_name");
+        String numeroLot = getIntent().getStringExtra("numeroLot");
 
-        File file = new File(pdfPath);
+        Article article = (Article) getIntent().getSerializableExtra("article");
+
+        List<String> fichiersASupprimer = new ArrayList<>();
+
+        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
+        File directory = contextWrapper.getDir(getFilesDir().getName(), Context.MODE_PRIVATE);
+        File file =  new File(directory, pdfName);
 
         //Vérifie si le fichier existe
         if (file.exists()) {
             try {
                 //Création d'un objet PdfRenderer à partir du fichier
                 PdfRenderer renderer = new PdfRenderer(ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY));
-
-                //N nombre de pages dans le PDF
-                final int pageCount = renderer.getPageCount();
 
                 //Sélection de la première page pour l'afficher dans ImageView
                 PdfRenderer.Page page = renderer.openPage(0);
@@ -76,9 +86,36 @@ public class TicketArticle extends AppCompatActivity {
         }
 
         binding.boutonTerminer.setOnClickListener(view -> {
+            if (!haveNetworkConnection()) {
+                Log.e("TicketArticle", "TicketArticle.java no internet");
+            } else {
+                if (file.exists()){
+                    new Thread(() -> {
+                        InsertionTicketVITAL.insererArticle(file);
+                        InsertionTicketSAGE.insererArticle(file, article.getCode());
+                        file.delete();
+                    }).start();
+                }
+            } /*else {
+                fichiersASupprimer.add(pdfPath);
+            }*/
+
             this.finish();
             Intent intent = new Intent(TicketArticle.this, MainActivity.class);
+            /*intent.putExtra("fichiersASupprimer", (ArrayList<String>) fichiersASupprimer);
+            intent.putExtra("numeroLot", numeroLot);
+            intent.putExtra("article", article);*/
             startActivity(intent);
         });
+    }
+
+    private boolean haveNetworkConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            return activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+        } else {
+                return false;
+        }
     }
 }

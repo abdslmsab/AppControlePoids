@@ -2,7 +2,6 @@ package com.example.appcontrolepoids.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +17,7 @@ import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.databinding.ActivityMainBinding;
 import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
+
 
 import java.util.Objects;
 
@@ -115,4 +115,40 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
     @Override
     public void alertDialogAlternativeOption(TypeAlerte type) {
     }
+    /*
+    private void supprimerFichiersEnAttente() {
+        ArrayList<String> fichiersASupprimer = getIntent().getStringArrayListExtra("fichiersASupprimer");
+
+        for (String filePath : fichiersASupprimer) {
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+        fichiersASupprimer.clear();
+    }
+
+    private boolean haveNetworkConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            return activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String numeroLot = getIntent().getStringExtra("numeroLot");
+        Article article = (Article) getIntent().getSerializableExtra("article");
+
+        if (haveNetworkConnection()){
+            InsertionTicketVITAL.insererArticle(article, numeroLot);
+            InsertionTicketSAGE.insererArticle(article, numeroLot);
+            supprimerFichiersEnAttente();
+        }
+    }*/
 }
