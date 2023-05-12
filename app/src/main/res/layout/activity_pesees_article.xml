@@ -118,7 +118,10 @@
                 app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="@id/conteneurPoids"
                 app:layout_constraintStart_toStartOf="@id/conteneurPoids"
-                app:layout_constraintTop_toBottomOf="@id/poids_brut">
+                app:layout_constraintTop_toBottomOf="@id/poids_brut"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/poids_brut_edit_text"

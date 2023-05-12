@@ -92,7 +92,10 @@
                 app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="@id/milieu"
                 app:layout_constraintStart_toStartOf="@id/ean_article"
-                app:layout_constraintTop_toBottomOf="@id/ean_article">
+                app:layout_constraintTop_toBottomOf="@id/ean_article"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ean_article_edit_text"
@@ -133,7 +136,10 @@
                 app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/code_operateur"
-                app:layout_constraintTop_toBottomOf="@id/code_operateur">
+                app:layout_constraintTop_toBottomOf="@id/code_operateur"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/code_operateur_edit_text"
@@ -174,7 +180,10 @@
                 app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="@id/milieu"
                 app:layout_constraintStart_toStartOf="@id/nom_article"
-                app:layout_constraintTop_toBottomOf="@id/nom_article">
+                app:layout_constraintTop_toBottomOf="@id/nom_article"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nom_article_edit_text"
@@ -222,7 +231,10 @@
                 app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/code_article"
-                app:layout_constraintTop_toBottomOf="@id/code_article">
+                app:layout_constraintTop_toBottomOf="@id/code_article"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/code_article_edit_text"
@@ -263,7 +275,10 @@
                 app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="@id/milieu"
                 app:layout_constraintStart_toStartOf="@id/poids_net"
-                app:layout_constraintTop_toBottomOf="@id/poids_net">
+                app:layout_constraintTop_toBottomOf="@id/poids_net"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/poids_net_edit_text"
@@ -304,7 +319,10 @@
                 app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/poids_brut"
-                app:layout_constraintTop_toBottomOf="@id/poids_brut">
+                app:layout_constraintTop_toBottomOf="@id/poids_brut"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/poids_brut_edit_text"
@@ -345,7 +363,10 @@
                 app:hintTextColor="@color/noir"
                 app:layout_constraintEnd_toEndOf="@id/milieu"
                 app:layout_constraintStart_toStartOf="@id/rendement"
-                app:layout_constraintTop_toBottomOf="@id/rendement">
+                app:layout_constraintTop_toBottomOf="@id/rendement"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:iconSize="43sp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/rendement_edit_text"
