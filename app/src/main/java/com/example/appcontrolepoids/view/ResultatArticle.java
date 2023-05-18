@@ -1,12 +1,7 @@
 package com.example.appcontrolepoids.view;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +19,6 @@ import com.example.appcontrolepoids.remote.PathsConstants;
 import com.example.appcontrolepoids.viewmodel.ResultatArticleViewModel;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class ResultatArticle extends AppCompatActivity implements DialogAlerte.AlertDialogInterface {

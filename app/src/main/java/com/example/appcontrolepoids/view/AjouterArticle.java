@@ -1,22 +1,18 @@
 package com.example.appcontrolepoids.view;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.example.appcontrolepoids.R;
-import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.databinding.ActivityAjouterArticleBinding;
-import com.example.appcontrolepoids.databinding.ActivityPeseesArticleBinding;
 import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.viewmodel.AjouterArticleViewModel;
 import com.example.appcontrolepoids.viewmodel.DateViewModel;
-import com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

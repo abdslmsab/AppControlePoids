@@ -1,10 +1,7 @@
 package com.example.appcontrolepoids.viewmodel;
 
 import android.text.Editable;
-import android.util.Log;
-import android.widget.Toast;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
@@ -12,8 +9,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.util.action.ActionLiveData;
-
-import java.util.Objects;
 
 public class AjouterArticleViewModel extends ViewModel {
 

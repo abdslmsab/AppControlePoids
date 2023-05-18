@@ -6,7 +6,6 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.appcontrolepoids.util.func.QuadriFunction;
-import com.example.appcontrolepoids.util.func.TriFunction;
 
 public class CombinedFourLiveData<L1, L2, L3, L4, R> extends MediatorLiveData<R> {
 

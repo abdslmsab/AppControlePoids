@@ -7,8 +7,6 @@ import androidx.lifecycle.Observer;
 
 import com.example.appcontrolepoids.util.func.TriFunction;
 
-import java.util.function.BiFunction;
-
 public class CombinedThreeLiveData<L1, L2, L3, R> extends MediatorLiveData<R> {
 
     private final TriFunction<L1, L2, L3, R> combine;

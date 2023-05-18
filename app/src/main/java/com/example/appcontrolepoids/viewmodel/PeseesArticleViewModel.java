@@ -1,7 +1,6 @@
 package com.example.appcontrolepoids.viewmodel;
 
 import android.text.Editable;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

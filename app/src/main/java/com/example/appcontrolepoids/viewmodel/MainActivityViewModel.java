@@ -1,8 +1,5 @@
 package com.example.appcontrolepoids.viewmodel;
 
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -13,7 +10,6 @@ import com.example.appcontrolepoids.util.Async;
 
 import java.io.File;
 import java.net.UnknownHostException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.regex.Matcher;

@@ -1,13 +1,10 @@
 package com.example.appcontrolepoids.view;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,18 +20,10 @@ import com.example.appcontrolepoids.alertdialog.TypeAlerte;
 import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.databinding.ActivityMainBinding;
 import com.example.appcontrolepoids.model.Article;
-import com.example.appcontrolepoids.remote.PathsConstants;
-import com.example.appcontrolepoids.remote.sage.InsertionTicketSAGE;
-import com.example.appcontrolepoids.remote.smb.InsertionTicketVITAL;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 import com.example.appcontrolepoids.viewmodel.MainActivityViewModel;
 
-
-import java.io.File;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements DialogAlerte.AlertDialogInterface {
 

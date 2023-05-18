@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.databinding.ActivityInformationsArticleBinding;
 import com.example.appcontrolepoids.model.Article;
-import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
 import com.example.appcontrolepoids.viewmodel.DateViewModel;
 import com.example.appcontrolepoids.viewmodel.InformationsArticleViewModel;
 import com.redmadrobot.inputmask.MaskedTextChangedListener;
@@ -19,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class InformationsArticle extends AppCompatActivity {
     @Override

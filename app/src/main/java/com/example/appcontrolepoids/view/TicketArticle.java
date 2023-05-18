@@ -1,16 +1,10 @@
 package com.example.appcontrolepoids.view;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,15 +12,10 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.databinding.ActivityTicketArticleBinding;
-import com.example.appcontrolepoids.model.Article;
 import com.example.appcontrolepoids.remote.PathsConstants;
-import com.example.appcontrolepoids.remote.sage.InsertionTicketSAGE;
-import com.example.appcontrolepoids.remote.smb.InsertionTicketVITAL;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class TicketArticle extends AppCompatActivity {

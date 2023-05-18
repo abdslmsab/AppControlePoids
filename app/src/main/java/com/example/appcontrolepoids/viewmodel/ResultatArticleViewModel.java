@@ -1,41 +1,22 @@
 package com.example.appcontrolepoids.viewmodel;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.fonts.Font;
-import android.graphics.fonts.FontFamily;
-import android.os.Environment;
-import android.widget.Toast;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.util.CombinedThreeLiveData;
 import com.example.appcontrolepoids.util.CombinedTwoLiveData;
-import com.example.appcontrolepoids.view.ResultatArticle;
-import com.example.appcontrolepoids.view.TicketArticle;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvasConstants;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Div;
-import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Tab;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.BorderRadius;
 import com.itextpdf.layout.property.HorizontalAlignment;
@@ -44,15 +25,11 @@ import com.itextpdf.layout.property.UnitValue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class ResultatArticleViewModel extends ViewModel {
 
