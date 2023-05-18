@@ -1,9 +1,16 @@
 package com.example.appcontrolepoids.view;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,16 +23,26 @@ import com.example.appcontrolepoids.alertdialog.TypeAlerte;
 import com.example.appcontrolepoids.database.AppDatabase;
 import com.example.appcontrolepoids.databinding.ActivityMainBinding;
 import com.example.appcontrolepoids.model.Article;
+import com.example.appcontrolepoids.remote.PathsConstants;
+import com.example.appcontrolepoids.remote.sage.InsertionTicketSAGE;
+import com.example.appcontrolepoids.remote.smb.InsertionTicketVITAL;
 import com.example.appcontrolepoids.viewmodel.ArticleViewModel;
+import com.example.appcontrolepoids.viewmodel.MainActivityViewModel;
 
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements DialogAlerte.AlertDialogInterface {
 
     private static boolean TEST_FIRST_RUN = true;
 
     private DialogAlerteViewModel dialogAlerteViewModel;
+
+    private MainActivityViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
 
         AppDatabase.initialiser(this);
         //Article servant de test
-        if(TEST_FIRST_RUN) {
+        if (TEST_FIRST_RUN) {
             TEST_FIRST_RUN = false;
             new Thread() {
                 @Override
@@ -55,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         //Initialisation de l'objet ArticleViewModel avec le contexte de l'activité
         ArticleViewModel articleViewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         //Définition de l'objet articleViewModel comme variable dans le layout pour le Data Binding
         binding.setArticleViewModel(articleViewModel);
         //Définition du cycle de vie pour le Data Binding
@@ -101,6 +119,16 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
             }
             dialogAlerteViewModel.reinitialiserCodeSaisi();
         });
+
+        mainActivityViewModel.messageErreur.observe(this, messageErreur -> {
+            new AlertDialog.Builder(this)
+                    .setMessage(messageErreur)
+                    .show();
+        });
+
+        mainActivityViewModel.messageInfos.observe(this, messageInfos -> {
+            Toast.makeText(this, messageInfos, Toast.LENGTH_LONG).show();
+        });
     }
 
     //Permet d'afficher une notification lorsque l'on clique sur le bouton principal de la pop-up d'alerte
@@ -114,18 +142,6 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
     //Permet d'afficher une notification lorsque l'on clique sur le bouton alternatif de la pop-up d'alerte
     @Override
     public void alertDialogAlternativeOption(TypeAlerte type) {
-    }
-    /*
-    private void supprimerFichiersEnAttente() {
-        ArrayList<String> fichiersASupprimer = getIntent().getStringArrayListExtra("fichiersASupprimer");
-
-        for (String filePath : fichiersASupprimer) {
-            File file = new File(filePath);
-            if (file.exists()) {
-                file.delete();
-            }
-        }
-        fichiersASupprimer.clear();
     }
 
     private boolean haveNetworkConnection() {
@@ -142,13 +158,12 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
     protected void onResume() {
         super.onResume();
 
-        String numeroLot = getIntent().getStringExtra("numeroLot");
-        Article article = (Article) getIntent().getSerializableExtra("article");
+        mainActivityViewModel.synchroniserPDFs(haveNetworkConnection());
+    }
 
-        if (haveNetworkConnection()){
-            InsertionTicketVITAL.insererArticle(article, numeroLot);
-            InsertionTicketSAGE.insererArticle(article, numeroLot);
-            supprimerFichiersEnAttente();
-        }
-    }*/
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainActivityViewModel = null;
+    }
 }

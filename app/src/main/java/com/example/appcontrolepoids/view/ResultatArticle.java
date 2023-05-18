@@ -20,6 +20,7 @@ import com.example.appcontrolepoids.alertdialog.GestionnaireAlerte;
 import com.example.appcontrolepoids.alertdialog.TypeAlerte;
 import com.example.appcontrolepoids.databinding.ActivityResultatsArticleBinding;
 import com.example.appcontrolepoids.model.Article;
+import com.example.appcontrolepoids.remote.PathsConstants;
 import com.example.appcontrolepoids.viewmodel.ResultatArticleViewModel;
 
 import java.io.File;
@@ -68,15 +69,11 @@ public class ResultatArticle extends AppCompatActivity implements DialogAlerte.A
                 Intent intent = new Intent(ResultatArticle.this, TicketArticle.class);
                 //On génère le PDF
                 String pdfName = article.getCode() + "-" + numeroLot + ".pdf";
-                ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-                File directory = contextWrapper.getDir(getFilesDir().getName(), Context.MODE_PRIVATE);
-                File file =  new File(directory, pdfName);
+                File file =  new File(PathsConstants.LOCAL_STORAGE, pdfName);
 
                 resultatArticleViewModel.genererPDF(file);
                 Toast.makeText(this, "PDF généré dans le fichier 'Documents' de la tablette", Toast.LENGTH_LONG).show();
                 intent.putExtra("pdf_name", pdfName);
-                intent.putExtra("numeroLot", numeroLot);
-                intent.putExtra("article", article);
                 startActivity(intent);
             } else {
                 GestionnaireAlerte.showMyDialog(this, TypeAlerte.verrouillageCode, dialogAlerteViewModel, this);

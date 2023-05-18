@@ -9,25 +9,22 @@ import com.hierynomus.smbj.share.DiskShare;
 import com.hierynomus.smbj.utils.SmbFiles;
 
 import java.io.File;
+import java.io.IOException;
 
 public class InsertionTicketVITAL {
 
-    public static void insererArticle(File file) {
+    public static void insererArticle(File file) throws IOException {
         SMBClient client = new SMBClient();
 
-        try {
-            Connection connection = client.connect("VM-GED");
-            AuthenticationContext ac = new AuthenticationContext("PRAMI", "PR170772".toCharArray(), "VITAL");
-            Session session = connection.authenticate(ac);
+        Connection connection = client.connect("VM-GED");
+        AuthenticationContext ac = new AuthenticationContext("PRAMI", "PR170772".toCharArray(), "VITAL");
+        Session session = connection.authenticate(ac);
 
-            // Connexion à Share
-            DiskShare share = (DiskShare) session.connectShare("public$");
+        // Connexion à Share
+        DiskShare share = (DiskShare) session.connectShare("public$");
 
-            String destinationPath = PathsConstants.SMB_DESTINATION_PATH + file.getName();
+        String destinationPath = PathsConstants.SMB_DESTINATION_PATH + file.getName();
 
-            SmbFiles.copy(file, share, destinationPath, false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SmbFiles.copy(file, share, destinationPath, false);
     }
 }

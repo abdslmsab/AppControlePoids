@@ -8,6 +8,7 @@ import android.graphics.pdf.PdfRenderer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.appcontrolepoids.R;
 import com.example.appcontrolepoids.databinding.ActivityTicketArticleBinding;
 import com.example.appcontrolepoids.model.Article;
+import com.example.appcontrolepoids.remote.PathsConstants;
 import com.example.appcontrolepoids.remote.sage.InsertionTicketSAGE;
 import com.example.appcontrolepoids.remote.smb.InsertionTicketVITAL;
 
@@ -40,15 +42,8 @@ public class TicketArticle extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         String pdfName = getIntent().getStringExtra("pdf_name");
-        String numeroLot = getIntent().getStringExtra("numeroLot");
 
-        Article article = (Article) getIntent().getSerializableExtra("article");
-
-        List<String> fichiersASupprimer = new ArrayList<>();
-
-        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-        File directory = contextWrapper.getDir(getFilesDir().getName(), Context.MODE_PRIVATE);
-        File file =  new File(directory, pdfName);
+        File file =  new File(PathsConstants.LOCAL_STORAGE, pdfName);
 
         //Vérifie si le fichier existe
         if (file.exists()) {
@@ -86,36 +81,9 @@ public class TicketArticle extends AppCompatActivity {
         }
 
         binding.boutonTerminer.setOnClickListener(view -> {
-            if (!haveNetworkConnection()) {
-                Log.e("TicketArticle", "TicketArticle.java no internet");
-            } else {
-                if (file.exists()){
-                    new Thread(() -> {
-                        InsertionTicketVITAL.insererArticle(file);
-                        InsertionTicketSAGE.insererArticle(file, article.getCode());
-                        file.delete();
-                    }).start();
-                }
-            } /*else {
-                fichiersASupprimer.add(pdfPath);
-            }*/
-
             this.finish();
             Intent intent = new Intent(TicketArticle.this, MainActivity.class);
-            /*intent.putExtra("fichiersASupprimer", (ArrayList<String>) fichiersASupprimer);
-            intent.putExtra("numeroLot", numeroLot);
-            intent.putExtra("article", article);*/
             startActivity(intent);
         });
-    }
-
-    private boolean haveNetworkConnection() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null) {
-            return activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
-        } else {
-                return false;
-        }
     }
 }

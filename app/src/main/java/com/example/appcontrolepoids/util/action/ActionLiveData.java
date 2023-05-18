@@ -6,14 +6,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.appcontrolepoids.util.Async;
+
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
 public class ActionLiveData<T> extends MediatorLiveData<T> {
-
-    private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(4);
 
     private LiveData<T> source;
 
@@ -41,7 +39,7 @@ public class ActionLiveData<T> extends MediatorLiveData<T> {
      */
     public void trigger(@NonNull Action<T> action) {
         FutureTask<LiveData<T>> future = new FutureTask<>(action::action);
-        EXECUTOR_SERVICE.execute(future);
+        Async.EXECUTOR_SERVICE.execute(future);
 
         try {
             source = future.get();
