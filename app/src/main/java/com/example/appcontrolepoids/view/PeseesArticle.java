@@ -1,10 +1,19 @@
 package com.example.appcontrolepoids.view;
 
+import static android.content.ContentValues.TAG;
+
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +32,7 @@ import com.example.appcontrolepoids.alertdialog.GestionnaireAlerte;
 import com.example.appcontrolepoids.alertdialog.TypeAlerte;
 import com.example.appcontrolepoids.databinding.ActivityPeseesArticleBinding;
 import com.example.appcontrolepoids.model.Article;
+import com.example.appcontrolepoids.util.HexDump;
 import com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
@@ -32,6 +42,9 @@ import com.redmadrobot.inputmask.MaskedTextChangedListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +56,8 @@ public class PeseesArticle extends AppCompatActivity implements DialogAlerte.Ale
     private PeseesArticleViewModel peseesArticleViewModel;
     private DialogAlerteViewModel dialogAlerteViewModel;
     private ActivityPeseesArticleBinding binding;
+    private static final int READ_WAIT_MILLIS = 2000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +152,57 @@ public class PeseesArticle extends AppCompatActivity implements DialogAlerte.Ale
                 startActivity(intent);
             }
         });
+
+        /*
+            //Partie RS232 vers USB-C
+
+        // Trouve tous les pilotes disponibles à partir des périphériques connectés
+        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
+        Log.d("USB", "Liste des pilotes disponibles : " + Arrays.toString(availableDrivers.toArray()));
+
+        if (availableDrivers.isEmpty()) {
+            return;
+        }
+
+        // Ouvre une connexion avec le premier pilote disponible
+        UsbSerialDriver driver = availableDrivers.get(0);
+        Log.d("USB", "Premier pilote : " + availableDrivers.get(0));
+
+        UsbDeviceConnection connection = manager.openDevice(driver.getDevice());
+        if (connection == null) {
+            return;
+        }
+
+        UsbSerialPort port = driver.getPorts().get(0); // La plupart des appareils n'ont qu'un seul port (port 0)
+        try {
+            port.open(connection);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            port.setParameters(9600, UsbSerialPort.DATABITS_8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            // Crée un tableau pour stocker les données lues
+            byte[] buffer = new byte[1024];
+            int len = port.read(buffer, 1000); // Lit les données avec un délai de 1000 millisecondes
+
+            // Convertir les données lues en chaîne
+            String data = new String(buffer, 0, len);
+
+            // Affichez les données lues
+            Log.d("USB", "Données lues : " + data);
+
+            // Affichez les données de poids dans le champ "poids_brut_edit_text" de la vue "PeseesArticle"
+            binding.poidsBrutEditText.setText(data);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+         */
     }
 
     @Override
@@ -169,17 +235,30 @@ public class PeseesArticle extends AppCompatActivity implements DialogAlerte.Ale
 
         // Trouve tous les pilotes disponibles à partir des périphériques connectés
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+
+        HashMap<String, UsbDevice> usbDevices = manager.getDeviceList();
+        Collection<UsbDevice> ite = usbDevices.values();
+        UsbDevice[] usbs = ite.toArray(new UsbDevice[]{});
+        for (UsbDevice usb : usbs) {
+            Log.d("USB","Les périphériques USB connectés sont : "+ usb.getDeviceName());
+        }
+
         List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
+        Log.d("USB", "Liste des pilotes disponibles : " + Arrays.toString(availableDrivers.toArray()));
+
         if (availableDrivers.isEmpty()) {
             return;
         }
 
         // Ouvre une connexion avec le premier pilote disponible
         UsbSerialDriver driver = availableDrivers.get(0);
+        Log.d("USB", "Premier pilote : " + availableDrivers.get(0));
+
         UsbDeviceConnection connection = manager.openDevice(driver.getDevice());
         if (connection == null) {
-            // Ajouter ici la gestion de UsbManager.requestPermission(driver.getDevice(), ..)
-            return;
+            Log.d("USB", "Impossible d'établir la connexion");
+        } else {
+            Log.d("USB", "Connexion établie");
         }
 
         UsbSerialPort port = driver.getPorts().get(0); // La plupart des appareils n'ont qu'un seul port (port 0)
@@ -196,22 +275,34 @@ public class PeseesArticle extends AppCompatActivity implements DialogAlerte.Ale
 
         try {
             // Crée un tableau pour stocker les données lues
-            byte[] buffer = new byte[1024];
-            int bytesRead = port.read(buffer, 1000); // Lit les données avec un délai de 1000 millisecondes
+            byte[] buffer = new byte[8192];
+            int len = port.read(buffer, READ_WAIT_MILLIS); // Lit les données avec un délai de 1000 millisecondes
+            receive(Arrays.copyOf(buffer, len));
+            Log.d("USB", "Nombre de bits lus : " + len);
+            if (len > 0) {
+                // Convertir les données lues en chaîne
+                String data = new String(buffer, 0, len);
+                // Affichez les données lues
+                Log.d("USB", "Données lues : " + data);
+            } else {
+                // Aucune donnée lue
+                Log.d("USB", "Aucune donnée lue");
+            }
 
-            // Convertir les données lues en chaîne
-            String data = new String(buffer, 0, bytesRead);
-
-            // Affichez les données lues
-            Log.d("USB", "Données lues : " + data);
-
-            // Affichez les données de poids dans le champ "poids_brut_edit_text" de la vue "PeseesArticle"
-            binding.poidsBrutEditText.setText(data);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         root.postDelayed(this, PERIOD);
+    }
+
+    private void receive(byte[] data) {
+        SpannableStringBuilder spn = new SpannableStringBuilder();
+        spn.append("receive " + data.length + " bytes\n");
+        if(data.length > 0)
+            spn.append(HexDump.dumpHexString(data)).append("\n");
+        // Affichez les données de poids dans le champ "poids_brut_edit_text" de la vue "PeseesArticle"
+        binding.poidsBrutEditText.append(spn);
     }
 
     @Override
