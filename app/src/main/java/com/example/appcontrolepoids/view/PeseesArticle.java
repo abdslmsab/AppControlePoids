@@ -91,7 +91,7 @@ public class PeseesArticle extends AppCompatActivity implements DialogAlerte.Ale
         });
 
         // Vérification des données aberrantes
-        peseesArticleViewModel.estPeseeAberrante.observe(this, estPeseeAberrante -> {
+        peseesArticleViewModel.afficherPopupPeseeAberrante.observe(this, estPeseeAberrante -> {
             if (estPeseeAberrante) {
                 GestionnaireAlerte.showMyDialog(this, TypeAlerte.peseeAberrante, dialogAlerteViewModel, this);
             }

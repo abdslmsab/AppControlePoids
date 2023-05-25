@@ -35,6 +35,7 @@ public class ActionLiveData<T> extends MediatorLiveData<T> {
 
     /**
      * Exécute LiveData donnée en paramètre et relaie son résultat sur elle-même
+     *
      * @param action fonction qui retourne une LiveData
      */
     public void trigger(@NonNull Action<T> action) {

@@ -22,7 +22,7 @@ public class PeseesArticleViewModel extends ViewModel {
     private int poidsBrut;
 
     public void init(int poidsBrut) {
-       this.poidsBrut = poidsBrut;
+        this.poidsBrut = poidsBrut;
     }
 
     public void calculerCompteur(int rendement, int nombreVenues) {
@@ -55,27 +55,29 @@ public class PeseesArticleViewModel extends ViewModel {
 
     public final ActionLiveData<Boolean> estPeseeValide = new ActionLiveData<>();
 
-    public final ActionLiveData<Boolean> estPeseeAberrante = new ActionLiveData<>();
+    public final LiveData<Boolean> estPeseeAberrante = Transformations.map(saisiesPeseesFlottant, pesee -> {
+        if (pesee == null) {
+            return false;
+        }
+        double poidsMin = poidsBrut - (poidsBrut * 0.1);
+        double poidsMax = poidsBrut + (poidsBrut * 0.1);
+        return pesee < poidsMin || pesee > poidsMax;
+    });
+
+    public final ActionLiveData<Boolean> afficherPopupPeseeAberrante = new ActionLiveData<>();
 
     public void verifierSaisieValides() {
         estPeseeValide.trigger(() -> Transformations.map(saisiesPeseesFlottant, pesee -> pesee != null && pesee >= 1));
     }
 
-    public void verifierSaisieDonneeAberrante(){
-        estPeseeAberrante.trigger(() -> Transformations.map(saisiesPeseesFlottant, pesee -> {
-            if (pesee == null){
-                return false;
-            }
-            double poidsMin = poidsBrut - (poidsBrut * 0.1);
-            double poidsMax = poidsBrut + (poidsBrut * 0.1);
-            return pesee < poidsMin || pesee > poidsMax;
-        }));
+    public void gererAffichagePopupSaisieAberrante() {
+        afficherPopupPeseeAberrante.trigger(() -> estPeseeAberrante);
     }
 
     //Permet de verifier, d'ajouter et de valider la pesée lors du clique sur le bouton "Valider" ou la touche "Ok" du clavier
     public void actionValiderSaisie() {
         verifierSaisieValides();
-        verifierSaisieDonneeAberrante();
+        gererAffichagePopupSaisieAberrante();
         if (Boolean.TRUE.equals(estPeseeValide.getValue()) && Boolean.FALSE.equals(estPeseeAberrante.getValue())) {
             ajouterPesee(saisiesPeseesFlottant.getValue());
             reinitialiserChamp();
@@ -83,7 +85,7 @@ public class PeseesArticleViewModel extends ViewModel {
     }
 
     //Permet de quand même ajouter la saisie aberrante lorsque l'utilisateur appuie sur "Oui"
-    public void actionAjouterPeseeAberrante(){
+    public void actionAjouterPeseeAberrante() {
         verifierSaisieValides();
         if (Boolean.TRUE.equals(estPeseeValide.getValue())) {
             ajouterPesee(saisiesPeseesFlottant.getValue());
@@ -96,6 +98,7 @@ public class PeseesArticleViewModel extends ViewModel {
     public void reinitialiserListePesees() {
         listePesees.postValue(new ArrayList<>());
     }
+
     public LiveData<Integer> nombrePeseesRestantes = new CombinedTwoLiveData<>(nombrePeseesAEffectuer, listePesees, (aEffectuer, pesees) -> aEffectuer != null ? aEffectuer - pesees.size() : null);
 
     public void ajouterPesee(Float pesee) {
