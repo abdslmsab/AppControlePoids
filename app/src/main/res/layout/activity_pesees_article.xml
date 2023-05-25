@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.inputmethod.EditorInfo"/>
+
+        <import type="android.view.inputmethod.EditorInfo" />
+
         <variable
             name="peseesArticleViewModel"
             type="com.example.appcontrolepoids.viewmodel.PeseesArticleViewModel" />
@@ -26,6 +28,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Nom article" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/circle"
+            app:layout_constraintBottom_toBottomOf="@id/barre_progression"
+            app:layout_constraintEnd_toEndOf="@id/barre_progression"
+            app:layout_constraintStart_toStartOf="@id/barre_progression"
+            app:layout_constraintTop_toTopOf="@id/barre_progression" />
+
+        <!-- app:tint="@{peseesArticleViewModel.estPeseeAberrante ? @color/rouge : @color/vert}" -->
+
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/barre_progression"
             style="?attr/circularProgressIndicatorStyle"
@@ -46,9 +59,9 @@
             android:id="@+id/nombre_pesees"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{String.valueOf(peseesArticleViewModel.nombrePeseesRestantes)}"
             android:textColor="@color/noir"
             android:textSize="150sp"
-            android:text="@{String.valueOf(peseesArticleViewModel.nombrePeseesRestantes)}"
             app:layout_constraintBottom_toBottomOf="@id/barre_progression"
             app:layout_constraintEnd_toEndOf="@id/barre_progression"
             app:layout_constraintStart_toStartOf="@id/barre_progression"
@@ -112,27 +125,27 @@
                 android:hint="@string/saisir_le_poids_brut"
                 app:boxStrokeColor="@color/noir"
                 app:counterTextAppearance="@style/Theme.AppControlePoids.Error"
+                app:endIconDrawable="@drawable/clear_white_24dp"
+                app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 app:errorTextAppearance="@style/Theme.AppControlePoids.Error"
                 app:hintTextAppearance="@style/Theme.AppControlePoids.H3"
                 app:hintTextColor="@color/noir"
+                app:iconSize="43sp"
                 app:layout_constraintEnd_toEndOf="@id/conteneurPoids"
                 app:layout_constraintStart_toStartOf="@id/conteneurPoids"
-                app:layout_constraintTop_toBottomOf="@id/poids_brut"
-                app:endIconDrawable="@drawable/clear_white_24dp"
-                app:iconSize="43sp"
-                app:endIconMode="clear_text">
+                app:layout_constraintTop_toBottomOf="@id/poids_brut">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/poids_brut_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:afterTextChanged="@{peseesArticleViewModel.changementPesees}"
+                    android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:maxLength="5"
                     android:text="@{peseesArticleViewModel.peseeSaisie}"
-                    android:textSize="25sp"
-                    android:imeOptions="actionDone"/>
+                    android:textSize="25sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,7 +182,7 @@
                 android:layout_weight="1"
                 android:text="@string/valider"
                 app:icon="@drawable/done_white_24dp"
-                app:iconSize="43sp"/>
+                app:iconSize="43sp" />
 
         </LinearLayout>
 
