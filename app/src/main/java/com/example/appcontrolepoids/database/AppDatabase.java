@@ -10,7 +10,7 @@ import com.example.appcontrolepoids.dao.ArticleDao;
 import com.example.appcontrolepoids.model.Article;
 
 //Classe destinée à contenir la base de données
-@Database(entities = {Article.class}, version = 1)
+@Database(entities = {Article.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 
@@ -21,6 +21,7 @@ public abstract class AppDatabase extends RoomDatabase {
             //Si elle n'est pas nulle, on crée une nouvelle instance de la base de données
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "app_database")
+                    .createFromAsset("database/article.db")
                     .fallbackToDestructiveMigration()
                     //TODO : Juste pour tester. A enlever.
                     .allowMainThreadQueries()
