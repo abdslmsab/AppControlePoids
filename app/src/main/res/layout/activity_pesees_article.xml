@@ -20,6 +20,8 @@
         <TextView
             android:id="@+id/nom_article"
             style="@style/Theme.AppControlePoids.H1"
+            android:textAlignment="center"
+            android:textAllCaps="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/barre_progression"
