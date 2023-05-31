@@ -48,7 +48,7 @@ public class DialogAlerteViewModel extends ViewModel {
         codeSaisi.postValue(texte.toString());
     }
 
-    //On vérifie si le code entré est bien égal à 1234
+    //On vérifie si le code entré est bien égal à 1836
     public void verifierCodeValide() {
         codeValide.trigger(() -> Transformations.map(codeSaisi, code -> code.equals("1836")));
     }
