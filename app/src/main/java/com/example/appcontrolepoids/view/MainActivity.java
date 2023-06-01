@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements DialogAlerte.Aler
     protected void onResume() {
         super.onResume();
 
-        mainActivityViewModel.synchroniserPDFs(haveNetworkConnection());
+        mainActivityViewModel.synchroniserPDFs(haveNetworkConnection(), MainActivity.this);
     }
 
     @Override

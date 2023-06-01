@@ -1,5 +1,8 @@
 package com.example.appcontrolepoids.viewmodel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,6 +13,9 @@ import com.example.appcontrolepoids.util.Async;
 
 import java.io.File;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.regex.Matcher;
@@ -20,7 +26,23 @@ public class MainActivityViewModel extends ViewModel {
     public MutableLiveData<String> messageErreur = new MutableLiveData<>();
     public MutableLiveData<String> messageInfos = new MutableLiveData<>();
 
-    public void synchroniserPDFs(boolean hasNetworkConnection) {
+    private static final String NOM_SHARED_PREFS = "MesPreferences";
+    private static void enregistrerDateSharedPreferences(Context context, Date date, String nomFichier) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String formatDate = dateFormat.format(date);
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(NOM_SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(nomFichier, formatDate);
+        editor.apply();
+    }
+
+    private static String getDateSharedPreferences(Context context, String nomFichier) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(NOM_SHARED_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(nomFichier, String.valueOf(new Date().getTime()));
+    }
+
+    public void synchroniserPDFs(boolean hasNetworkConnection, Context context) {
         File directory = new File(PathsConstants.LOCAL_STORAGE);
         directory.mkdirs();
 
@@ -39,12 +61,14 @@ public class MainActivityViewModel extends ViewModel {
             for (File file : files) {
                 Pattern pattern = Pattern.compile("(.*)-\\d{5}\\.pdf");
                 Matcher matcher = pattern.matcher(file.getName());
+                enregistrerDateSharedPreferences(context, new Date(), file.getName());
                 if (matcher.matches()) {
                     String codeArticle = matcher.group(1);
                     if (codeArticle != null) {
                         FutureTask<Void> task = new FutureTask<>(() -> {
+                            String dateControle = getDateSharedPreferences(context, file.getName());
                             InsertionTicketVITAL.insererArticle(file);
-                            InsertionTicketSAGE.insererArticle(file, codeArticle);
+                            InsertionTicketSAGE.insererArticle(file, codeArticle, dateControle);
                             return null;
                         });
                         Async.EXECUTOR_SERVICE.execute(task);

@@ -1,5 +1,8 @@
 package com.example.appcontrolepoids.remote.sage;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.example.appcontrolepoids.remote.PathsConstants;
 
 import java.io.File;
@@ -13,9 +16,7 @@ import java.util.Locale;
 
 public class InsertionTicketSAGE {
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-
-    public static void insererArticle(File file, String codeArticle) throws SQLException {
+    public static void insererArticle(File file, String codeArticle, String dateControle) throws SQLException {
         String serverName = "192.168.100.11";
         String dbName = "VITAL";
         String url = "jdbc:jtds:sqlserver://" + serverName + ":1433;DatabaseName=" + dbName + ";encrypt=true;trustServerCertificate=true;";
@@ -34,9 +35,8 @@ public class InsertionTicketSAGE {
 
         pstmt.setString(1, codeArticle);
         pstmt.setString(2, PathsConstants.VOLUME_PATH + file.getName());
-        pstmt.setString(3, "Contrôle poids du " + dateFormat.format(new Date()));
+        pstmt.setString(3, "Contrôle poids du " + dateControle);
 
         pstmt.executeUpdate();
-
     }
 }
