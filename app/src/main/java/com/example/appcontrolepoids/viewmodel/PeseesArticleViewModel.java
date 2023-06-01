@@ -60,8 +60,7 @@ public class PeseesArticleViewModel extends ViewModel {
             return false;
         }
         double poidsMin = poidsBrut - (poidsBrut * 0.1);
-        double poidsMax = poidsBrut + (poidsBrut * 0.1);
-        return pesee < poidsMin || pesee > poidsMax;
+        return pesee < poidsMin;
     });
 
     public final ActionLiveData<Boolean> afficherPopupPeseeAberrante = new ActionLiveData<>();

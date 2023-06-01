@@ -37,10 +37,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class PeseesArticle extends AppCompatActivity implements DialogAlerte.AlertDialogInterface, Runnable {
-
-
     private View root = null;
-
     private PeseesArticleViewModel peseesArticleViewModel;
     private DialogAlerteViewModel dialogAlerteViewModel;
     private ActivityPeseesArticleBinding binding;

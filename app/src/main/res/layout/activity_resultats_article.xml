@@ -18,15 +18,17 @@
         <TextView
             android:id="@+id/titre_article"
             style="@style/Theme.AppControlePoids.H1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAllCaps="true"
             android:textAlignment="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/conteneurFormulaire"
-            tools:text="Code article - Nom Article" />
+            tools:text="MADEL054 - MADELEINE LONGUE PEPITES CHOCOLAT BIO 200 G - VB" />
 
         <TextView
             android:id="@+id/numero_lot"
