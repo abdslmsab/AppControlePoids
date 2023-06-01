@@ -119,7 +119,7 @@ public class ResultatArticleViewModel extends ViewModel {
                     .setFontSize(25);
             document.add(titre);
 
-            Paragraph ean = new Paragraph(eanArticle + "\n\n")
+            Paragraph ean = new Paragraph(eanArticle + "\n")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setBold()
                     .setFontSize(16);
