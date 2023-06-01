@@ -17,7 +17,7 @@
     </style>
 
     <style name="Theme.AppControlePoids.H1">
-        <item name="android:textSize">42sp</item>
+        <item name="android:textSize">40sp</item>
         <item name="android:fontFamily">@font/adamina</item>
         <item name="android:textColor">@color/noir</item>
         <item name="android:letterSpacing" >-0.05</item>
